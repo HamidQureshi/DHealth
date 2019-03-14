@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="Gradle: com.github.activeledger:SDK-Android-0.1.2">
+    <CLASSES>
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/SDK-Android-0.1.2.aar/1dcb5be3a152660f92f0ebd5a40a1b00/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/SDK-Android-0.1.2.aar/1dcb5be3a152660f92f0ebd5a40a1b00/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.activeledger/SDK-Android/0.1.2/d7e083d7482f927d3601b88fb1d8a86f53b2d9eb/SDK-Android-0.1.2-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
