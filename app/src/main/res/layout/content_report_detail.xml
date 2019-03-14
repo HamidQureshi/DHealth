@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".Activities.ReportDetailActivity"
+    >
+
+
+    <TextView
+        android:id="@+id/tv_lbl_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:text="Patient Name: "
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="187dp"
+        android:layout_height="21dp"
+        android:layout_marginStart="44dp"
+        android:layout_marginEnd="8dp"
+        android:text="Dr Dan Brown"
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.134"
+        app:layout_constraintStart_toEndOf="@+id/tv_lbl_name"
+        app:layout_constraintTop_toTopOf="@+id/tv_lbl_name" />
+
+    <TextView
+        android:id="@+id/tv_lbl_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Report Title: "
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/tv_lbl_name"
+        app:layout_constraintTop_toBottomOf="@+id/tv_lbl_name" />
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="187dp"
+        android:layout_height="21dp"
+        android:text="Diabetic Report"
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        app:layout_constraintStart_toStartOf="@+id/tv_name"
+        app:layout_constraintTop_toTopOf="@+id/tv_lbl_title" />
+
+    <TextView
+        android:id="@+id/tv_lbl_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Report Status: "
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/tv_lbl_title"
+        app:layout_constraintTop_toBottomOf="@+id/tv_lbl_title" />
+
+    <TextView
+        android:id="@+id/tv_staus"
+        android:layout_width="187dp"
+        android:layout_height="21dp"
+        android:text="Pending"
+        android:textColor="@color/btn_logut_bg"
+        android:textSize="15sp"
+        app:layout_constraintStart_toStartOf="@+id/tv_name"
+        app:layout_constraintTop_toTopOf="@+id/tv_lbl_status" />
+
+    <TextView
+        android:id="@+id/tv_lbl_uploaddate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Upload Date: "
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/tv_lbl_status"
+        app:layout_constraintTop_toBottomOf="@+id/tv_lbl_status" />
+
+    <TextView
+        android:id="@+id/tv_uploaddate"
+        android:layout_width="187dp"
+        android:layout_height="21dp"
+        android:text="24/07/1994"
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        app:layout_constraintStart_toStartOf="@+id/tv_staus"
+        app:layout_constraintTop_toTopOf="@+id/tv_lbl_uploaddate" />
+
+
+    <TextView
+        android:id="@+id/tv_lbl_assigned_to"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Assigned To: "
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/tv_lbl_uploaddate"
+        app:layout_constraintTop_toBottomOf="@+id/tv_lbl_uploaddate" />
+
+    <TextView
+        android:id="@+id/tv_assigned_to"
+        android:layout_width="187dp"
+        android:layout_height="21dp"
+        android:text="DR AVC"
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        app:layout_constraintStart_toStartOf="@+id/tv_uploaddate"
+        app:layout_constraintTop_toTopOf="@+id/tv_lbl_assigned_to" />
+
+
+    <TextView
+        android:id="@+id/tv_lbl_signeddate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Date Signed: "
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/tv_lbl_assigned_to"
+        app:layout_constraintTop_toBottomOf="@+id/tv_lbl_assigned_to" />
+
+    <TextView
+        android:id="@+id/tv_signeddate"
+        android:layout_width="187dp"
+        android:layout_height="21dp"
+        android:text="24/07/1994"
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        app:layout_constraintStart_toStartOf="@+id/tv_assigned_to"
+        app:layout_constraintTop_toTopOf="@+id/tv_lbl_signeddate" />
+
+
+    <TextView
+        android:id="@+id/tv_lbl_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Description: "
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/tv_lbl_signeddate"
+        app:layout_constraintTop_toBottomOf="@+id/tv_lbl_signeddate" />
+
+    <TextView
+        android:id="@+id/tv_description"
+        android:layout_width="187dp"
+        android:layout_height="21dp"
+        android:text="BLAH BLAH BLAH"
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        app:layout_constraintStart_toStartOf="@+id/tv_signeddate"
+        app:layout_constraintTop_toTopOf="@+id/tv_lbl_description" />
+
+
+    <TextView
+        android:id="@+id/tv_lbl_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Content: "
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/tv_lbl_description"
+        app:layout_constraintTop_toBottomOf="@+id/tv_lbl_description" />
+
+    <TextView
+        android:id="@+id/tv_content"
+        android:layout_width="187dp"
+        android:layout_height="21dp"
+        android:text="BLAH BLAH BLAH"
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        app:layout_constraintStart_toStartOf="@+id/tv_description"
+        app:layout_constraintTop_toTopOf="@+id/tv_lbl_content" />
+
+
+
+
+
+
+</android.support.constraint.ConstraintLayout>
