@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Tasks</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/home.css}"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+ 
+</head>
+
+<body style="padding-top:50px;background:#ebebeb">
+<div class="container">
+<br/>
+
+    <form th:action="@{/logout}" method="get">
+        <button class="redbutton" name="registration"
+                type="Submit">Logout
+        </button>
+    </form>
+    <br/><br/>
+    
+    
+  <div  style="background:white">
+    <h1>Todo List</h1>
+
+    <hr/>
+<div class="todoForm">
+      <form class="form-horizontal" role="form" th:action="@{/add}" th:object="${task}" method="POST">
+      		
+      		<input type="text" style="width:80%" th:field="*{description}"  placeholder="Add a Task"/>
+      		 <input type="date" th:field="*{date}" placeholder="yyyy/mm/dd"/>
+      		 
+      		  <br/> <br/>
+      		<button class="button" type="Submit">Add</button>
+         
+       
+</form>
+  
+    </div>
+    <br/>
+ 
+
+  
+  <div  style="text-align:left" >
+   
+      <table class=" tableborder table table-bordered table-striped" style="table-layout: auto;width:100%" id="todoItems">
+        <thead>
+          <tr>
+            <th style="text-align:center; background:white"></th>
+            <th style="text-align:center; background:white"></th>
+            <th style="text-align:center; background:white"></th>
+         
+          </tr>
+        </thead>
+        <tbody>
+            <tr th:each="todo : ${todolist}" >
+             <form   th:action="@{/delete}" th:object="${task}" method="post">
+     			
+                <td th:class="${todo?.cssClass}" th:text="${todo.description}"></td>
+                <td th:class="${todo?.cssClass}" style="text-align: right;" th:text="${todo.date}"></td>
+                
+              <td th:class="${todo?.cssClass}" >
+              <input type="hidden" th:value="${todo.description}" th:name="description" />
+              <button type="submit" class="delButton"><img th:src="@{/images/delete.png}" class="img-del center-block"></button>
+              </td>
+               
+               </form>
+            </tr>
+        </tbody>
+      </table>
+        </div>
+ 
+    
+    
+  <!-- Item Input Form -->
+  </div>
+</div>
+  <!-- Placed at the end of the document so the pages load faster -->
+  <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.1.1.min.js"></script>
+  <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.2.0/bootstrap.min.js"></script>
+
+</body>
+</html>
+    

@@ -1,0 +1,61 @@
+buildscript {
+   
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.0.5.RELEASE")
+
+    }
+}
+
+plugins {
+	id 'org.springframework.boot' version '2.1.3.RELEASE'
+	id 'java'
+}
+apply plugin: 'eclipse'
+apply plugin :'io.spring.dependency-management'
+
+
+
+group = 'com.activeledger.health'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
+
+repositories {
+
+mavenLocal()
+	mavenCentral()
+	
+}
+
+
+dependencies {
+
+	compile("org.springframework.boot:spring-boot-starter-web")
+	{
+	exclude group: "org.springframework",module:"spring-webmvc"
+	}
+
+
+// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-thymeleaf
+//compile group: 'org.springframework.boot', name: 'spring-boot-starter-thymeleaf', version: '2.1.3.RELEASE'
+// https://mvnrepository.com/artifact/com.h2database/h2
+// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-jpa
+compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: '2.1.3.RELEASE'
+	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-jersey
+	compile group: 'org.springframework.boot', name: 'spring-boot-starter-jersey', version: '2.1.0.RELEASE'
+	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security
+//compile group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '2.1.3.RELEASE'
+// https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt
+compile group: 'io.jsonwebtoken', name: 'jjwt', version: '0.2'
+
+// https://mvnrepository.com/artifact/org.springframework.security/spring-security-test
+//compile group: 'org.springframework.security', name: 'spring-security-test', version: '4.0.0.RELEASE'
+
+compile group: 'com.h2database', name: 'h2', version: '1.4.198'
+compile group: 'org.activeledger.sdk.java', name: 'activeledger-sdk-java', version: '1.0.0'
+	
+	implementation 'org.springframework.boot:spring-boot-starter'
+	
+	
+	testCompile 'org.springframework.boot:spring-boot-starter-test'
+}
