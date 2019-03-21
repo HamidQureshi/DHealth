@@ -116,16 +116,21 @@ public class LoginScreen extends AppCompatActivity {
                             public void onNext(Response<String> stringResponse) {
                                 int status_code = stringResponse.code();
                                 Log.e("login status code --->", status_code + "");
-                                Log.e("login header--->", stringResponse.headers() + "");
 
                                 if (status_code == 200) {
+
                                     //hit the service if the response is 200 go for it
 
-//                                    PreferenceManager.getINSTANCE().writeToPref(LoginScreen.this, PreferenceKeys.SP_LOGGEDIN, true);
-//                                    PreferenceManager.getINSTANCE().writeToPref(LoginScreen.this,PreferenceKeys.SP_EMAIL,inputEmail.getText().toString());
-//                                    Intent intent = new Intent(LoginScreen.this, ProfileScreen.class);
-//                                    startActivity(intent);
-//                                    finish();
+                                    String token = stringResponse.headers().get("Token");
+                                    Log.e("login header--->", stringResponse.headers() + "");
+                                    Log.e("login header token--->",   token);
+
+                                    PreferenceManager.getINSTANCE().writeToPref(LoginScreen.this,PreferenceKeys.SP_APP_TOKEN,token);
+                                    PreferenceManager.getINSTANCE().writeToPref(LoginScreen.this, PreferenceKeys.SP_LOGGEDIN, true);
+                                    PreferenceManager.getINSTANCE().writeToPref(LoginScreen.this,PreferenceKeys.SP_EMAIL,inputEmail.getText().toString());
+                                    Intent intent = new Intent(LoginScreen.this, ProfileScreen.class);
+                                    startActivity(intent);
+                                    finish();
 
                                 } else if (status_code == 400) {
                                     Toast.makeText(LoginScreen.this, "User already exist." + status_code,
