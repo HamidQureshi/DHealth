@@ -11,6 +11,8 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import com.activeledger.health.controller.ActiveledgerController;
+
 @Configuration
 @PropertySource("classpath:health.properties")
 @ComponentScan("basePackages = com.activeledger.health")
@@ -25,8 +27,10 @@ public class Config {
     public ServletRegistrationBean serviceServlet() {
 	
         ResourceConfig resourceConfig=new ResourceConfig();
-        resourceConfig.packages("com.activeledger.health");
+       // resourceConfig.packages("com.activeledger.health");
         resourceConfig.register(CORSFilter.class);
+        //resourceConfig.register(.class);
+        resourceConfig.register(ActiveledgerController.class);
         ServletContainer servletContainer = new ServletContainer(resourceConfig);
         String basePath = "/";
              if (!basePath.endsWith("/") || !basePath.startsWith("/"))

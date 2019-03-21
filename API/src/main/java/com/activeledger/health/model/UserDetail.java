@@ -1,66 +1,30 @@
-/*package com.activeledger.health.model;
+package com.activeledger.health.model;
 
-import java.util.Collection;
+import java.util.Collections;
 
-public class UserDetail implements UserDetails{
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 
-	*//**
-	 * 
-	 *//*
-	private static final long serialVersionUID = -644641346743700302L;
-	private String userName;
-    private String token;
+import com.activeledger.health.dao.UserDao;
+
+@Service
+public class UserDetail implements UserDetailsService{
+
+	@Autowired
+	UserDao userDao;
+	@Override
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		// TODO Auto-generated method stub
+		User user = userDao.findByUsername(username);
+        if (user == null) {
+            throw new UsernameNotFoundException(username);
+        }
+		return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), Collections.EMPTY_LIST);
+	}
+
 	
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-	public void setToken(String token) {
-		this.token = token;
-	}
-	@Override
-	public Collection<? extends GrantedAuthority> getAuthorities() {
-		
-		return null;
-	}
-	@Override
-	public String getPassword() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
-	public String getUsername() {
-		// TODO Auto-generated method stub
-		return userName;
-	}
-	@Override
-	public boolean isAccountNonExpired() {
-		// TODO Auto-generated method stub
-		return true;
-	}
-	@Override
-	public boolean isAccountNonLocked() {
-		// TODO Auto-generated method stub
-		return true;
-	}
-	@Override
-	public boolean isCredentialsNonExpired() {
-		// TODO Auto-generated method stub
-		return true;
-	}
-	@Override
-	public boolean isEnabled() {
-		// TODO Auto-generated method stub
-		return true;
-	}
 	
-	public String getUserName() {
-        return userName;
-    }
-
-    public String getToken() {
-        return token;
-    }
-    
-    
 }
-*/

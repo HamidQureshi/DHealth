@@ -1,4 +1,4 @@
-/*package com.activeledger.health.config;
+package com.activeledger.health.config;
 
 import java.io.IOException;
 
@@ -18,4 +18,3 @@ public class JwtSuccessHandler implements AuthenticationSuccessHandler{
     }
 
 }
-*/

@@ -5,22 +5,28 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
 @Entity
+@JsonInclude(Include.NON_NULL)
 public class User{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", username=" + username + ", password=" + password + ", enabled=" + enabled
+				+ ", identity=" + identity + "]";
+	}
+
 	private String username;
 	private String password;
-
+	private boolean enabled=true;
 	
-	private String name;
-
 	private String identity;
 	
-	private String age;
-
 	public String getUsername() {
 		return username;
 	}
@@ -36,29 +42,13 @@ public class User{
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
+	
 	public String getIdentity() {
 		return identity;
 	}
 
 	public void setIdentity(String identity) {
 		this.identity = identity;
-	}
-
-	public String getAge() {
-		return age;
-	}
-
-	public void setAge(String age) {
-		this.age = age;
 	}
 
 	public Integer getId() {
@@ -68,5 +58,10 @@ public class User{
 	public void setId(Integer id) {
 		this.id = id;
 	}
+
+	public boolean isEnabled() {
+		return enabled;
+	}
+
 
 	}

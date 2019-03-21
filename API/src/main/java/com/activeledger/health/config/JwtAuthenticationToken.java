@@ -1,15 +1,12 @@
-/*package com.activeledger.health.config;
+package com.activeledger.health.config;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Component;
 
-@Component
+
 public class JwtAuthenticationToken extends UsernamePasswordAuthenticationToken{
 
-	
-	*//**
-	 * 
-	 *//*
+
 	private static final long serialVersionUID = 8236375340914110342L;
 	private String token;
 	
@@ -45,4 +42,3 @@ public class JwtAuthenticationToken extends UsernamePasswordAuthenticationToken{
 	}
 
 }
-*/

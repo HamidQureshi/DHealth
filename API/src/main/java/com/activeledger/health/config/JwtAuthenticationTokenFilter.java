@@ -1,4 +1,4 @@
-/*package com.activeledger.health.config;
+package com.activeledger.health.config;
 
 import java.io.IOException;
 
@@ -15,25 +15,27 @@ import org.springframework.stereotype.Component;
 public class JwtAuthenticationTokenFilter extends AbstractAuthenticationProcessingFilter  {
 
 	
-	protected JwtAuthenticationTokenFilter() {
-		super("/**");
-	
-	}
 
+
+
+	protected JwtAuthenticationTokenFilter() {
+		super("/transaction/**");
+		// TODO Auto-generated constructor stub
+	}
 
 	@Override
 	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
 			throws AuthenticationException, IOException, ServletException {
 
-		  String header = request.getHeader("Authorisation");
-
+		  String header = request.getHeader("Authorization");
+		 
 
 	        if (header == null || !header.startsWith("Token ")) {
-	            throw new RuntimeException("JWT Token is missing");
+	            throw new RuntimeException("Token is missing");
 	        }
 
-	        String authenticationToken = header.substring(6);
-
+	        String authenticationToken = header.replace("Token ","");
+	        System.out.println("token in filter "+authenticationToken);
 	        JwtAuthenticationToken token = new JwtAuthenticationToken(authenticationToken);
 	        return getAuthenticationManager().authenticate(token);
 	}
@@ -45,4 +47,3 @@ public class JwtAuthenticationTokenFilter extends AbstractAuthenticationProcessi
     }
 	  
 }
-*/

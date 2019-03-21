@@ -1,4 +1,4 @@
-/*package com.activeledger.health.config;
+package com.activeledger.health.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -7,14 +7,15 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
+import com.activeledger.health.dao.UserDao;
 import com.activeledger.health.model.User;
-import com.activeledger.health.model.UserDetail;
 
 @Component
 public class JwtAuthenticationProvider extends AbstractUserDetailsAuthenticationProvider{
 
 	@Autowired
     private JwtValidator validator;
+	
 
     @Override
     protected void additionalAuthenticationChecks(UserDetails userDetails, UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken) throws AuthenticationException {
@@ -27,15 +28,9 @@ public class JwtAuthenticationProvider extends AbstractUserDetailsAuthentication
         JwtAuthenticationToken jwtAuthenticationToken = (JwtAuthenticationToken) usernamePasswordAuthenticationToken;
         String token = jwtAuthenticationToken.getToken();
 
-        User jwtUser = validator.validate(token);
+        org.springframework.security.core.userdetails.User jwtUser = validator.validate(token);
 
-        if (jwtUser == null) {
-            throw new RuntimeException("JWT Token is incorrect");
-        }
-        UserDetail userDetail=new UserDetail();
-        userDetail.setUserName(jwtUser.getEmail());
-  
-          return userDetail;
+          return jwtUser;
    }
 
     @Override
@@ -43,4 +38,3 @@ public class JwtAuthenticationProvider extends AbstractUserDetailsAuthentication
         return (JwtAuthenticationToken.class.isAssignableFrom(aClass));
     }
 }
-*/

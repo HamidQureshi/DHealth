@@ -1,4 +1,4 @@
-/*package com.activeledger.health.config;
+package com.activeledger.health.config;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -15,10 +15,7 @@ public class JwtGenerator {
 
 
         Claims claims = Jwts.claims()
-                .setSubject(user.getEmail());
-        claims.put("userId", String.valueOf(jwtUser.getId()));
-        claims.put("role", jwtUser.getRole());
-
+                .setSubject(user.getUsername());
 
         return Jwts.builder()
                 .setClaims(claims)
@@ -26,4 +23,3 @@ public class JwtGenerator {
                 .compact();
     }
 }
-*/
