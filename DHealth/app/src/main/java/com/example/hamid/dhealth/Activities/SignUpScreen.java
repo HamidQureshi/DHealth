@@ -2,22 +2,30 @@ package com.example.hamid.dhealth.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.example.activeledgersdk.utility.Utility;
+import com.example.hamid.dhealth.MedicalRepository.HTTP.HttpClient;
 import com.example.hamid.dhealth.Preference.PreferenceKeys;
 import com.example.hamid.dhealth.Preference.PreferenceManager;
 import com.example.hamid.dhealth.R;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
+import retrofit2.Response;
 
 public class SignUpScreen extends AppCompatActivity {
 
@@ -77,27 +85,83 @@ public class SignUpScreen extends AppCompatActivity {
                 }
 
                 progressBar.setVisibility(View.VISIBLE);
-                //create user
-                auth.createUserWithEmailAndPassword(email, password)
-                        .addOnCompleteListener(SignUpScreen.this, new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                Toast.makeText(SignUpScreen.this, "createUserWithEmail:onComplete:" + task.isSuccessful(), Toast.LENGTH_SHORT).show();
-                                progressBar.setVisibility(View.GONE);
-                                // If sign in fails, display a message to the user. If sign in succeeds
-                                // the auth state listener will be notified and logic to handle the
-                                // signed in user can be handled in the listener.
-                                if (!task.isSuccessful()) {
-                                    Toast.makeText(SignUpScreen.this, "Authentication failed." + task.getException(),
-                                            Toast.LENGTH_SHORT).show();
-                                } else {
-                                    PreferenceManager.getINSTANCE().writeToPref(SignUpScreen.this,PreferenceKeys.SP_EMAIL,inputEmail.getText().toString());
 
+                JSONObject userJSON = new JSONObject();
+
+                try {
+                    userJSON.put("username", email);
+                    userJSON.put("password", password);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+                String userString = Utility.getInstance().convertJSONObjectToString(userJSON);
+
+                HttpClient.getInstance().registerUser(userString)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Observer<Response<String>>() {
+                            @Override
+                            public void onSubscribe(Disposable d) {
+
+                            }
+
+                            @Override
+                            public void onNext(Response<String> stringResponse) {
+                                int status_code = stringResponse.code();
+                                Log.e("register --->", status_code + "");
+
+                                if (status_code == 200) {
+                                    //hit the service if the response is 200 go for it
+                                    PreferenceManager.getINSTANCE().writeToPref(SignUpScreen.this, PreferenceKeys.SP_EMAIL, inputEmail.getText().toString());
                                     startActivity(new Intent(SignUpScreen.this, ProfileScreen.class));
                                     finish();
+                                } else if (status_code == 400) {
+                                    Toast.makeText(SignUpScreen.this, "User already exist." + status_code,
+                                            Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(SignUpScreen.this, "Authentication failed." + status_code,
+                                            Toast.LENGTH_SHORT).show();
                                 }
+
+                            }
+
+
+                            @Override
+                            public void onError(Throwable e) {
+                                Log.e("login --->", e.getMessage());
+                            }
+
+                            @Override
+                            public void onComplete() {
+                                progressBar.setVisibility(View.GONE);
+
                             }
                         });
+
+
+//                //create user
+//                auth.createUserWithEmailAndPassword(email, password)
+//                        .addOnCompleteListener(SignUpScreen.this, new OnCompleteListener<AuthResult>() {
+//                            @Override
+//                            public void onComplete(@NonNull Task<AuthResult> task) {
+//                                Toast.makeText(SignUpScreen.this, "createUserWithEmail:onComplete:" + task.isSuccessful(), Toast.LENGTH_SHORT).show();
+//                                progressBar.setVisibility(View.GONE);
+//                                // If sign in fails, display a message to the user. If sign in succeeds
+//                                // the auth state listener will be notified and logic to handle the
+//                                // signed in user can be handled in the listener.
+//                                if (!task.isSuccessful()) {
+//                                    Toast.makeText(SignUpScreen.this, "Authentication failed." + task.getException(),
+//                                            Toast.LENGTH_SHORT).show();
+//                                } else {
+//                                    PreferenceManager.getINSTANCE().writeToPref(SignUpScreen.this,PreferenceKeys.SP_EMAIL,inputEmail.getText().toString());
+//
+//                                    startActivity(new Intent(SignUpScreen.this, ProfileScreen.class));
+//                                    finish();
+//                                }
+//                            }
+//                        });
 
             }
         });
