@@ -2,7 +2,6 @@ package com.example.hamid.dhealth.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Base64;
@@ -17,10 +16,10 @@ import com.example.hamid.dhealth.MedicalRepository.HTTP.HttpClient;
 import com.example.hamid.dhealth.Preference.PreferenceKeys;
 import com.example.hamid.dhealth.Preference.PreferenceManager;
 import com.example.hamid.dhealth.R;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -49,9 +48,6 @@ public class LoginScreen extends AppCompatActivity {
 
         setContentView(R.layout.activity_login);
 
-
-//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
 
         inputEmail = (EditText) findViewById(R.id.email);
         inputPassword = (EditText) findViewById(R.id.password);
@@ -120,14 +116,26 @@ public class LoginScreen extends AppCompatActivity {
                                 if (status_code == 200) {
 
                                     //hit the service if the response is 200 go for it
-
                                     String token = stringResponse.headers().get("Token");
-                                    Log.e("login header--->", stringResponse.headers() + "");
-                                    Log.e("login header token--->",   token);
+                                    JSONObject description = null;
+                                    String message = null;
+                                    try {
+                                        description = new JSONObject(stringResponse.body());
+                                        message = description.getString("desc");
+                                        Log.e("login description--->", message );
 
-                                    PreferenceManager.getINSTANCE().writeToPref(LoginScreen.this,PreferenceKeys.SP_APP_TOKEN,token);
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                    Log.e("login header--->", stringResponse.headers() + "");
+                                    Log.e("login header token--->", token);
+
+                                    Toast.makeText(LoginScreen.this, message,
+                                            Toast.LENGTH_SHORT).show();
+
+                                    PreferenceManager.getINSTANCE().writeToPref(LoginScreen.this, PreferenceKeys.SP_APP_TOKEN, token);
                                     PreferenceManager.getINSTANCE().writeToPref(LoginScreen.this, PreferenceKeys.SP_LOGGEDIN, true);
-                                    PreferenceManager.getINSTANCE().writeToPref(LoginScreen.this,PreferenceKeys.SP_EMAIL,inputEmail.getText().toString());
+                                    PreferenceManager.getINSTANCE().writeToPref(LoginScreen.this, PreferenceKeys.SP_EMAIL, inputEmail.getText().toString());
                                     Intent intent = new Intent(LoginScreen.this, ProfileScreen.class);
                                     startActivity(intent);
                                     finish();
@@ -154,11 +162,6 @@ public class LoginScreen extends AppCompatActivity {
 
                             }
                         });
-
-
-
-
-
 
 
                 //authenticate user

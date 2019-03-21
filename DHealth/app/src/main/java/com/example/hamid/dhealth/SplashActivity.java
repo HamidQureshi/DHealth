@@ -20,16 +20,14 @@ public class SplashActivity extends AppCompatActivity {
 
         Intent intent;
 
-        boolean login = PreferenceManager.getINSTANCE().readFromPref(this,PreferenceKeys.SP_LOGGEDIN,false);
+        boolean login = PreferenceManager.getINSTANCE().readFromPref(this, PreferenceKeys.SP_LOGGEDIN, false);
 
-        if(login == false) {
+        if (login == false) {
             intent = new Intent(this, LoginScreen.class);
-        }
-        else {
-            if(!PreferenceManager.getINSTANCE().readFromPref(this,PreferenceKeys.SP_PROFILEFINISHED,false)){
+        } else {
+            if (!PreferenceManager.getINSTANCE().readFromPref(this, PreferenceKeys.SP_PROFILEFINISHED, false)) {
                 intent = new Intent(this, ProfileScreen.class);
-            }
-            else{
+            } else {
                 intent = new Intent(this, DashboardScreen.class);
             }
         }

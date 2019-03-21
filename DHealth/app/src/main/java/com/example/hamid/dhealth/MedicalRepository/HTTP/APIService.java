@@ -25,18 +25,12 @@ package com.example.hamid.dhealth.MedicalRepository.HTTP;
 import io.reactivex.Observable;
 import retrofit2.Response;
 import retrofit2.http.Body;
-import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
-import retrofit2.http.Path;
 
 public interface APIService {
 
-//    // http service endpoint
-//    @Headers("Content-Type: application/json")
-//    @POST(".")
-//    Observable<String> sendTransaction(@Body String post);
 
     @Headers("Content-Type: application/json")
     @POST("/register")
@@ -48,9 +42,4 @@ public interface APIService {
     Observable<Response<String>> loginUser(@Header("Authorization") String authHeader);
 
 
-
-
-//    @Headers("Content-Type: application/json")
-//    @GET("/api/stream/{id}")
-//    Observable<String> getTransactionData(@Path("id") String id);
 }

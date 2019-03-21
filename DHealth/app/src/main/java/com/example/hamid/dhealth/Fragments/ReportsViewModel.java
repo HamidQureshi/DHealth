@@ -28,7 +28,7 @@ public class ReportsViewModel extends AndroidViewModel {
         repository.insertReport(report);
     }
 
-    public void deleteReport( int position){
+    public void deleteReport(int position) {
 //        Report report = report_list.get(position);
 //        repository.deleteReport(report);
 
@@ -38,7 +38,9 @@ public class ReportsViewModel extends AndroidViewModel {
         repository.deleteAllReport();
     }
 
-    public List<Report> searchReportsList(String name) { return repository.searchReportList(name);}
+    public List<Report> searchReportsList(String name) {
+        return repository.searchReportList(name);
+    }
 
 
 }

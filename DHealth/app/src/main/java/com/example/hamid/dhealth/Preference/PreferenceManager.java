@@ -49,9 +49,9 @@ public class PreferenceManager {
         return sharedPreference.getString(key, defaultValue);
     }
 
-    public Boolean readFromPref(Context context, String key, Boolean defaultValue){
+    public Boolean readFromPref(Context context, String key, Boolean defaultValue) {
         SharedPreferences sharedPreferences = getSharedPreference(context);
-        return sharedPreferences.getBoolean(key,defaultValue);
+        return sharedPreferences.getBoolean(key, defaultValue);
     }
 
     public int readFromPref(Context context, String key, int defaultValue) {

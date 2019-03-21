@@ -15,7 +15,7 @@ import com.example.hamid.dhealth.R;
 
 public class UploadFileActivity extends AppCompatActivity {
 
-    EditText et_name,et_title, et_uploaddate, et_assigned_to, et_signeddate, et_description, et_content;
+    EditText et_name, et_title, et_uploaddate, et_assigned_to, et_signeddate, et_description, et_content;
     TextView tv_staus;
 
     @Override
@@ -76,7 +76,7 @@ public class UploadFileActivity extends AppCompatActivity {
         String description = et_description.getText().toString();
         String content = et_content.getText().toString();
         String status = tv_staus.getText().toString();
-        Report report = new Report(title, description, name,assignedto,uploaddate,signeddate,content,status);
+        Report report = new Report(title, description, name, assignedto, uploaddate, signeddate, content, status);
 
         //add the report to db
         DataRepository dataRepository = new DataRepository(getApplication());

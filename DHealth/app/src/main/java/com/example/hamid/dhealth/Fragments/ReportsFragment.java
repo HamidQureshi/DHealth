@@ -1,9 +1,7 @@
 package com.example.hamid.dhealth.Fragments;
 
-import android.app.SearchManager;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Canvas;
 import android.os.Bundle;
@@ -40,13 +38,12 @@ import io.reactivex.schedulers.Schedulers;
 public class ReportsFragment extends Fragment implements View.OnClickListener {
 
 
+    public List<Report> reports;
+    SearchView searchView;
     private FloatingActionButton fab_create_file;
-
     private ReportsViewModel mViewModel;
     private RecyclerView rv_report_list;
     private ReportsListAdapter reportsListAdapter;
-    public List<Report> reports;
-    SearchView searchView;
 
     public static ReportsFragment newInstance() {
         return new ReportsFragment();
@@ -88,11 +85,10 @@ public class ReportsFragment extends Fragment implements View.OnClickListener {
         populateList();
 
 
-
     }
 
 
-    public void setupRecyclerView(){
+    public void setupRecyclerView() {
 
         rv_report_list = (RecyclerView) getView().findViewById(R.id.rv_report_list);
 
@@ -160,7 +156,7 @@ public class ReportsFragment extends Fragment implements View.OnClickListener {
         // Associate searchable configuration with the SearchView
 //        SearchManager searchManager =
 //                (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
-         searchView =
+        searchView =
                 (SearchView) menu.findItem(R.id.search).getActionView();
 //        searchView.setSearchableInfo(
 //                searchManager.getSearchableInfo(getActivity().getComponentName()));
@@ -207,7 +203,7 @@ public class ReportsFragment extends Fragment implements View.OnClickListener {
 
     private void populateList() {
         mViewModel.deleteReportData();
-        Report report = new Report("Diabetic Report", "abc", "john", "Jhonny Depp", "10/20/2012", "10/20/2012", "report diabetic etc","Pending");
+        Report report = new Report("Diabetic Report", "abc", "john", "Jhonny Depp", "10/20/2012", "10/20/2012", "report diabetic etc", "Pending");
         mViewModel.insert(report);
     }
 

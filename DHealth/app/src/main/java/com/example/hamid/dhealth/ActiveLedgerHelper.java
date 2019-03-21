@@ -4,7 +4,6 @@ import android.arch.lifecycle.MutableLiveData;
 import android.content.Context;
 import android.util.Log;
 
-
 import com.example.activeledgersdk.ActiveLedgerSDK;
 import com.example.activeledgersdk.model.Territoriality;
 import com.example.activeledgersdk.utility.KeyType;
@@ -248,8 +247,8 @@ public class ActiveLedgerHelper {
                 });
     }
 
-    public void getTransactionData(String id){
-         ActiveLedgerSDK.getInstance().getTransactionData(id)
+    public void getTransactionData(String id) {
+        ActiveLedgerSDK.getInstance().getTransactionData(id)
                 .subscribe(new Observer<String>() {
                     @Override
                     public void onSubscribe(Disposable d) {

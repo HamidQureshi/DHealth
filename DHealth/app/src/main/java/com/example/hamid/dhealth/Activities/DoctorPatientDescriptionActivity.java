@@ -56,5 +56,4 @@ public class DoctorPatientDescriptionActivity extends AppCompatActivity {
     }
 
 
-
 }

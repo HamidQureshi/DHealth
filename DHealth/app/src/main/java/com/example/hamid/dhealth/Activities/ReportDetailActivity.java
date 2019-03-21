@@ -12,7 +12,7 @@ import com.example.hamid.dhealth.R;
 public class ReportDetailActivity extends AppCompatActivity {
 
     public static final String REPORT_DATA = "report_data";
-    TextView tv_title,tv_name,tv_staus,tv_uploaddate,tv_assigned_to,tv_signeddate,tv_description,tv_content;
+    TextView tv_title, tv_name, tv_staus, tv_uploaddate, tv_assigned_to, tv_signeddate, tv_description, tv_content;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +35,7 @@ public class ReportDetailActivity extends AppCompatActivity {
 
     }
 
-    private void populateLayout( Report report) {
+    private void populateLayout(Report report) {
 
         if (report != null) {
             tv_name.setText(report.getOwnership());

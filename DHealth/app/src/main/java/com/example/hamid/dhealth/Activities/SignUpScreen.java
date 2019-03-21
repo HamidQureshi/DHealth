@@ -1,5 +1,6 @@
 package com.example.hamid.dhealth.Activities;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -33,6 +34,7 @@ public class SignUpScreen extends AppCompatActivity {
     private Button btnSignIn, btnSignUp, btnResetPassword;
     private ProgressBar progressBar;
     private FirebaseAuth auth;
+    private SignUpScreenViewModel signUpScreenViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +42,8 @@ public class SignUpScreen extends AppCompatActivity {
         setContentView(R.layout.activity_sign_up_screen);
         //Get Firebase auth instance
         auth = FirebaseAuth.getInstance();
+
+        signUpScreenViewModel = ViewModelProviders.of(this).get(SignUpScreenViewModel.class);
 
         btnSignIn = (Button) findViewById(R.id.sign_in_button);
         btnSignUp = (Button) findViewById(R.id.sign_up_button);
@@ -113,7 +117,27 @@ public class SignUpScreen extends AppCompatActivity {
                                 Log.e("register --->", status_code + "");
 
                                 if (status_code == 200) {
+
                                     //hit the service if the response is 200 go for it
+                                    String token = stringResponse.headers().get("Token");
+                                    JSONObject description = null;
+                                    String message = null;
+                                    try {
+                                        description = new JSONObject(stringResponse.body());
+                                        message = description.getString("desc");
+                                        Log.e("login description--->", message );
+
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                    Log.e("login header--->", stringResponse.headers() + "");
+                                    Log.e("login header token--->", token);
+
+                                    Toast.makeText(SignUpScreen.this, message,
+                                            Toast.LENGTH_SHORT).show();
+
+                                    PreferenceManager.getINSTANCE().writeToPref(SignUpScreen.this, PreferenceKeys.SP_APP_TOKEN, token);
+                                    PreferenceManager.getINSTANCE().writeToPref(SignUpScreen.this, PreferenceKeys.SP_LOGGEDIN, true);
                                     PreferenceManager.getINSTANCE().writeToPref(SignUpScreen.this, PreferenceKeys.SP_EMAIL, inputEmail.getText().toString());
                                     startActivity(new Intent(SignUpScreen.this, ProfileScreen.class));
                                     finish();

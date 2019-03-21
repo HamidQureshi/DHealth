@@ -46,7 +46,9 @@ public class DataRepository {
         return mAllReports;
     }
 
-    public List<Report> searchReportList(String name) { return databaseDAO.searchReports(name+'%'); }
+    public List<Report> searchReportList(String name) {
+        return databaseDAO.searchReports(name + '%');
+    }
 
 
     @SuppressLint("CheckResult")
@@ -94,7 +96,7 @@ public class DataRepository {
     }
 
 
-    public void deleteReport(Report report){
+    public void deleteReport(Report report) {
         Observable.fromCallable(() -> {
             databaseDAO.deleteReport(report);
             return true;

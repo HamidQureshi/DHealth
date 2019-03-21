@@ -23,7 +23,6 @@
 package com.example.hamid.dhealth.MedicalRepository.HTTP;
 
 
-
 import io.reactivex.Observable;
 import retrofit2.Response;
 import retrofit2.Retrofit;
@@ -54,12 +53,11 @@ public class HttpClient {
     }
 
 
-
-    public Observable<Response<String>> registerUser(String user){
+    public Observable<Response<String>> registerUser(String user) {
         return apiService.registerUser(user);
     }
 
-    public Observable<Response<String>> loginUser(String user){
+    public Observable<Response<String>> loginUser(String user) {
         return apiService.loginUser(user);
     }
 

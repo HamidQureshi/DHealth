@@ -62,7 +62,7 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
         et_name = (EditText) findViewById(R.id.et_name);
         et_last_name = (EditText) findViewById(R.id.et_last_name);
         et_email = (EditText) findViewById(R.id.et_email);
-        et_email.setText(PreferenceManager.getINSTANCE().readFromPref(this,PreferenceKeys.SP_EMAIL,"null"));
+        et_email.setText(PreferenceManager.getINSTANCE().readFromPref(this, PreferenceKeys.SP_EMAIL, "null"));
         et_phone = (EditText) findViewById(R.id.et_phone);
         et_address = (EditText) findViewById(R.id.et_address);
 

@@ -17,8 +17,8 @@ import java.util.List;
 
 public class ReportsListAdapter extends RecyclerView.Adapter<ReportsListAdapter.ViewHolder> {
 
-    private Context mContext;
     public List<Report> reportList;
+    private Context mContext;
 
     public ReportsListAdapter(Context context, List<Report> reports) {
         this.mContext = context;
