@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/DHealth.iml" filepath="$PROJECT_DIR$/DHealth.iml" />
-      <module fileurl="file://$PROJECT_DIR$/activeledgersdk/activeledgersdk.iml" filepath="$PROJECT_DIR$/activeledgersdk/activeledgersdk.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

@@ -106,6 +106,8 @@ public class LoginScreen extends AppCompatActivity {
 
                                     PreferenceManager.getINSTANCE().writeToPref(LoginScreen.this, PreferenceKeys.SP_LOGGEDIN, true);
 
+                                    PreferenceManager.getINSTANCE().writeToPref(LoginScreen.this,PreferenceKeys.SP_EMAIL,inputEmail.getText().toString());
+
                                     Intent intent = new Intent(LoginScreen.this, ProfileScreen.class);
                                     startActivity(intent);
                                     finish();

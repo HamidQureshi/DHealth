@@ -51,4 +51,7 @@ public interface DatabaseDAO {
     @Query("SELECT * from report_table")
     LiveData<List<Report>> getReportList();
 
+    @Query("SELECT * FROM report_table where assignedTo LIKE :name")
+    List<Report> searchReports(String name);
+
 }

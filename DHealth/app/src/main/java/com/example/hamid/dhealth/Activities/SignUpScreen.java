@@ -11,6 +11,8 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.example.hamid.dhealth.Preference.PreferenceKeys;
+import com.example.hamid.dhealth.Preference.PreferenceManager;
 import com.example.hamid.dhealth.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -89,6 +91,8 @@ public class SignUpScreen extends AppCompatActivity {
                                     Toast.makeText(SignUpScreen.this, "Authentication failed." + task.getException(),
                                             Toast.LENGTH_SHORT).show();
                                 } else {
+                                    PreferenceManager.getINSTANCE().writeToPref(SignUpScreen.this,PreferenceKeys.SP_EMAIL,inputEmail.getText().toString());
+
                                     startActivity(new Intent(SignUpScreen.this, ProfileScreen.class));
                                     finish();
                                 }

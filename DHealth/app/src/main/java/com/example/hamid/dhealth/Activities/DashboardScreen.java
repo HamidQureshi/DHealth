@@ -1,7 +1,5 @@
 package com.example.hamid.dhealth.Activities;
 
-import android.app.SearchManager;
-import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -17,11 +15,9 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.hamid.dhealth.ActiveLedgerHelper;
 import com.example.hamid.dhealth.Fragments.DoctorPatientFragment;
 import com.example.hamid.dhealth.Fragments.ProfileFragment;
 import com.example.hamid.dhealth.Fragments.ReportsFragment;
-import com.example.hamid.dhealth.Fragments.SettingFragment;
 import com.example.hamid.dhealth.Preference.PreferenceKeys;
 import com.example.hamid.dhealth.Preference.PreferenceManager;
 import com.example.hamid.dhealth.R;
@@ -31,7 +27,7 @@ public class DashboardScreen extends AppCompatActivity {
 
     Fragment fragment = null;
     ImageView iv_dp;
-    TextView tv_name;
+    TextView tv_first_name, tv_last_name;
     private DrawerLayout dl;
     private ActionBarDrawerToggle drawerToggle;
     private NavigationView nv;
@@ -57,10 +53,10 @@ public class DashboardScreen extends AppCompatActivity {
         getSupportActionBar().setHomeButtonEnabled(true);
 
         //testing
-        ActiveLedgerHelper.getInstance().setupALSDK(this);
-        ActiveLedgerHelper.getInstance().getTransactionData("a40f9e9520b64cb1d950ef637a59a850dfd64fc5e620c43facd5511133525a7f");
+//        ActiveLedgerHelper.getInstance().setupALSDK(this);
+//        ActiveLedgerHelper.getInstance().getTransactionData("a40f9e9520b64cb1d950ef637a59a850dfd64fc5e620c43facd5511133525a7f");
 
-        if (savedInstanceState  == null) {
+        if (savedInstanceState == null) {
             Log.e("===>", "on create");
 
             fragment = ProfileFragment.newInstance();
@@ -85,7 +81,11 @@ public class DashboardScreen extends AppCompatActivity {
 
                     case R.id.dplist:
 //                        Toast.makeText(DashboardScreen.this, "Doctor/TablePatient List", Toast.LENGTH_SHORT).show();
-                        title = "Doctor/TablePatient List";
+                        if ((PreferenceManager.getINSTANCE().readFromPref(DashboardScreen.this, PreferenceKeys.SP_PROFILE_TYPE, "Doctor")).equalsIgnoreCase("Doctor")) {
+                            title = "Patient List";
+                        } else {
+                            title = "Doctor List";
+                        }
                         fragment = DoctorPatientFragment.newInstance();
                         break;
 
@@ -95,11 +95,11 @@ public class DashboardScreen extends AppCompatActivity {
                         fragment = ReportsFragment.newInstance();
                         break;
 
-                    case R.id.settings:
-//                        Toast.makeText(DashboardScreen.this, "Settings", Toast.LENGTH_SHORT).show();
-                        title = "Settings";
-                        fragment = SettingFragment.newInstance();
-                        break;
+//                    case R.id.settings:
+////                        Toast.makeText(DashboardScreen.this, "Settings", Toast.LENGTH_SHORT).show();
+//                        title = "Settings";
+//                        fragment = SettingFragment.newInstance();
+//                        break;
 
                     default:
 
@@ -122,19 +122,20 @@ public class DashboardScreen extends AppCompatActivity {
         });
 
 
-
         View header = nv.getHeaderView(0);
         iv_dp = (ImageView) header.findViewById(R.id.imageView);
-        tv_name = (TextView) header.findViewById(R.id.name);
+        tv_first_name = (TextView) header.findViewById(R.id.first_name);
+        tv_last_name = (TextView) header.findViewById(R.id.last_name);
 
         iv_dp.setImageBitmap(Utils.decodeBase64(PreferenceManager.getINSTANCE().readFromPref(this, PreferenceKeys.SP_PROFILEPIC, "")));
-        tv_name.setText(PreferenceManager.getINSTANCE().readFromPref(this, PreferenceKeys.SP_NAME, "John Doe"));
+        tv_first_name.setText(PreferenceManager.getINSTANCE().readFromPref(this, PreferenceKeys.SP_NAME, "John"));
+        tv_last_name.setText(PreferenceManager.getINSTANCE().readFromPref(this, PreferenceKeys.SP_LAST_NAME, "Doe"));
 
 
-        handleIntent(getIntent());
-
+//        handleIntent(getIntent());
 
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -176,20 +177,20 @@ public class DashboardScreen extends AppCompatActivity {
 //    }
 
 
-    @Override
-    protected void onNewIntent(Intent intent) {
-
-        handleIntent(intent);
-    }
-
-    private void handleIntent(Intent intent) {
-
-        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-            String query = intent.getStringExtra(SearchManager.QUERY);
-            //use the query to search your data somehow
-            Log.e("=====>", query);
-        }
-    }
+//    @Override
+//    protected void onNewIntent(Intent intent) {
+//
+////        handleIntent(intent);
+//    }
+//
+//    private void handleIntent(Intent intent) {
+//
+//        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+//            String query = intent.getStringExtra(SearchManager.QUERY);
+//            //use the query to search your data somehow
+//            Log.e("=====>", query);
+//        }
+//    }
 
 
 }

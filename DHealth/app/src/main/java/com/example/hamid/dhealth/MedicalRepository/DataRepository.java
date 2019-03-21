@@ -46,6 +46,8 @@ public class DataRepository {
         return mAllReports;
     }
 
+    public List<Report> searchReportList(String name) { return databaseDAO.searchReports(name+'%'); }
+
 
     @SuppressLint("CheckResult")
     public void insertDoctor(final Doctor doctor) {

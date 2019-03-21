@@ -15,6 +15,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -32,6 +33,10 @@ import com.example.hamid.dhealth.Utils.SwipeControllerActions;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
+
 public class ReportsFragment extends Fragment implements View.OnClickListener {
 
 
@@ -41,6 +46,7 @@ public class ReportsFragment extends Fragment implements View.OnClickListener {
     private RecyclerView rv_report_list;
     private ReportsListAdapter reportsListAdapter;
     public List<Report> reports;
+    SearchView searchView;
 
     public static ReportsFragment newInstance() {
         return new ReportsFragment();
@@ -80,6 +86,8 @@ public class ReportsFragment extends Fragment implements View.OnClickListener {
             }
         });
         populateList();
+
+
 
     }
 
@@ -150,12 +158,39 @@ public class ReportsFragment extends Fragment implements View.OnClickListener {
         inflater.inflate(R.menu.options_menu, menu);
 
         // Associate searchable configuration with the SearchView
-        SearchManager searchManager =
-                (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView =
+//        SearchManager searchManager =
+//                (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
+         searchView =
                 (SearchView) menu.findItem(R.id.search).getActionView();
-        searchView.setSearchableInfo(
-                searchManager.getSearchableInfo(getActivity().getComponentName()));
+//        searchView.setSearchableInfo(
+//                searchManager.getSearchableInfo(getActivity().getComponentName()));
+
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Log.e("query text submit ==>", query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+
+                Observable.fromCallable(() -> {
+                    return mViewModel.searchReportsList(newText);
+                })
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe((result) -> {
+                            reportsListAdapter.setReportList(result);
+                        });
+
+                Log.e("query text change ==>", newText);
+                return false;
+            }
+        });
+
+
     }
 
 

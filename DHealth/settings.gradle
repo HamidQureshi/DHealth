@@ -1,1 +1,2 @@
-include ':app', ':activeledgersdk'
+include ':app'
+//, ':activeledgersdk'

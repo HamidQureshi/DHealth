@@ -4,6 +4,7 @@ import android.arch.lifecycle.MutableLiveData;
 import android.content.Context;
 import android.util.Log;
 
+
 import com.example.activeledgersdk.ActiveLedgerSDK;
 import com.example.activeledgersdk.model.Territoriality;
 import com.example.activeledgersdk.utility.KeyType;
@@ -49,7 +50,9 @@ public class ActiveLedgerHelper {
     public void setupALSDK(Context context) {
         ActiveLedgerSDK.getInstance().initSDK(context, "http", "testnet-uk.activeledger.io", "5260");
         generatekeys();
-        onboardkeys();
+        //give some pause before calling that
+//        onboardkeys();
+
     }
 
 
@@ -103,6 +106,10 @@ public class ActiveLedgerHelper {
                         public void onNext(String response) {
                             try {
                                 Utility.getInstance().extractID(response);
+
+                                setOnBoardId(PreferenceManager.getInstance().getStringValueFromKey("onboard_id"));
+                                setOnBoardName(PreferenceManager.getInstance().getStringValueFromKey("onboard_name"));
+
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -118,8 +125,7 @@ public class ActiveLedgerHelper {
                         @Override
                         public void onComplete() {
 
-                            setOnBoardId(PreferenceManager.getInstance().getStringValueFromKey(Utility.getInstance().getContext().getString(R.string.onboard_id)));
-                            setOnBoardName(PreferenceManager.getInstance().getStringValueFromKey(Utility.getInstance().getContext().getString(R.string.onboard_name)));
+
                         }
                     });
 

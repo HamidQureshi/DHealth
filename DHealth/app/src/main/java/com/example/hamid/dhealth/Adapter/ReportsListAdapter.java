@@ -49,7 +49,7 @@ public class ReportsListAdapter extends RecyclerView.Adapter<ReportsListAdapter.
     @Override
     public void onBindViewHolder(final ReportsListAdapter.ViewHolder holder, int position) {
         Report report = reportList.get(position);
-        holder.tv_name.setText(report.getAssignedTo());
+        holder.tv_name.setText(report.getOwnership());
 
         // loading album cover using Glide library
 //        Glide.with(mContext).load(album.getThumbnail()).into(holder.thumbnail);

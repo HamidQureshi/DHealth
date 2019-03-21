@@ -27,6 +27,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.hamid.dhealth.ActiveLedgerHelper;
 import com.example.hamid.dhealth.Preference.PreferenceKeys;
 import com.example.hamid.dhealth.Preference.PreferenceManager;
 import com.example.hamid.dhealth.R;
@@ -36,6 +37,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import belka.us.androidtoggleswitch.widgets.BaseToggleSwitch;
 import belka.us.androidtoggleswitch.widgets.ToggleSwitch;
 
 import static android.app.Activity.RESULT_OK;
@@ -43,20 +45,14 @@ import static android.app.Activity.RESULT_OK;
 public class ProfileFragment extends Fragment implements View.OnClickListener {
 
     private static final int MY_CAMERA_PERMISSION_CODE = 100;
-    static String lbl_doctor = "Doctor";
-    static String lbl_patient = "TablePatient";
-    static String lbl_gender_male = "Male";
-    static String lbl_gender_female = "Female";
-    static String lbl_encryption_RSA = "RSA";
-    static String lbl_encryption_EC = "Elliptic Curve";
-    EditText et_name, et_email, et_dob, et_phone;
+    EditText et_name, et_last_name, et_email, et_dob, et_phone, et_address;
     ImageView iv_camera, iv_dp;
     Button btn_submit;
     private ProfileViewModel mViewModel;
     private DatePickerDialog datePickerDialog;
-    private String profession = "Doctor";
-    private String gender = "Male";
-    private String encryption = "RSA";
+    private String profile_type = PreferenceKeys.LBL_DOCTOR;
+    private String gender = PreferenceKeys.LBL_MALE;
+    private String encryption = PreferenceKeys.LBL_RSA;
 
     public static ProfileFragment newInstance() {
         return new ProfileFragment();
@@ -93,8 +89,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
         ToggleSwitch dp_toggleSwitch = (ToggleSwitch) getView().findViewById(R.id.dp_toggle);
         ArrayList<String> dp_labels = new ArrayList<>();
-        dp_labels.add(lbl_doctor);
-        dp_labels.add(lbl_patient);
+        dp_labels.add(PreferenceKeys.LBL_DOCTOR);
+        dp_labels.add(PreferenceKeys.LBL_PATIENT);
         dp_toggleSwitch.setLabels(dp_labels);
         dp_toggleSwitch.setOnToggleSwitchChangeListener(new ToggleSwitch.OnToggleSwitchChangeListener() {
 
@@ -102,9 +98,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
             public void onToggleSwitchChangeListener(int position, boolean isChecked) {
 
                 if (position == 0)
-                    profession = lbl_doctor;
+                    profile_type = PreferenceKeys.LBL_DOCTOR;
                 else
-                    profession = lbl_patient;
+                    profile_type = PreferenceKeys.LBL_PATIENT;
 
             }
         });
@@ -112,8 +108,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
         ToggleSwitch gender_toggleSwitch = (ToggleSwitch) getView().findViewById(R.id.gender_toggle);
         ArrayList<String> gender_labels = new ArrayList<>();
-        gender_labels.add(lbl_gender_male);
-        gender_labels.add(lbl_gender_female);
+        gender_labels.add(PreferenceKeys.LBL_MALE);
+        gender_labels.add(PreferenceKeys.LBL_FEMALE);
         gender_toggleSwitch.setLabels(gender_labels);
         gender_toggleSwitch.setOnToggleSwitchChangeListener(new ToggleSwitch.OnToggleSwitchChangeListener() {
 
@@ -121,9 +117,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
             public void onToggleSwitchChangeListener(int position, boolean isChecked) {
 
                 if (position == 0)
-                    gender = lbl_gender_male;
+                    gender = PreferenceKeys.LBL_MALE;
                 else
-                    gender = lbl_gender_female;
+                    gender = PreferenceKeys.LBL_FEMALE;
 
             }
         });
@@ -131,8 +127,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
         ToggleSwitch encryption_toggleSwitch = (ToggleSwitch) getView().findViewById(R.id.encryption_toggle);
         ArrayList<String> encryption_labels = new ArrayList<>();
-        encryption_labels.add(lbl_encryption_RSA);
-        encryption_labels.add(lbl_encryption_EC);
+        encryption_labels.add(PreferenceKeys.LBL_RSA);
+        encryption_labels.add(PreferenceKeys.LBL_EC);
         encryption_toggleSwitch.setLabels(encryption_labels);
         encryption_toggleSwitch.setOnToggleSwitchChangeListener(new ToggleSwitch.OnToggleSwitchChangeListener() {
 
@@ -140,17 +136,19 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
             public void onToggleSwitchChangeListener(int position, boolean isChecked) {
 
                 if (position == 0)
-                    encryption = lbl_encryption_RSA;
+                    encryption = PreferenceKeys.LBL_RSA;
                 else
-                    encryption = lbl_encryption_EC;
+                    encryption = PreferenceKeys.LBL_EC;
 
             }
         });
 
 
         et_name = (EditText) getView().findViewById(R.id.et_name);
+        et_last_name = (EditText) getView().findViewById(R.id.et_last_name);
         et_email = (EditText) getView().findViewById(R.id.et_email);
         et_phone = (EditText) getView().findViewById(R.id.et_phone);
+        et_address = (EditText) getView().findViewById(R.id.et_address);
 
 
         btn_submit = (Button) getView().findViewById(R.id.btn_submit);
@@ -159,6 +157,10 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         iv_camera = (ImageView) getView().findViewById(R.id.iv_camera);
         iv_camera.setOnClickListener(this);
         iv_dp = (ImageView) getView().findViewById(R.id.iv_dp);
+
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//            iv_dp.setImageDrawable(getActivity().getDrawable(R.drawable.activeledgerlogo));
+//        }
 
 
         fetchDataFromPref();
@@ -205,19 +207,23 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
     public void fetchDataFromPref() {
 
-        et_name.setText(PreferenceManager.getINSTANCE().readFromPref(getActivity(), PreferenceKeys.SP_NAME, "JOHN DOE"));
+        et_name.setText(PreferenceManager.getINSTANCE().readFromPref(getActivity(), PreferenceKeys.SP_NAME, "JOHN "));
+        et_last_name.setText(PreferenceManager.getINSTANCE().readFromPref(getActivity(), PreferenceKeys.SP_LAST_NAME, "DOE"));
         et_email.setText(PreferenceManager.getINSTANCE().readFromPref(getActivity(), PreferenceKeys.SP_EMAIL, "JOHN DOE"));
         et_dob.setText(PreferenceManager.getINSTANCE().readFromPref(getActivity(), PreferenceKeys.SP_DOB, "JOHN DOE"));
         et_phone.setText(PreferenceManager.getINSTANCE().readFromPref(getActivity(), PreferenceKeys.SP_PHONENO, "JOHN DOE"));
+        et_address.setText(PreferenceManager.getINSTANCE().readFromPref(getActivity(), PreferenceKeys.SP_ADDRESS, "JOHN DOE"));
         iv_dp.setImageBitmap(Utils.decodeBase64(PreferenceManager.getINSTANCE().readFromPref(getActivity(), PreferenceKeys.SP_PROFILEPIC, "")));
 
     }
 
     private void updatePref() {
         PreferenceManager.getINSTANCE().writeToPref(getActivity(), PreferenceKeys.SP_NAME, et_name.getText().toString());
+        PreferenceManager.getINSTANCE().writeToPref(getActivity(), PreferenceKeys.SP_LAST_NAME, et_last_name.getText().toString());
         PreferenceManager.getINSTANCE().writeToPref(getActivity(), PreferenceKeys.SP_EMAIL, et_email.getText().toString());
         PreferenceManager.getINSTANCE().writeToPref(getActivity(), PreferenceKeys.SP_DOB, et_dob.getText().toString());
         PreferenceManager.getINSTANCE().writeToPref(getActivity(), PreferenceKeys.SP_PHONENO, et_phone.getText().toString());
+        PreferenceManager.getINSTANCE().writeToPref(getActivity(), PreferenceKeys.SP_ADDRESS, et_address.getText().toString());
     }
 
 
@@ -235,9 +241,16 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         int id = item.getItemId();
 
         if (id == R.id.edit) {
+
             Toast.makeText(getActivity(), "Action clicked", Toast.LENGTH_LONG).show();
             et_name.setFocusable(true);
             et_name.setFocusableInTouchMode(true);
+
+            et_last_name.setFocusable(true);
+            et_last_name.setFocusableInTouchMode(true);
+
+            et_address.setFocusable(true);
+            et_address.setFocusableInTouchMode(true);
 
 //            et_email.setFocusable(true);
 //            et_email.setFocusableInTouchMode(true);

@@ -19,6 +19,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.activeledgersdk.utility.KeyType;
+import com.example.hamid.dhealth.ActiveLedgerHelper;
 import com.example.hamid.dhealth.Preference.PreferenceKeys;
 import com.example.hamid.dhealth.Preference.PreferenceManager;
 import com.example.hamid.dhealth.R;
@@ -33,19 +35,13 @@ import belka.us.androidtoggleswitch.widgets.ToggleSwitch;
 public class ProfileScreen extends AppCompatActivity implements View.OnClickListener {
 
     private static final int MY_CAMERA_PERMISSION_CODE = 100;
-    static String lbl_doctor = "Doctor";
-    static String lbl_patient = "Patient";
-    static String lbl_gender_male = "Male";
-    static String lbl_gender_female = "Female";
-    static String lbl_encryption_RSA = "RSA";
-    static String lbl_encryption_EC = "Elliptic Curve";
-    EditText et_dob, et_name, et_email, et_phone;
+    EditText et_dob, et_name, et_last_name, et_email, et_phone, et_address;
     Button btn_submit;
     ImageView iv_camera, iv_dp;
     private DatePickerDialog datePickerDialog;
-    private String profession = "Doctor";
-    private String gender = "Male";
-    private String encryption = "RSA";
+    private String profile_type = PreferenceKeys.LBL_DOCTOR;
+    private String gender = PreferenceKeys.LBL_MALE;
+    private String encryption = PreferenceKeys.LBL_RSA;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,8 +49,6 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
         setContentView(R.layout.activity_profile_screen);
 
         initLayouts();
-
-   //     ActiveLedgerHelper.getInstance().setupALSDK(getApplicationContext());
 
     }
 
@@ -66,8 +60,11 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
         prepareDatePickerDialog();
 
         et_name = (EditText) findViewById(R.id.et_name);
+        et_last_name = (EditText) findViewById(R.id.et_last_name);
         et_email = (EditText) findViewById(R.id.et_email);
+        et_email.setText(PreferenceManager.getINSTANCE().readFromPref(this,PreferenceKeys.SP_EMAIL,"null"));
         et_phone = (EditText) findViewById(R.id.et_phone);
+        et_address = (EditText) findViewById(R.id.et_address);
 
 
         btn_submit = (Button) findViewById(R.id.btn_submit);
@@ -80,8 +77,8 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
 
         ToggleSwitch dp_toggleSwitch = (ToggleSwitch) findViewById(R.id.dp_toggle);
         ArrayList<String> dp_labels = new ArrayList<>();
-        dp_labels.add(lbl_doctor);
-        dp_labels.add(lbl_patient);
+        dp_labels.add(PreferenceKeys.LBL_DOCTOR);
+        dp_labels.add(PreferenceKeys.LBL_PATIENT);
         dp_toggleSwitch.setLabels(dp_labels);
         dp_toggleSwitch.setOnToggleSwitchChangeListener(new ToggleSwitch.OnToggleSwitchChangeListener() {
 
@@ -89,9 +86,9 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
             public void onToggleSwitchChangeListener(int position, boolean isChecked) {
 
                 if (position == 0)
-                    profession = lbl_doctor;
+                    profile_type = PreferenceKeys.LBL_DOCTOR;
                 else
-                    profession = lbl_patient;
+                    profile_type = PreferenceKeys.LBL_PATIENT;
 
             }
         });
@@ -99,8 +96,8 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
 
         ToggleSwitch gender_toggleSwitch = (ToggleSwitch) findViewById(R.id.gender_toggle);
         ArrayList<String> gender_labels = new ArrayList<>();
-        gender_labels.add(lbl_gender_male);
-        gender_labels.add(lbl_gender_female);
+        gender_labels.add(PreferenceKeys.LBL_MALE);
+        gender_labels.add(PreferenceKeys.LBL_FEMALE);
         gender_toggleSwitch.setLabels(gender_labels);
         gender_toggleSwitch.setOnToggleSwitchChangeListener(new ToggleSwitch.OnToggleSwitchChangeListener() {
 
@@ -108,9 +105,9 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
             public void onToggleSwitchChangeListener(int position, boolean isChecked) {
 
                 if (position == 0)
-                    gender = lbl_gender_male;
+                    gender = PreferenceKeys.LBL_MALE;
                 else
-                    gender = lbl_gender_female;
+                    gender = PreferenceKeys.LBL_FEMALE;
 
             }
         });
@@ -118,18 +115,21 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
 
         ToggleSwitch encryption_toggleSwitch = (ToggleSwitch) findViewById(R.id.encryption_toggle);
         ArrayList<String> encryption_labels = new ArrayList<>();
-        encryption_labels.add(lbl_encryption_RSA);
-        encryption_labels.add(lbl_encryption_EC);
+        encryption_labels.add(PreferenceKeys.LBL_RSA);
+        encryption_labels.add(PreferenceKeys.LBL_EC);
         encryption_toggleSwitch.setLabels(encryption_labels);
         encryption_toggleSwitch.setOnToggleSwitchChangeListener(new ToggleSwitch.OnToggleSwitchChangeListener() {
 
             @Override
             public void onToggleSwitchChangeListener(int position, boolean isChecked) {
 
-                if (position == 0)
-                    encryption = lbl_encryption_RSA;
-                else
-                    encryption = lbl_encryption_EC;
+                if (position == 0) {
+                    encryption = PreferenceKeys.LBL_RSA;
+                    ActiveLedgerHelper.getInstance().setKeyType(KeyType.RSA);
+                } else {
+                    encryption = PreferenceKeys.LBL_EC;
+                    ActiveLedgerHelper.getInstance().setKeyType(KeyType.EC);
+                }
 
             }
         });
@@ -141,9 +141,9 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
         iv_camera.setOnClickListener(this);
         iv_dp = (ImageView) findViewById(R.id.iv_dp);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            iv_dp.setImageDrawable(getDrawable(R.drawable.activeledgerlogo));
-        }
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//            iv_dp.setImageDrawable(getDrawable(R.drawable.activeledgerlogo));
+//        }
 
     }
 
@@ -171,6 +171,9 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
 
 
                 //do req to the ledger onboarding and upload data to the ledger
+
+                ActiveLedgerHelper.getInstance().setupALSDK(getApplicationContext());
+
                 updatePref();
                 Intent intent = new Intent(this, DashboardScreen.class);
                 startActivity(intent);
@@ -185,10 +188,17 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
 
     private void updatePref() {
         PreferenceManager.getINSTANCE().writeToPref(this, PreferenceKeys.SP_NAME, et_name.getText().toString());
+        PreferenceManager.getINSTANCE().writeToPref(this, PreferenceKeys.SP_LAST_NAME, et_last_name.getText().toString());
         PreferenceManager.getINSTANCE().writeToPref(this, PreferenceKeys.SP_EMAIL, et_email.getText().toString());
         PreferenceManager.getINSTANCE().writeToPref(this, PreferenceKeys.SP_DOB, et_dob.getText().toString());
         PreferenceManager.getINSTANCE().writeToPref(this, PreferenceKeys.SP_PHONENO, et_phone.getText().toString());
-        PreferenceManager.getINSTANCE().writeToPref(this, PreferenceKeys.SP_PROFILEFINISHED,true);
+        PreferenceManager.getINSTANCE().writeToPref(this, PreferenceKeys.SP_ADDRESS, et_address.getText().toString());
+
+        PreferenceManager.getINSTANCE().writeToPref(this, PreferenceKeys.SP_GENDER, gender);
+        PreferenceManager.getINSTANCE().writeToPref(this, PreferenceKeys.SP_ENCRYPTION, encryption);
+        PreferenceManager.getINSTANCE().writeToPref(this, PreferenceKeys.SP_PROFILE_TYPE, profile_type);
+
+        PreferenceManager.getINSTANCE().writeToPref(this, PreferenceKeys.SP_PROFILEFINISHED, true);
     }
 
 
