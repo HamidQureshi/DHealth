@@ -10,23 +10,17 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 @Entity
 @JsonInclude(Include.NON_NULL)
-public class User{
+public class User {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
-	@Override
-	public String toString() {
-		return "User [id=" + id + ", username=" + username + ", password=" + password + ", enabled=" + enabled
-				+ ", identity=" + identity + "]";
-	}
-
 	private String username;
 	private String password;
-	private boolean enabled=true;
-	
+	private boolean enabled = true;
+
 	private String identity;
-	
+
 	public String getUsername() {
 		return username;
 	}
@@ -42,7 +36,7 @@ public class User{
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
+
 	public String getIdentity() {
 		return identity;
 	}
@@ -63,5 +57,10 @@ public class User{
 		return enabled;
 	}
 
-
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", username=" + username + ", password=" + password + ", enabled=" + enabled
+				+ ", identity=" + identity + "]";
 	}
+
+}

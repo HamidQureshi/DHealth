@@ -10,14 +10,11 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class JsonParsing {
-	
-	
+
 	private Map<String, String> map;
-	
-	
-	public JsonParsing()
-	{
-		map=new HashMap<>();
+
+	public JsonParsing() {
+		map = new HashMap<>();
 	}
 
 	public void getArray(Object object2) throws ParseException {
