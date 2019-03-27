@@ -16,7 +16,7 @@ apply plugin :'io.spring.dependency-management'
 
 
 group = 'com.activeledger.health'
-version = '0.0.1-SNAPSHOT'
+version = '1.0'
 sourceCompatibility = '1.8'
 targetCompatibility = '1.8'
 
@@ -24,7 +24,6 @@ repositories {
 
 mavenLocal()
 	mavenCentral()
-	
 }
 
 
@@ -35,6 +34,8 @@ dependencies {
 	exclude group: "org.springframework",module:"spring-webmvc"
 	}
 
+// https://mvnrepository.com/artifact/com.google.code.gson/gson
+compile group: 'com.google.code.gson', name: 'gson', version: '2.8.5'
 
 // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-thymeleaf
 //compile group: 'org.springframework.boot', name: 'spring-boot-starter-thymeleaf', version: '2.1.3.RELEASE'
@@ -42,17 +43,22 @@ dependencies {
 // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-jpa
 compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: '2.1.3.RELEASE'
 	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-jersey
-	compile group: 'org.springframework.boot', name: 'spring-boot-starter-jersey', version: '2.1.0.RELEASE'
+compile group: 'org.springframework.boot', name: 'spring-boot-starter-jersey', version: '2.1.0.RELEASE'
 	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security
-//compile group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '2.1.3.RELEASE'
+compile group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '2.1.3.RELEASE'
 // https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt
 compile group: 'io.jsonwebtoken', name: 'jjwt', version: '0.2'
+// https://mvnrepository.com/artifact/org.flywaydb/flyway-core
+compile group: 'org.flywaydb', name: 'flyway-core', version: '5.2.4'
 
 // https://mvnrepository.com/artifact/org.springframework.security/spring-security-test
 //compile group: 'org.springframework.security', name: 'spring-security-test', version: '4.0.0.RELEASE'
 
 compile group: 'com.h2database', name: 'h2', version: '1.4.198'
 compile group: 'org.activeledger.sdk.java', name: 'activeledger-sdk-java', version: '1.0.0'
+// https://mvnrepository.com/artifact/log4j/log4j
+compile group: 'log4j', name: 'log4j', version: '1.2.17'
+
 	
 	implementation 'org.springframework.boot:spring-boot-starter'
 	
