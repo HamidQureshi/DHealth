@@ -13,6 +13,7 @@ import java.util.List;
 public class DoctorPatientViewModel extends AndroidViewModel {
 
     private DataRepository repository;
+
     private LiveData<List<Doctor>> doctor_list;
 
     private LiveData<List<Patient>> patient_list;
@@ -20,12 +21,17 @@ public class DoctorPatientViewModel extends AndroidViewModel {
     public DoctorPatientViewModel(Application application) {
         super(application);
         repository = new DataRepository(application);
+
         doctor_list = repository.getDoctorList();
         patient_list = repository.getPatientList();
     }
 
     LiveData<List<Doctor>> getDoctorList() {
         return doctor_list;
+    }
+
+    public void setDoctor_list(LiveData<List<Doctor>> doctor_list) {
+        this.doctor_list = doctor_list;
     }
 
     LiveData<List<Patient>> getPatientList() {
@@ -46,6 +52,15 @@ public class DoctorPatientViewModel extends AndroidViewModel {
 
     public void deletePatientData() {
         repository.deleteAllPatient();
+    }
+
+
+    public void getDoctorListFromServer(String token) {
+        repository.getDoctorListFromServer(token);
+    }
+
+    public void getPatientListFromServer(String token) {
+        repository.getDoctorListFromServer(token);
     }
 
 }

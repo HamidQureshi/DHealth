@@ -74,13 +74,11 @@ public class DashboardScreen extends AppCompatActivity {
                 dl.closeDrawers();
                 switch (id) {
                     case R.id.profile:
-//                        Toast.makeText(DashboardScreen.this, "My Profile", Toast.LENGTH_SHORT).show();
                         title = "Profile";
                         fragment = ProfileFragment.newInstance();
                         break;
 
                     case R.id.dplist:
-//                        Toast.makeText(DashboardScreen.this, "Doctor/TablePatient List", Toast.LENGTH_SHORT).show();
                         if ((PreferenceManager.getINSTANCE().readFromPref(DashboardScreen.this, PreferenceKeys.SP_PROFILE_TYPE, "Doctor")).equalsIgnoreCase("Doctor")) {
                             title = "Patient List";
                         } else {
@@ -90,7 +88,6 @@ public class DashboardScreen extends AppCompatActivity {
                         break;
 
                     case R.id.reports:
-//                        Toast.makeText(DashboardScreen.this, "Reports", Toast.LENGTH_SHORT).show();
                         title = "Reports";
                         fragment = ReportsFragment.newInstance();
                         break;
@@ -132,8 +129,6 @@ public class DashboardScreen extends AppCompatActivity {
         tv_last_name.setText(PreferenceManager.getINSTANCE().readFromPref(this, PreferenceKeys.SP_LAST_NAME, "Doe"));
 
 
-//        handleIntent(getIntent());
-
     }
 
 
@@ -159,38 +154,6 @@ public class DashboardScreen extends AppCompatActivity {
         // Pass any configuration change to the drawer toggles
         drawerToggle.onConfigurationChanged(newConfig);
     }
-
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        MenuInflater inflater = getMenuInflater();
-//        inflater.inflate(R.menu.options_menu, menu);
-//
-//        // Associate searchable configuration with the SearchView
-//        SearchManager searchManager =
-//                (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-//        SearchView searchView =
-//                (SearchView) menu.findItem(R.id.search).getActionView();
-//        searchView.setSearchableInfo(
-//                searchManager.getSearchableInfo(getComponentName()));
-//
-//        return true;
-//    }
-
-
-//    @Override
-//    protected void onNewIntent(Intent intent) {
-//
-////        handleIntent(intent);
-//    }
-//
-//    private void handleIntent(Intent intent) {
-//
-//        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-//            String query = intent.getStringExtra(SearchManager.QUERY);
-//            //use the query to search your data somehow
-//            Log.e("=====>", query);
-//        }
-//    }
 
 
 }

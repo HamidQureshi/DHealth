@@ -11,69 +11,93 @@ public class Doctor implements Serializable {
 
     @PrimaryKey(autoGenerate = true)
     private int id;
-    private String name;
-    private String picture;
-    private String dob;
-    private String specialist;
-    private String hospital;
+    private String first_name;
+    private String last_name;
     @NonNull
     private String email;
+    private String date_of_birth;
+    private String address;
+    private String phone_number;
+    private String gender;
+    private String dp;
+//    private String specialist;
+//    private String hospital;
 
-    public Doctor(String name, String picture, String dob, String specialist, String hospital, String email) {
-        this.name = name;
-        this.picture = picture;
-        this.dob = dob;
-        this.specialist = specialist;
-        this.hospital = hospital;
+    public Doctor(String first_name, String last_name, @NonNull String email, String date_of_birth, String address, String phone_number, String gender, String dp) {
+        this.first_name = first_name;
+        this.last_name = last_name;
         this.email = email;
+        this.date_of_birth = date_of_birth;
+        this.address = address;
+        this.phone_number = phone_number;
+        this.gender = gender;
+        this.dp = dp;
     }
 
-    public String getName() {
-        return name;
+
+    public String getFirst_name() {
+        return first_name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirst_name(String first_name) {
+        this.first_name = first_name;
     }
 
-    public String getPicture() {
-        return picture;
+    public String getLast_name() {
+        return last_name;
     }
 
-    public void setPicture(String picture) {
-        this.picture = picture;
+    public void setLast_name(String last_name) {
+        this.last_name = last_name;
     }
 
-    public String getDob() {
-        return dob;
-    }
-
-    public void setDob(String dob) {
-        this.dob = dob;
-    }
-
-    public String getSpecialist() {
-        return specialist;
-    }
-
-    public void setSpecialist(String specialist) {
-        this.specialist = specialist;
-    }
-
-    public String getHospital() {
-        return hospital;
-    }
-
-    public void setHospital(String hospital) {
-        this.hospital = hospital;
-    }
-
+    @NonNull
     public String getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
+    public void setEmail(@NonNull String email) {
         this.email = email;
+    }
+
+    public String getDate_of_birth() {
+        return date_of_birth;
+    }
+
+    public void setDate_of_birth(String date_of_birth) {
+        this.date_of_birth = date_of_birth;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getPhone_number() {
+        return phone_number;
+    }
+
+    public void setPhone_number(String phone_number) {
+        this.phone_number = phone_number;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getDp() {
+        return dp;
+    }
+
+    public void setDp(String dp) {
+        this.dp = dp;
     }
 
     public int getId() {
@@ -83,6 +107,5 @@ public class Doctor implements Serializable {
     public void setId(int id) {
         this.id = id;
     }
-
 
 }

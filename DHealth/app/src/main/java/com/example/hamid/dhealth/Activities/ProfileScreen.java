@@ -24,6 +24,7 @@ import com.example.hamid.dhealth.ActiveLedgerHelper;
 import com.example.hamid.dhealth.Preference.PreferenceKeys;
 import com.example.hamid.dhealth.Preference.PreferenceManager;
 import com.example.hamid.dhealth.R;
+import com.example.hamid.dhealth.Utils.ImageUtils;
 import com.example.hamid.dhealth.Utils.Utils;
 
 import java.io.IOException;
@@ -65,8 +66,6 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
         et_email.setText(PreferenceManager.getINSTANCE().readFromPref(this, PreferenceKeys.SP_EMAIL, "null"));
         et_phone = (EditText) findViewById(R.id.et_phone);
         et_address = (EditText) findViewById(R.id.et_address);
-
-
         btn_submit = (Button) findViewById(R.id.btn_submit);
         btn_submit.setOnClickListener(this);
 
@@ -92,7 +91,6 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
 
             }
         });
-
 
         ToggleSwitch gender_toggleSwitch = (ToggleSwitch) findViewById(R.id.gender_toggle);
         ArrayList<String> gender_labels = new ArrayList<>();
@@ -130,7 +128,6 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
                     encryption = PreferenceKeys.LBL_EC;
                     ActiveLedgerHelper.getInstance().setKeyType(KeyType.EC);
                 }
-
             }
         });
 
@@ -141,9 +138,6 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
         iv_camera.setOnClickListener(this);
         iv_dp = (ImageView) findViewById(R.id.iv_dp);
 
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//            iv_dp.setImageDrawable(getDrawable(R.drawable.activeledgerlogo));
-//        }
 
     }
 
@@ -168,22 +162,32 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
                 break;
 
             case R.id.btn_submit:
-
-
                 //do req to the ledger onboarding and upload data to the ledger
-
                 ActiveLedgerHelper.getInstance().setupALSDK(getApplicationContext());
 
-                updatePref();
-                Intent intent = new Intent(this, DashboardScreen.class);
-                startActivity(intent);
-                finish();
+//                ActiveLedgerHelper.getInstance().generatekeys("hamid", "mehmood", "hamid@agilitysciences.com",
+//                        "24/07/1994", "07400633866", "queen mary", "RSA", "Doctor", "Male","dp");
+
+                ActiveLedgerHelper.getInstance().generatekeys(this, et_name.getText().toString(), et_last_name.getText().toString(), et_email.getText().toString(),
+                        et_dob.getText().toString(), et_phone.getText().toString(), et_address.getText().toString(), encryption, profile_type,
+                        gender,
+                        PreferenceManager.getINSTANCE().readFromPref(this, PreferenceKeys.SP_PROFILEPIC, "null"));
+
                 break;
 
             case R.id.iv_camera:
                 takePhoto(v);
                 break;
         }
+    }
+
+    public void submitProfile() {
+
+        updatePref();
+        Intent intent = new Intent(this, DashboardScreen.class);
+        startActivity(intent);
+        finish();
+
     }
 
     private void updatePref() {
@@ -193,11 +197,9 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
         PreferenceManager.getINSTANCE().writeToPref(this, PreferenceKeys.SP_DOB, et_dob.getText().toString());
         PreferenceManager.getINSTANCE().writeToPref(this, PreferenceKeys.SP_PHONENO, et_phone.getText().toString());
         PreferenceManager.getINSTANCE().writeToPref(this, PreferenceKeys.SP_ADDRESS, et_address.getText().toString());
-
         PreferenceManager.getINSTANCE().writeToPref(this, PreferenceKeys.SP_GENDER, gender);
         PreferenceManager.getINSTANCE().writeToPref(this, PreferenceKeys.SP_ENCRYPTION, encryption);
         PreferenceManager.getINSTANCE().writeToPref(this, PreferenceKeys.SP_PROFILE_TYPE, profile_type);
-
         PreferenceManager.getINSTANCE().writeToPref(this, PreferenceKeys.SP_PROFILEFINISHED, true);
     }
 
@@ -247,6 +249,9 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
             case 0:
                 if (resultCode == RESULT_OK) {
                     Bitmap photo = (Bitmap) imageReturnedIntent.getExtras().get("data");
+
+                    photo = ImageUtils.scaleDownBitmap(photo, this);
+
                     iv_dp.setImageBitmap(photo);
 
                     PreferenceManager.getINSTANCE().writeToPref(this, PreferenceKeys.SP_PROFILEPIC, Utils.encodeTobase64(photo));
@@ -258,9 +263,9 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
                     Uri selectedImage = imageReturnedIntent.getData();
                     try {
                         Bitmap photo = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
+                        photo = ImageUtils.scaleDownBitmap(photo, this);
                         iv_dp.setImageBitmap(photo);
                         PreferenceManager.getINSTANCE().writeToPref(this, PreferenceKeys.SP_PROFILEPIC, Utils.encodeTobase64(photo));
-
 
                     } catch (IOException e) {
                         iv_dp.setImageURI(selectedImage);

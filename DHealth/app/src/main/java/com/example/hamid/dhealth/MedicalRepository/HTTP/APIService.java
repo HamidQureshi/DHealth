@@ -22,9 +22,14 @@
  */
 package com.example.hamid.dhealth.MedicalRepository.HTTP;
 
+import com.example.hamid.dhealth.MedicalRepository.DB.Entity.Patient;
+
+import java.util.List;
+
 import io.reactivex.Observable;
 import retrofit2.Response;
 import retrofit2.http.Body;
+import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
@@ -41,5 +46,20 @@ public interface APIService {
     @POST("/login")
     Observable<Response<String>> loginUser(@Header("Authorization") String authHeader);
 
+    @Headers("Content-Type: application/json")
+    @POST("/transaction/createProfile")
+    Observable<Response<String>> createProfile(@Header("Authorization") String token, @Body String profile);
+
+    @Headers("Content-Type: application/json")
+    @POST("/transaction")
+    Observable<Response<String>> sendTransaction(@Header("Authorization") String token, @Body String profile);
+
+    @Headers("Content-Type: application/json")
+    @GET("/transaction/users/doctors")
+    Observable<Response<String>> getDoctorList(@Header("Authorization") String token);
+
+    @Headers("Content-Type: application/json")
+    @GET("/transaction/users/patients")
+    Observable<Response<String>> getPatientList(@Header("Authorization") String token);
 
 }

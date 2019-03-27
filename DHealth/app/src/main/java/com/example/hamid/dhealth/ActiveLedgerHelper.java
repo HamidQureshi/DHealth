@@ -7,10 +7,14 @@ import android.util.Log;
 import com.example.activeledgersdk.ActiveLedgerSDK;
 import com.example.activeledgersdk.model.Territoriality;
 import com.example.activeledgersdk.utility.KeyType;
-import com.example.activeledgersdk.utility.PreferenceManager;
 import com.example.activeledgersdk.utility.Utility;
+import com.example.hamid.dhealth.Activities.ProfileScreen;
+import com.example.hamid.dhealth.MedicalRepository.HTTP.HttpClient;
+import com.example.hamid.dhealth.Preference.PreferenceKeys;
+import com.example.hamid.dhealth.Utils.Utils;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.security.KeyPair;
@@ -19,11 +23,15 @@ import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+import retrofit2.Response;
+
+import static com.example.activeledgersdk.ActiveLedgerSDK.signMessage;
 
 public class ActiveLedgerHelper {
 
 
     static ActiveLedgerHelper instance = null;
+    ProfileScreen profileScreen = null;
     private Disposable disposable;
     private KeyPair key_Pair = null;
     private KeyType keyType = KeyType.RSA;
@@ -33,6 +41,8 @@ public class ActiveLedgerHelper {
     private MutableLiveData<String> onBoardId;
     private MutableLiveData<String> onBoardName;
     private MutableLiveData<String> showToast = new MutableLiveData<>();
+    private MutableLiveData<Boolean> loginApp = new MutableLiveData<>();
+    private Context context = null;
 
     public static ActiveLedgerHelper getInstance() {
 
@@ -48,14 +58,14 @@ public class ActiveLedgerHelper {
 
     public void setupALSDK(Context context) {
         ActiveLedgerSDK.getInstance().initSDK(context, "http", "testnet-uk.activeledger.io", "5260");
-        generatekeys();
-        //give some pause before calling that
-//        onboardkeys();
-
+        this.context = context;
     }
 
 
-    public void generatekeys() {
+    public void generatekeys(ProfileScreen activity, String first_name, String last_name, String email,
+                             String date_of_birth, String phone_number, String address, String security, String profile_type, String gender, String dp) {
+
+        profileScreen = activity;
 
         ActiveLedgerSDK.getInstance().generateAndSetKeyPair(keyType, true)
                 .subscribeOn(Schedulers.io())
@@ -78,6 +88,19 @@ public class ActiveLedgerHelper {
                         try {
                             setPublickey(ActiveLedgerSDK.readFileAsString((Utility.PUBLICKEY_FILE)));
                             setPrivatekey(ActiveLedgerSDK.readFileAsString((Utility.PRIVATEKEY_FILE)));
+
+
+                            if (key_Pair != null) {
+
+                                onboardkeysTransaction(first_name, last_name, email,
+                                        date_of_birth, phone_number, address, security, profile_type, gender, dp);
+
+
+                            } else {
+                                setShowToast("Generate Keys First");
+                            }
+
+
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -90,47 +113,77 @@ public class ActiveLedgerHelper {
                 });
     }
 
-    public void onboardkeys() {
+    public void onboardkeysTransaction(String first_name, String last_name, String email,
+                                       String date_of_birth, String phone_number, String address, String security, String profile_type, String gender, String dp) {
 
-        if (key_Pair != null) {
 
-            ActiveLedgerSDK.getInstance().onBoardKeys(key_Pair, keyname)
-                    .subscribe(new Observer<String>() {
-                        @Override
-                        public void onSubscribe(Disposable d) {
+        ActiveLedgerSDK.KEYNAME = keyname;
 
-                        }
+        JSONObject onboardTransaction = onboardTransaction(key_Pair, ActiveLedgerSDK.getInstance().getKeyType(), first_name, last_name, email,
+                date_of_birth, phone_number, address, security, profile_type, gender, dp);
 
-                        @Override
-                        public void onNext(String response) {
-                            try {
-                                Utility.getInstance().extractID(response);
+        String transactionString = Utility.getInstance().convertJSONObjectToString(onboardTransaction);
 
-                                setOnBoardId(PreferenceManager.getInstance().getStringValueFromKey("onboard_id"));
-                                setOnBoardName(PreferenceManager.getInstance().getStringValueFromKey("onboard_name"));
+        Utils.Log("Onboard Transaction", transactionString);
+        Log.e("Onboard token", com.example.hamid.dhealth.Preference.PreferenceManager.getINSTANCE().readFromPref(context, PreferenceKeys.SP_APP_TOKEN, "null"));
 
-                            } catch (JSONException e) {
-                                e.printStackTrace();
+        HttpClient.getInstance().createProfile(com.example.hamid.dhealth.Preference.PreferenceManager.getINSTANCE().readFromPref(context, PreferenceKeys.SP_APP_TOKEN, "null"), transactionString)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Response<String>>() {
+
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        disposable = d;
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+
+                    @Override
+                    public void onNext(Response<String> response) {
+                        Log.e("onboard response--->", response.code() + "");
+                        if (response.code() == 200) {
+
+//                            try {
+                            Utils.Log("onboard response--->", response.body() + "");
+
+                            if (profileScreen != null) {
+                                profileScreen.submitProfile();
                             }
-                            Log.e("----->", response);
+
+//                                JSONObject responseJSON = new JSONObject(response.body());
+//
+//                                JSONObject stream = responseJSON.optJSONObject("stream");
+//
+//                                String first_name = stream.optString("first_name");
+//                                String last_name = stream.optString("last_name");
+//                                String email = stream.optString("email");
+//                                String date_of_birth = stream.optString("date_of_birth");
+//                                String phone_number = stream.optString("phone_number");
+//                                String address = stream.optString("address");
+//                                String security = stream.optString("security");
+//                                String profile_type = stream.optString("profile_type");
+//                                String gender = stream.optString("gender");
+//                                String dp = stream.optString("dp");
+//
+//                                Log.e("onboard response--->", stream.optString("first_name")+ "");
+
+
+//                            } catch (JSONException e) {
+//                                e.printStackTrace();
+//                            }
+
 
                         }
+                    }
+                });
 
-                        @Override
-                        public void onError(Throwable e) {
-
-                        }
-
-                        @Override
-                        public void onComplete() {
-
-
-                        }
-                    });
-
-        } else {
-            setShowToast("Generate Keys First");
-        }
 
     }
 
@@ -221,6 +274,10 @@ public class ActiveLedgerHelper {
         this.showToast.postValue(message);
     }
 
+    public void loginApp(Boolean message) {
+        this.loginApp.postValue(message);
+    }
+
     public void getTerritorialityList() {
         ActiveLedgerSDK.getInstance().getTerritorialityStatus()
                 .subscribe(new Observer<Territoriality>() {
@@ -271,6 +328,75 @@ public class ActiveLedgerHelper {
                     public void onComplete() {
                     }
                 });
+    }
+
+
+    // this method return the onboard transaction as JSON object
+    public JSONObject onboardTransaction(KeyPair keyPair, KeyType type, String first_name, String last_name, String email,
+                                         String date_of_birth, String phone_number, String address, String security, String profile_type, String gender, String dp) {
+
+        JSONObject transaction = new JSONObject();
+        JSONObject $sigs = new JSONObject();
+        JSONObject identity = new JSONObject();
+        JSONObject $i = new JSONObject();
+        JSONObject $tx = new JSONObject();
+
+        try {
+
+            String pubKey = null;
+            try {
+                pubKey = Utility.readFileAsString(Utility.PUBLICKEY_FILE);
+                System.out.println("public:::" + pubKey.toString());
+                String priKey = Utility.readFileAsString(Utility.PRIVATEKEY_FILE);
+                System.out.println("public:::" + priKey.toString());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+//            $tx.put("$contract", "695cf7b471bc01431c8dad2d4d00e64187f2e1eb09d2ca985238e4a186181ea8");
+//            $tx.put("$contract", "4ef18a5639951bae4103b1dae3f0bc1d592fd7af66a10606afdabbf2f141d248");
+            $tx.put("$contract", "263a140f90b72ca73c905906b33cc4b3955fdfe9e204b35142cc54d5e09d022a");
+            $tx.put("$namespace", "dhealth");
+            identity.put("publicKey", pubKey);
+
+            if (type == KeyType.RSA)
+                identity.put("type", "rsa");
+            else if (type == KeyType.EC)
+                identity.put("type", "secp256k1");
+
+            identity.put("first_name", first_name);
+            identity.put("last_name", last_name);
+            identity.put("email", email);
+            identity.put("date_of_birth", date_of_birth);
+            identity.put("phone_number", phone_number);
+            identity.put("address", address);
+            identity.put("security", security);
+            identity.put("profile_type", profile_type);
+            identity.put("gender", gender);
+            identity.put("dp", dp);
+
+
+            $i.put(ActiveLedgerSDK.KEYNAME, identity);
+            $tx.put("$i", $i);
+
+            try {
+
+                String signTransactionObject = Utility.getInstance().convertJSONObjectToString($tx);
+                $sigs.put(ActiveLedgerSDK.KEYNAME, signMessage(signTransactionObject.getBytes(), keyPair, type));
+
+            } catch (Exception e) {
+                throw new IllegalArgumentException("Unable to sign object:" + e.getMessage());
+            }
+
+
+            transaction.put("$tx", $tx);
+            transaction.put("$selfsign", true);
+            transaction.put("$sigs", $sigs);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return transaction;
     }
 
 

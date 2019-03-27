@@ -61,12 +61,26 @@ public class HttpClient {
         return apiService.loginUser(user);
     }
 
+    // this method can be used to send transaction as an HTTP request to the ledger
+    public Observable<Response<String>> createProfile(String token, String transaction) {
 
-//    // this method can be used to send transaction as an HTTP request to the ledger
-//    public Observable<String> sendTransaction(String transaction) {
-//
-//        return apiService.sendTransaction(transaction);
-//    }
+        return apiService.createProfile(token, transaction);
+    }
+
+
+    // this method can be used to send transaction as an HTTP request to the ledger
+    public Observable<Response<String>> sendTransaction(String token, String transaction) {
+
+        return apiService.sendTransaction(token, transaction);
+    }
+
+    public Observable<Response<String>> getDoctorListFromServer(String token) {
+        return apiService.getDoctorList(token);
+    }
+
+    public Observable<Response<String>> getPatientListFromServer(String token) {
+        return apiService.getPatientList(token);
+    }
 
 
 }

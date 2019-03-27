@@ -15,6 +15,9 @@ import android.view.ViewGroup;
 
 import com.example.hamid.dhealth.Adapter.DoctorPatientListAdapter;
 import com.example.hamid.dhealth.MedicalRepository.DB.Entity.Doctor;
+import com.example.hamid.dhealth.MedicalRepository.DB.Entity.Patient;
+import com.example.hamid.dhealth.Preference.PreferenceKeys;
+import com.example.hamid.dhealth.Preference.PreferenceManager;
 import com.example.hamid.dhealth.R;
 
 import java.util.ArrayList;
@@ -27,6 +30,7 @@ public class DoctorPatientFragment extends Fragment {
     private RecyclerView rv_dplist;
     private DoctorPatientListAdapter doctorPatientListAdapter;
     private List<Doctor> doctorList;
+    private List<Patient> patientList;
 
     public static DoctorPatientFragment newInstance() {
         return new DoctorPatientFragment();
@@ -47,33 +51,46 @@ public class DoctorPatientFragment extends Fragment {
 
         rv_dplist = (RecyclerView) getView().findViewById(R.id.rv_doctor_patient_list);
         doctorList = new ArrayList<>();
-        doctorPatientListAdapter = new DoctorPatientListAdapter(getContext(), doctorList);
+        patientList = new ArrayList<>();
+        doctorPatientListAdapter = new DoctorPatientListAdapter(getContext(), doctorList, patientList);
 
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getContext(), 1);
         rv_dplist.setLayoutManager(mLayoutManager);
         rv_dplist.setItemAnimator(new DefaultItemAnimator());
         rv_dplist.setAdapter(doctorPatientListAdapter);
 
-        mViewModel.getDoctorList().observe(this, new Observer<List<Doctor>>() {
-            @Override
-            public void onChanged(@Nullable final List<Doctor> doctors) {
-                // Update the cached copy of the words in the adapter.
-                doctorPatientListAdapter.setDoctorList(doctors);
-            }
-        });
+
+        if (PreferenceManager.getINSTANCE().readFromPref(getActivity(), PreferenceKeys.SP_PROFILE_TYPE, PreferenceKeys.LBL_DOCTOR).equalsIgnoreCase(PreferenceKeys.LBL_DOCTOR)) {
+
+            mViewModel.getPatientList().observe(this, new Observer<List<Patient>>() {
+                @Override
+                public void onChanged(@Nullable final List<Patient> patients) {
+                    // Update the cached copy of the words in the adapter.
+                    doctorPatientListAdapter.setP(patients);
+                }
+            });
+        } else {
+
+            mViewModel.getDoctorList().observe(this, new Observer<List<Doctor>>() {
+                @Override
+                public void onChanged(@Nullable final List<Doctor> doctors) {
+                    // Update the cached copy of the words in the adapter.
+                    doctorPatientListAdapter.setDoctorList(doctors);
+                }
+            });
+        }
+
+
         populateList();
     }
 
     private void populateList() {
+        if (PreferenceManager.getINSTANCE().readFromPref(getActivity(), PreferenceKeys.SP_PROFILE_TYPE, PreferenceKeys.LBL_DOCTOR).equalsIgnoreCase(PreferenceKeys.LBL_DOCTOR)) {
+            mViewModel.getPatientListFromServer(PreferenceManager.getINSTANCE().readFromPref(getActivity(), PreferenceKeys.SP_APP_TOKEN, "null"));
 
-        mViewModel.deleteDctorData();
-
-        Doctor doctor = new Doctor("Johnny Depp", "null", "10/20/1994", "eye", "east london", "abc@gmail.com");
-
-        mViewModel.insertDoctor(doctor);
-        doctor = new Doctor("Tom Cruise", "null", "10/20/1994", "eye", "east london", "abc@gmail.com");
-        mViewModel.insertDoctor(doctor);
-
+        } else {
+            mViewModel.getDoctorListFromServer(PreferenceManager.getINSTANCE().readFromPref(getActivity(), PreferenceKeys.SP_APP_TOKEN, "null"));
+        }
     }
 
 

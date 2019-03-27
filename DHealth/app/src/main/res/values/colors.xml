@@ -27,4 +27,6 @@
     <!--<color name="borderColor">#4169E1</color>-->
     <color name="borderColor">#ff6861</color>
 
+    <color name="jet_black">#000</color>
+
 </resources>

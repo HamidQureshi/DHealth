@@ -16,7 +16,6 @@ import com.example.hamid.dhealth.MedicalRepository.HTTP.HttpClient;
 import com.example.hamid.dhealth.Preference.PreferenceKeys;
 import com.example.hamid.dhealth.Preference.PreferenceManager;
 import com.example.hamid.dhealth.R;
-import com.google.firebase.auth.FirebaseAuth;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -27,10 +26,10 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Response;
 
+
 public class LoginScreen extends AppCompatActivity {
 
     private EditText inputEmail, inputPassword;
-    private FirebaseAuth auth;
     private ProgressBar progressBar;
     private Button btnSignup, btnLogin, btnReset;
 
@@ -38,16 +37,7 @@ public class LoginScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //Get Firebase auth instance
-        auth = FirebaseAuth.getInstance();
-
-        if (auth.getCurrentUser() != null) {
-            startActivity(new Intent(LoginScreen.this, ProfileScreen.class));
-            finish();
-        }
-
         setContentView(R.layout.activity_login);
-
 
         inputEmail = (EditText) findViewById(R.id.email);
         inputPassword = (EditText) findViewById(R.id.password);
@@ -56,13 +46,11 @@ public class LoginScreen extends AppCompatActivity {
         btnLogin = (Button) findViewById(R.id.btn_login);
         btnReset = (Button) findViewById(R.id.btn_reset_password);
 
-        //Get Firebase auth instance
-        auth = FirebaseAuth.getInstance();
-
         btnSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(LoginScreen.this, SignUpScreen.class));
+                finish();
             }
         });
 
@@ -117,18 +105,58 @@ public class LoginScreen extends AppCompatActivity {
 
                                     //hit the service if the response is 200 go for it
                                     String token = stringResponse.headers().get("Token");
-                                    JSONObject description = null;
+                                    JSONObject response = null;
+                                    Intent intent = null;
                                     String message = null;
                                     try {
-                                        description = new JSONObject(stringResponse.body());
-                                        message = description.getString("desc");
-                                        Log.e("login description--->", message );
+                                        response = new JSONObject(stringResponse.body());
+                                        JSONObject res = response.optJSONObject("resp");
+
+                                        message = res.optString("desc");
+                                        Log.e("login description--->", message + "");
+
+                                        JSONObject stream = response.optJSONObject("stream");
+                                        Log.e("login stream--->", stream + "");
+
+                                        if (stream != null) {
+
+                                            String first_name = stream.optString("first_name");
+                                            String last_name = stream.optString("last_name");
+                                            String email = stream.optString("email");
+                                            String date_of_birth = stream.optString("date_of_birth");
+                                            String phone_number = stream.optString("phone_number");
+                                            String address = stream.optString("address");
+                                            String security = stream.optString("security");
+                                            String profile_type = stream.optString("profile_type");
+                                            String gender = stream.optString("gender");
+                                            String dp = stream.optString("dp");
+
+                                            Log.e("login stream--->", first_name + "");
+
+                                            intent = new Intent(LoginScreen.this, DashboardScreen.class);
+
+                                            PreferenceManager.getINSTANCE().writeToPref(LoginScreen.this, PreferenceKeys.SP_NAME, first_name);
+                                            PreferenceManager.getINSTANCE().writeToPref(LoginScreen.this, PreferenceKeys.SP_LAST_NAME, last_name);
+                                            PreferenceManager.getINSTANCE().writeToPref(LoginScreen.this, PreferenceKeys.SP_EMAIL, email);
+                                            PreferenceManager.getINSTANCE().writeToPref(LoginScreen.this, PreferenceKeys.SP_DOB, date_of_birth);
+                                            PreferenceManager.getINSTANCE().writeToPref(LoginScreen.this, PreferenceKeys.SP_PHONENO, phone_number);
+                                            PreferenceManager.getINSTANCE().writeToPref(LoginScreen.this, PreferenceKeys.SP_ADDRESS, address);
+                                            PreferenceManager.getINSTANCE().writeToPref(LoginScreen.this, PreferenceKeys.SP_GENDER, gender);
+                                            PreferenceManager.getINSTANCE().writeToPref(LoginScreen.this, PreferenceKeys.SP_ENCRYPTION, security);
+                                            PreferenceManager.getINSTANCE().writeToPref(LoginScreen.this, PreferenceKeys.SP_PROFILE_TYPE, profile_type);
+                                            PreferenceManager.getINSTANCE().writeToPref(LoginScreen.this, PreferenceKeys.SP_PROFILEPIC, dp);
+                                            PreferenceManager.getINSTANCE().writeToPref(LoginScreen.this, PreferenceKeys.SP_PROFILEFINISHED, true);
+
+                                        } else {
+                                            intent = new Intent(LoginScreen.this, ProfileScreen.class);
+                                        }
+
 
                                     } catch (JSONException e) {
                                         e.printStackTrace();
                                     }
                                     Log.e("login header--->", stringResponse.headers() + "");
-                                    Log.e("login header token--->", token);
+                                    Log.e("login header token--->", token + "");
 
                                     Toast.makeText(LoginScreen.this, message,
                                             Toast.LENGTH_SHORT).show();
@@ -136,7 +164,6 @@ public class LoginScreen extends AppCompatActivity {
                                     PreferenceManager.getINSTANCE().writeToPref(LoginScreen.this, PreferenceKeys.SP_APP_TOKEN, token);
                                     PreferenceManager.getINSTANCE().writeToPref(LoginScreen.this, PreferenceKeys.SP_LOGGEDIN, true);
                                     PreferenceManager.getINSTANCE().writeToPref(LoginScreen.this, PreferenceKeys.SP_EMAIL, inputEmail.getText().toString());
-                                    Intent intent = new Intent(LoginScreen.this, ProfileScreen.class);
                                     startActivity(intent);
                                     finish();
 
@@ -164,34 +191,6 @@ public class LoginScreen extends AppCompatActivity {
                         });
 
 
-                //authenticate user
-//                auth.signInWithEmailAndPassword(email, password)
-//                        .addOnCompleteListener(LoginScreen.this, new OnCompleteListener<AuthResult>() {
-//                            @Override
-//                            public void onComplete(@NonNull Task<AuthResult> task) {
-//                                // If sign in fails, display a message to the user. If sign in succeeds
-//                                // the auth state listener will be notified and logic to handle the
-//                                // signed in user can be handled in the listener.
-//                                progressBar.setVisibility(View.GONE);
-//                                if (!task.isSuccessful()) {
-//                                    // there was an error
-//                                    if (password.length() < 6) {
-//                                        inputPassword.setError(getString(R.string.minimum_password));
-//                                    } else {
-//                                        Toast.makeText(LoginScreen.this, getString(R.string.auth_failed), Toast.LENGTH_LONG).show();
-//                                    }
-//                                } else {
-//
-//                                    PreferenceManager.getINSTANCE().writeToPref(LoginScreen.this, PreferenceKeys.SP_LOGGEDIN, true);
-//
-//                                    PreferenceManager.getINSTANCE().writeToPref(LoginScreen.this,PreferenceKeys.SP_EMAIL,inputEmail.getText().toString());
-//
-//                                    Intent intent = new Intent(LoginScreen.this, ProfileScreen.class);
-//                                    startActivity(intent);
-//                                    finish();
-//                                }
-//                            }
-//                        });
             }
         });
     }

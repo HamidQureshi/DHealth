@@ -17,7 +17,6 @@ import com.example.hamid.dhealth.MedicalRepository.HTTP.HttpClient;
 import com.example.hamid.dhealth.Preference.PreferenceKeys;
 import com.example.hamid.dhealth.Preference.PreferenceManager;
 import com.example.hamid.dhealth.R;
-import com.google.firebase.auth.FirebaseAuth;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -28,20 +27,19 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Response;
 
+
 public class SignUpScreen extends AppCompatActivity {
 
     private EditText inputEmail, inputPassword;
     private Button btnSignIn, btnSignUp, btnResetPassword;
     private ProgressBar progressBar;
-    private FirebaseAuth auth;
     private SignUpScreenViewModel signUpScreenViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up_screen);
-        //Get Firebase auth instance
-        auth = FirebaseAuth.getInstance();
+
 
         signUpScreenViewModel = ViewModelProviders.of(this).get(SignUpScreenViewModel.class);
 
@@ -56,6 +54,7 @@ public class SignUpScreen extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(SignUpScreen.this, ResetPasswordScreen.class));
+                finish();
             }
         });
 
@@ -125,13 +124,13 @@ public class SignUpScreen extends AppCompatActivity {
                                     try {
                                         description = new JSONObject(stringResponse.body());
                                         message = description.getString("desc");
-                                        Log.e("login description--->", message );
+                                        Log.e("register description", message);
 
                                     } catch (JSONException e) {
                                         e.printStackTrace();
                                     }
-                                    Log.e("login header--->", stringResponse.headers() + "");
-                                    Log.e("login header token--->", token);
+                                    Log.e("register header--->", stringResponse.headers() + "");
+                                    Log.e("register header token", token);
 
                                     Toast.makeText(SignUpScreen.this, message,
                                             Toast.LENGTH_SHORT).show();
@@ -154,7 +153,7 @@ public class SignUpScreen extends AppCompatActivity {
 
                             @Override
                             public void onError(Throwable e) {
-                                Log.e("login --->", e.getMessage());
+                                Log.e("register --->", e.getMessage());
                             }
 
                             @Override
@@ -164,28 +163,6 @@ public class SignUpScreen extends AppCompatActivity {
                             }
                         });
 
-
-//                //create user
-//                auth.createUserWithEmailAndPassword(email, password)
-//                        .addOnCompleteListener(SignUpScreen.this, new OnCompleteListener<AuthResult>() {
-//                            @Override
-//                            public void onComplete(@NonNull Task<AuthResult> task) {
-//                                Toast.makeText(SignUpScreen.this, "createUserWithEmail:onComplete:" + task.isSuccessful(), Toast.LENGTH_SHORT).show();
-//                                progressBar.setVisibility(View.GONE);
-//                                // If sign in fails, display a message to the user. If sign in succeeds
-//                                // the auth state listener will be notified and logic to handle the
-//                                // signed in user can be handled in the listener.
-//                                if (!task.isSuccessful()) {
-//                                    Toast.makeText(SignUpScreen.this, "Authentication failed." + task.getException(),
-//                                            Toast.LENGTH_SHORT).show();
-//                                } else {
-//                                    PreferenceManager.getINSTANCE().writeToPref(SignUpScreen.this,PreferenceKeys.SP_EMAIL,inputEmail.getText().toString());
-//
-//                                    startActivity(new Intent(SignUpScreen.this, ProfileScreen.class));
-//                                    finish();
-//                                }
-//                            }
-//                        });
 
             }
         });

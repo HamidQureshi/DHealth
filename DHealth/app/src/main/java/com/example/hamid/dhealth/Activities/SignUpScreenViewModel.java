@@ -2,15 +2,10 @@ package com.example.hamid.dhealth.Activities;
 
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
-import android.content.Intent;
 import android.util.Log;
-import android.view.View;
-import android.widget.Toast;
 
 import com.example.activeledgersdk.utility.Utility;
 import com.example.hamid.dhealth.MedicalRepository.HTTP.HttpClient;
-import com.example.hamid.dhealth.Preference.PreferenceKeys;
-import com.example.hamid.dhealth.Preference.PreferenceManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -27,7 +22,7 @@ public class SignUpScreenViewModel extends AndroidViewModel {
         super(application);
     }
 
-    public void signUp(String email, String password){
+    public void signUp(String email, String password) {
 
         JSONObject userJSON = new JSONObject();
 

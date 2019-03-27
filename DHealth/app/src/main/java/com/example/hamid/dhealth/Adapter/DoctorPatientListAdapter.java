@@ -11,7 +11,9 @@ import android.widget.TextView;
 
 import com.example.hamid.dhealth.Activities.DoctorPatientDescriptionActivity;
 import com.example.hamid.dhealth.MedicalRepository.DB.Entity.Doctor;
+import com.example.hamid.dhealth.MedicalRepository.DB.Entity.Patient;
 import com.example.hamid.dhealth.R;
+import com.example.hamid.dhealth.Utils.Utils;
 
 import java.util.List;
 
@@ -19,6 +21,7 @@ public class DoctorPatientListAdapter extends RecyclerView.Adapter<DoctorPatient
 
     private Context mContext;
     private List<Doctor> doctorList;
+    private List<Patient> patientList;
 
 
     public DoctorPatientListAdapter(Context context, List<Doctor> doctorList) {
@@ -49,10 +52,8 @@ public class DoctorPatientListAdapter extends RecyclerView.Adapter<DoctorPatient
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         Doctor doctor = doctorList.get(position);
-        holder.tv_name.setText(doctor.getName());
-
-        // loading album cover using Glide library
-//        Glide.with(mContext).load(album.getThumbnail()).into(holder.thumbnail);
+        holder.tv_name.setText(doctor.getFirst_name() + " " + doctor.getLast_name());
+        holder.iv_dp.setImageBitmap(Utils.decodeBase64(doctor.getDp()));
 
     }
 
@@ -76,6 +77,7 @@ public class DoctorPatientListAdapter extends RecyclerView.Adapter<DoctorPatient
 
         public TextView tv_name;
         public ImageView iv_display;
+        public ImageView iv_dp;
 
         private ViewHolder.IItemClickListener itemClickListener;
 
@@ -85,6 +87,7 @@ public class DoctorPatientListAdapter extends RecyclerView.Adapter<DoctorPatient
 
             tv_name = (TextView) view.findViewById(R.id.tv_name);
             iv_display = (ImageView) view.findViewById(R.id.iv_dp);
+            iv_dp = (ImageView) view.findViewById(R.id.iv_dp);
 
             this.itemClickListener = itemClickListener;
             view.setOnClickListener(this);

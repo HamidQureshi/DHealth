@@ -30,6 +30,7 @@ import android.widget.Toast;
 import com.example.hamid.dhealth.Preference.PreferenceKeys;
 import com.example.hamid.dhealth.Preference.PreferenceManager;
 import com.example.hamid.dhealth.R;
+import com.example.hamid.dhealth.Utils.ImageUtils;
 import com.example.hamid.dhealth.Utils.Utils;
 
 import java.io.IOException;
@@ -137,10 +138,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                     encryption = PreferenceKeys.LBL_RSA;
                 else
                     encryption = PreferenceKeys.LBL_EC;
-
             }
         });
-
 
         et_name = (EditText) getView().findViewById(R.id.et_name);
         et_last_name = (EditText) getView().findViewById(R.id.et_last_name);
@@ -189,9 +188,11 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
             case R.id.btn_submit:
 
                 updatePref();
+                btn_submit.setVisibility(View.INVISIBLE);
 
                 Log.e("===>", "submit");
 
+                //TODO update ledger
                 //do req to the ledger onboarding and upload data to the ledger
 
                 break;
@@ -240,7 +241,10 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
         if (id == R.id.edit) {
 
-            Toast.makeText(getActivity(), "Action clicked", Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), "Profile Editing Enabled", Toast.LENGTH_LONG).show();
+
+            btn_submit.setVisibility(View.VISIBLE);
+
             et_name.setFocusable(true);
             et_name.setFocusableInTouchMode(true);
 
@@ -312,6 +316,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
             case 0:
                 if (resultCode == RESULT_OK) {
                     Bitmap photo = (Bitmap) imageReturnedIntent.getExtras().get("data");
+                    photo = ImageUtils.scaleDownBitmap(photo, getActivity());
+                    Log.e("---", Utils.encodeTobase64(photo));
                     iv_dp.setImageBitmap(photo);
                     PreferenceManager.getINSTANCE().writeToPref(getActivity(), PreferenceKeys.SP_PROFILEPIC, Utils.encodeTobase64(photo));
                 }
@@ -322,6 +328,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                     Uri selectedImage = imageReturnedIntent.getData();
                     try {
                         Bitmap photo = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), selectedImage);
+                        photo = ImageUtils.scaleDownBitmap(photo, getActivity());
+                        Log.e("---", Utils.encodeTobase64(photo));
                         iv_dp.setImageBitmap(photo);
                         PreferenceManager.getINSTANCE().writeToPref(getActivity(), PreferenceKeys.SP_PROFILEPIC, Utils.encodeTobase64(photo));
                     } catch (IOException e) {
@@ -349,6 +357,5 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
         }
     }
-
 
 }

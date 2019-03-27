@@ -20,7 +20,7 @@ public class SplashActivity extends AppCompatActivity {
 
         Intent intent;
 
-        boolean login = PreferenceManager.getINSTANCE().readFromPref(this, PreferenceKeys.SP_LOGGEDIN, false);
+        Boolean login = PreferenceManager.getINSTANCE().readFromPref(this, PreferenceKeys.SP_LOGGEDIN, false);
 
         if (login == false) {
             intent = new Intent(this, LoginScreen.class);
