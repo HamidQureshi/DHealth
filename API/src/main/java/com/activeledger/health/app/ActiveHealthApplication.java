@@ -11,5 +11,4 @@ public class ActiveHealthApplication {
 	public static void main(String[] args) {
 		new SpringApplicationBuilder(ActiveHealthApplication.class,Config.class).run(args);
 	}
-
 }

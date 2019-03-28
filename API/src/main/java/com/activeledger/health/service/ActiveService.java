@@ -106,4 +106,10 @@ public class ActiveService {
 		
 	}
 
+	public JSONObject getUsers(String type) throws Exception {
+		// TODO Auto-generated method stub
+		JSONObject json = activeledgerAdapter.getUsers(type);
+		return json;
+	}
+
 }
