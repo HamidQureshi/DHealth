@@ -16,7 +16,7 @@ public class ReportsViewModel extends AndroidViewModel {
 
     public ReportsViewModel(Application application) {
         super(application);
-        repository = new DataRepository(application);
+        repository = DataRepository.getINSTANCE(application);
         report_list = repository.getReportList();
     }
 

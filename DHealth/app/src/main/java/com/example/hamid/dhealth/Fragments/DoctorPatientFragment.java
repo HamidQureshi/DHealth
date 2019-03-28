@@ -52,7 +52,8 @@ public class DoctorPatientFragment extends Fragment {
         rv_dplist = (RecyclerView) getView().findViewById(R.id.rv_doctor_patient_list);
         doctorList = new ArrayList<>();
         patientList = new ArrayList<>();
-        doctorPatientListAdapter = new DoctorPatientListAdapter(getContext(), doctorList, patientList);
+        String profileType = PreferenceManager.getINSTANCE().readFromPref(getActivity(),PreferenceKeys.SP_PROFILE_TYPE,PreferenceKeys.LBL_DOCTOR);
+        doctorPatientListAdapter = new DoctorPatientListAdapter(getContext(), doctorList, patientList,profileType);
 
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getContext(), 1);
         rv_dplist.setLayoutManager(mLayoutManager);
@@ -66,7 +67,7 @@ public class DoctorPatientFragment extends Fragment {
                 @Override
                 public void onChanged(@Nullable final List<Patient> patients) {
                     // Update the cached copy of the words in the adapter.
-                    doctorPatientListAdapter.setP(patients);
+                    doctorPatientListAdapter.setPatientList(patients);
                 }
             });
         } else {

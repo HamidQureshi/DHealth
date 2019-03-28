@@ -79,7 +79,7 @@ public class UploadFileActivity extends AppCompatActivity {
         Report report = new Report(title, description, name, assignedto, uploaddate, signeddate, content, status);
 
         //add the report to db
-        DataRepository dataRepository = new DataRepository(getApplication());
+        DataRepository dataRepository = DataRepository.getINSTANCE(getApplication());
         dataRepository.insertReport(report);
 
         finish();

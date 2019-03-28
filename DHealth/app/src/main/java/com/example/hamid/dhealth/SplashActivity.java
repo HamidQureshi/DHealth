@@ -17,9 +17,7 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-
         Intent intent;
-
         Boolean login = PreferenceManager.getINSTANCE().readFromPref(this, PreferenceKeys.SP_LOGGEDIN, false);
 
         if (login == false) {

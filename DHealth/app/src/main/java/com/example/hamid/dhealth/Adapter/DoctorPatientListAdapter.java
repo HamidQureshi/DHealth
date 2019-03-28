@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.example.hamid.dhealth.Activities.DoctorPatientDescriptionActivity;
 import com.example.hamid.dhealth.MedicalRepository.DB.Entity.Doctor;
 import com.example.hamid.dhealth.MedicalRepository.DB.Entity.Patient;
+import com.example.hamid.dhealth.Preference.PreferenceKeys;
 import com.example.hamid.dhealth.R;
 import com.example.hamid.dhealth.Utils.Utils;
 
@@ -22,11 +23,14 @@ public class DoctorPatientListAdapter extends RecyclerView.Adapter<DoctorPatient
     private Context mContext;
     private List<Doctor> doctorList;
     private List<Patient> patientList;
+    private String profile_type;
 
 
-    public DoctorPatientListAdapter(Context context, List<Doctor> doctorList) {
+    public DoctorPatientListAdapter(Context context, List<Doctor> doctorList,List<Patient> patientList ,String profile_type) {
         this.mContext = context;
         this.doctorList = doctorList;
+        this.patientList = patientList;
+        this.profile_type = profile_type;
     }
 
     @Override
@@ -38,37 +42,62 @@ public class DoctorPatientListAdapter extends RecyclerView.Adapter<DoctorPatient
 
             @Override
             public void onItemClick(View caller, int position) {
-                Doctor doctor = doctorList.get(position);
+
                 Intent intent = new Intent(mContext, DoctorPatientDescriptionActivity.class);
-                intent.putExtra(DoctorPatientDescriptionActivity.DOCTOR_DATA, doctor);
+                if(profile_type.equalsIgnoreCase(PreferenceKeys.LBL_DOCTOR)){
+                    Patient patient = patientList.get(position);
+                    intent.putExtra(DoctorPatientDescriptionActivity.DATA, patient);
+                }
+                else {
+                    Doctor doctor = doctorList.get(position);
+                    intent.putExtra(DoctorPatientDescriptionActivity.DATA, doctor);
+                }
                 mContext.startActivity(intent);
             }
         });
-
 
         return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        Doctor doctor = doctorList.get(position);
-        holder.tv_name.setText(doctor.getFirst_name() + " " + doctor.getLast_name());
-        holder.iv_dp.setImageBitmap(Utils.decodeBase64(doctor.getDp()));
+        if(profile_type.equalsIgnoreCase(PreferenceKeys.LBL_DOCTOR)){
+            Patient patient = patientList.get(position);
+            holder.tv_name.setText(patient.getFirst_name() + " " + patient.getLast_name());
+            holder.iv_dp.setImageBitmap(Utils.decodeBase64(patient.getDp()));
+        }else{
+            Doctor doctor = doctorList.get(position);
+            holder.tv_name.setText(doctor.getFirst_name() + " " + doctor.getLast_name());
+            holder.iv_dp.setImageBitmap(Utils.decodeBase64(doctor.getDp()));
+        }
+
 
     }
 
 
     @Override
     public int getItemCount() {
-        if (doctorList != null)
-            return doctorList.size();
-        else return 0;
+
+        if(profile_type.equalsIgnoreCase(PreferenceKeys.LBL_DOCTOR)){
+            if (patientList != null)
+                return patientList.size();
+            else return 0;
+        }else{
+            if (doctorList != null)
+                return doctorList.size();
+            else return 0;
+        }
 
     }
 
 
     public void setDoctorList(List<Doctor> doctorList) {
         this.doctorList = doctorList;
+        notifyDataSetChanged();
+    }
+
+    public void setPatientList(List<Patient> patientList) {
+        this.patientList = patientList;
         notifyDataSetChanged();
     }
 
