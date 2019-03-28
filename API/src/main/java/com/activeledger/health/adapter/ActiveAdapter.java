@@ -1,7 +1,6 @@
 package com.activeledger.health.adapter;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 import org.activeledger.java.sdk.activeledgerjavasdk.ActiveledgerJavaSdkApplication;
@@ -11,6 +10,7 @@ import org.activeledger.java.sdk.generic.transaction.TxObject;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.apache.log4j.Logger;
@@ -97,6 +97,37 @@ public class ActiveAdapter {
 		
 		return obj;
 
+	}
+
+	public JSONObject getUsers(String type) throws Exception{
+		
+		String doctorSql="SELECT * FROM X WHERE type='dhealth.activeledger.identity.Doctor'";
+		String patientSql="SELECT * FROM X WHERE type='dhealth.activeledger.identity.Patient'";
+		URIBuilder builder=builder = new URIBuilder("http://testnet-uk.activeledger.io:5261/api/stream/search");
+		
+		if(type.equalsIgnoreCase("patients"))
+			builder.setParameter("sql", patientSql);
+		else if(type.equalsIgnoreCase("doctors"))
+			builder.setParameter("sql", doctorSql);
+		
+			
+		
+		HttpGet httpGet = new HttpGet(builder.build());
+		//String mongo="db.x.find( { type: \"dhealth.activeledger.identity.Doctor\" } ) LIMIT 5";
+		HttpResponse response = httpclient.execute(httpGet);
+		//StringEntity entity = new StringEntity(mongo);
+		//entity.setContentType("application/json");
+		//httpPost.setEntity(entity);
+		
+		//HttpResponse response = httpclient.execute(httpPost);
+		
+		
+		String responseAsString = EntityUtils.toString(response.getEntity());
+ 
+
+		JSONObject obj=new JSONObject(responseAsString);
+
+		return obj;
 	}
 
 }

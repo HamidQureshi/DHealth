@@ -94,6 +94,7 @@ public class UserAuthenticationFilter extends UsernamePasswordAuthenticationFilt
 		Map<String,String> mapResp;
 			if (user.getIdentity() != null) {
 				try {
+				
 				mapResp = activeService.retrieveUser(user.getIdentity());
 				mapResp.put("identity", user.getIdentity());
 				activeResp.setStream(mapResp);
@@ -104,9 +105,10 @@ public class UserAuthenticationFilter extends UsernamePasswordAuthenticationFilt
 			
 		}
 			System.out.println("---------activeResp------\n"+mapper.writeValueAsString(activeResp));
+			response.setContentType("application/json");
+			response.addHeader("Token", "Token " + token);
 		response.getWriter().write(mapper.writeValueAsString(activeResp));
-		response.setContentType("application/json");
-		response.addHeader("Token", "Token " + token);
+		
 
 	}
 	

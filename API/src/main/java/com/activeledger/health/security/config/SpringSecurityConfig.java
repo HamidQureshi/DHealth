@@ -1,14 +1,18 @@
 package com.activeledger.health.security.config;
 
+import java.io.IOException;
 import java.util.Collections;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
+import javax.ws.rs.core.Response.Status;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -17,9 +21,12 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.logout.LogoutHandler;
 
+import com.activeledger.health.auth.CustomLogoutHandler;
 import com.activeledger.health.auth.JwtAuthenticationProvider;
 import com.activeledger.health.auth.JwtAuthenticationTokenFilter;
 import com.activeledger.health.auth.JwtFailureHandler;
@@ -79,10 +86,11 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                .antMatchers("/").permitAll()
                 .antMatchers("/register").permitAll()
                 .antMatchers("/h2/**").permitAll()
+                .antMatchers("/customLogout/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .exceptionHandling().accessDeniedHandler((req, rsp, e) -> {
- 
+                	
                 	Resp resp=new Resp();
                 	resp.setCode(rsp.getStatus());
                 	resp.setDesc("Invalid username or password");
@@ -90,11 +98,13 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 	
                 })
                 .and()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and().logout()
+                .logoutUrl("/logout").clearAuthentication(true).invalidateHttpSession(true).logoutSuccessUrl("/customLogout");
 
       http.addFilter(new UserAuthenticationFilter(authenticationManager(),activeService,secret));
-       http.addFilterAfter(authenticationTokenFilter(), UsernamePasswordAuthenticationFilter.class);
-        http.headers().cacheControl();
+      http.addFilterAfter(authenticationTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+      http.headers().cacheControl();
 
     }
   

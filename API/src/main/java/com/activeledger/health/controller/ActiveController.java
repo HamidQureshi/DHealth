@@ -1,5 +1,6 @@
 package com.activeledger.health.controller;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.ws.rs.Consumes;
@@ -7,6 +8,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
@@ -127,10 +129,37 @@ public class ActiveController {
 	}
 	
 	
-
+	@GET
+	@Path("/customLogout")
+	@Produces("application/json")
+	public Response logout() {
+		
+		Resp resp=new Resp();
+		resp.setCode(200);
+		resp.setDesc("Logout was successfull");
+		return Response.ok().entity(resp).build();
+	}
 	
 	
+	@GET
+	@Path("/transaction/users/{userType}")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public Response getUsers(@PathParam("userType") String type) throws Exception {
 
+		logger.info("------fetching users-----:"+type);
+		JSONObject docs=activeService.getUsers(type);
+		/*Resp resp=new Resp();
+		resp.setCode(200);
+		resp.setDesc("User Registered Successfully");
+		Map<String,String> temp=new HashMap<>();
+		temp.put("test",docs.toString());
+		ActiveResponse activeResp=new ActiveResponse();
+		activeResp.setResp(resp);
+		activeResp.getStream().p;*/
+		return Response.ok().header("Content-Type", "application/json").entity(docs.toString()).build();//header("Content-Type", "application/json").entity(activeResp).build();
+	
+	}
 
 	
 }
