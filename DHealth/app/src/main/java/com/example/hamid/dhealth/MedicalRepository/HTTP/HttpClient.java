@@ -22,7 +22,6 @@
  */
 package com.example.hamid.dhealth.MedicalRepository.HTTP;
 
-
 import io.reactivex.Observable;
 import retrofit2.Response;
 import retrofit2.Retrofit;
@@ -63,14 +62,12 @@ public class HttpClient {
 
     // this method can be used to send transaction as an HTTP request to the ledger
     public Observable<Response<String>> createProfile(String token, String transaction) {
-
         return apiService.createProfile(token, transaction);
     }
 
 
     // this method can be used to send transaction as an HTTP request to the ledger
     public Observable<Response<String>> sendTransaction(String token, String transaction) {
-
         return apiService.sendTransaction(token, transaction);
     }
 

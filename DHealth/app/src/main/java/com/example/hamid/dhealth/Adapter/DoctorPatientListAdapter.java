@@ -26,7 +26,7 @@ public class DoctorPatientListAdapter extends RecyclerView.Adapter<DoctorPatient
     private String profile_type;
 
 
-    public DoctorPatientListAdapter(Context context, List<Doctor> doctorList,List<Patient> patientList ,String profile_type) {
+    public DoctorPatientListAdapter(Context context, List<Doctor> doctorList, List<Patient> patientList, String profile_type) {
         this.mContext = context;
         this.doctorList = doctorList;
         this.patientList = patientList;
@@ -44,11 +44,10 @@ public class DoctorPatientListAdapter extends RecyclerView.Adapter<DoctorPatient
             public void onItemClick(View caller, int position) {
 
                 Intent intent = new Intent(mContext, DoctorPatientDescriptionActivity.class);
-                if(profile_type.equalsIgnoreCase(PreferenceKeys.LBL_DOCTOR)){
+                if (profile_type.equalsIgnoreCase(PreferenceKeys.LBL_DOCTOR)) {
                     Patient patient = patientList.get(position);
                     intent.putExtra(DoctorPatientDescriptionActivity.DATA, patient);
-                }
-                else {
+                } else {
                     Doctor doctor = doctorList.get(position);
                     intent.putExtra(DoctorPatientDescriptionActivity.DATA, doctor);
                 }
@@ -61,11 +60,11 @@ public class DoctorPatientListAdapter extends RecyclerView.Adapter<DoctorPatient
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        if(profile_type.equalsIgnoreCase(PreferenceKeys.LBL_DOCTOR)){
+        if (profile_type.equalsIgnoreCase(PreferenceKeys.LBL_DOCTOR)) {
             Patient patient = patientList.get(position);
             holder.tv_name.setText(patient.getFirst_name() + " " + patient.getLast_name());
             holder.iv_dp.setImageBitmap(Utils.decodeBase64(patient.getDp()));
-        }else{
+        } else {
             Doctor doctor = doctorList.get(position);
             holder.tv_name.setText(doctor.getFirst_name() + " " + doctor.getLast_name());
             holder.iv_dp.setImageBitmap(Utils.decodeBase64(doctor.getDp()));
@@ -78,11 +77,11 @@ public class DoctorPatientListAdapter extends RecyclerView.Adapter<DoctorPatient
     @Override
     public int getItemCount() {
 
-        if(profile_type.equalsIgnoreCase(PreferenceKeys.LBL_DOCTOR)){
+        if (profile_type.equalsIgnoreCase(PreferenceKeys.LBL_DOCTOR)) {
             if (patientList != null)
                 return patientList.size();
             else return 0;
-        }else{
+        } else {
             if (doctorList != null)
                 return doctorList.size();
             else return 0;

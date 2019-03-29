@@ -22,10 +22,6 @@
  */
 package com.example.hamid.dhealth.MedicalRepository.HTTP;
 
-import com.example.hamid.dhealth.MedicalRepository.DB.Entity.Patient;
-
-import java.util.List;
-
 import io.reactivex.Observable;
 import retrofit2.Response;
 import retrofit2.http.Body;

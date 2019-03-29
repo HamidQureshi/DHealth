@@ -15,10 +15,10 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.hamid.dhealth.ActiveLedgerHelper;
 import com.example.hamid.dhealth.Fragments.DoctorPatientFragment;
 import com.example.hamid.dhealth.Fragments.ProfileFragment;
 import com.example.hamid.dhealth.Fragments.ReportsFragment;
-import com.example.hamid.dhealth.MedicalRepository.DataRepository;
 import com.example.hamid.dhealth.Preference.PreferenceKeys;
 import com.example.hamid.dhealth.Preference.PreferenceManager;
 import com.example.hamid.dhealth.R;
@@ -40,6 +40,8 @@ public class DashboardScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard_screen);
+
+        ActiveLedgerHelper.getInstance().setupALSDK(getApplicationContext());
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -129,7 +131,6 @@ public class DashboardScreen extends AppCompatActivity {
         iv_dp.setImageBitmap(Utils.decodeBase64(PreferenceManager.getINSTANCE().readFromPref(this, PreferenceKeys.SP_PROFILEPIC, "")));
         tv_first_name.setText(PreferenceManager.getINSTANCE().readFromPref(this, PreferenceKeys.SP_NAME, "John"));
         tv_last_name.setText(PreferenceManager.getINSTANCE().readFromPref(this, PreferenceKeys.SP_LAST_NAME, "Doe"));
-
 
 
     }

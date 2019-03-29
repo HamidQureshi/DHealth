@@ -14,6 +14,7 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -27,6 +28,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.hamid.dhealth.ActiveLedgerHelper;
 import com.example.hamid.dhealth.MedicalRepository.DataRepository;
 import com.example.hamid.dhealth.Preference.PreferenceKeys;
 import com.example.hamid.dhealth.Preference.PreferenceManager;
@@ -125,7 +127,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
             }
         });
 
-
         ToggleSwitch encryption_toggleSwitch = (ToggleSwitch) getView().findViewById(R.id.encryption_toggle);
         ArrayList<String> encryption_labels = new ArrayList<>();
         encryption_labels.add(PreferenceKeys.LBL_RSA);
@@ -168,7 +169,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         datePickerDialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-
                 monthOfYear++;
                 et_dob.setText(dayOfMonth + "/" + monthOfYear + "/" + year);
                 datePickerDialog.dismiss();
@@ -186,32 +186,20 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
             case R.id.btn_submit:
 
-                updatePref();
                 btn_submit.setVisibility(View.INVISIBLE);
                 btn_logout.setVisibility(View.INVISIBLE);
 
-                Log.e("===>", "submit");
+                ActiveLedgerHelper.getInstance().generatekeys(null,et_name.getText().toString(),et_last_name.getText().toString(),null,et_dob.getText().toString(),et_phone.getText().toString(),
+                        et_address.getText().toString(),null,null,null,PreferenceManager.getINSTANCE().readFromPref(getActivity(), PreferenceKeys.SP_PROFILEPIC, ""),false,true);
 
-                //TODO update ledger
-                //do req to the ledger onboarding and upload data to the ledger
 
+//                ActiveLedgerHelper.getInstance().updateUserTransaction(et_name.getText().toString(),et_last_name.getText().toString(),et_dob.getText().toString(),et_phone.getText().toString(),
+//                        et_address.getText().toString(),PreferenceManager.getINSTANCE().readFromPref(getActivity(), PreferenceKeys.SP_PROFILEPIC, ""));
+                updatePref();
                 break;
 
             case R.id.btn_logout:
-
-                //delete preferences
-                PreferenceManager.getINSTANCE().clearPreferences(getActivity());
-                //delete db
-                DataRepository repository = DataRepository.getINSTANCE(getActivity().getApplication());
-                repository.deleteAllDoctor();
-                repository.deleteAllPatient();
-                repository.deleteAllReport();
-
-                //back to splash screen
-                Intent intent = new Intent(getActivity(),SplashActivity.class);
-                startActivity(intent);
-                getActivity().finish();
-
+                showAlertDialog();
                 break;
 
             case R.id.iv_camera:
@@ -221,7 +209,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     }
 
     public void fetchDataFromPref() {
-
         et_name.setText(PreferenceManager.getINSTANCE().readFromPref(getActivity(), PreferenceKeys.SP_NAME, "JOHN "));
         et_last_name.setText(PreferenceManager.getINSTANCE().readFromPref(getActivity(), PreferenceKeys.SP_LAST_NAME, "DOE"));
         et_email.setText(PreferenceManager.getINSTANCE().readFromPref(getActivity(), PreferenceKeys.SP_EMAIL, "JOHN DOE"));
@@ -229,7 +216,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         et_phone.setText(PreferenceManager.getINSTANCE().readFromPref(getActivity(), PreferenceKeys.SP_PHONENO, "JOHN DOE"));
         et_address.setText(PreferenceManager.getINSTANCE().readFromPref(getActivity(), PreferenceKeys.SP_ADDRESS, "JOHN DOE"));
         iv_dp.setImageBitmap(Utils.decodeBase64(PreferenceManager.getINSTANCE().readFromPref(getActivity(), PreferenceKeys.SP_PROFILEPIC, "")));
-
     }
 
     private void updatePref() {
@@ -246,7 +232,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     public void onPrepareOptionsMenu(Menu menu) {
         MenuInflater inflater = getActivity().getMenuInflater();
         inflater.inflate(R.menu.edit_options_menu, menu);
-
     }
 
 
@@ -322,8 +307,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
             }
         });
         builder.show();
-
-
     }
 
     @Override
@@ -345,8 +328,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                     try {
                         Bitmap photo = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), selectedImage);
                         photo = ImageUtils.scaleDownBitmap(photo, getActivity());
-                        iv_dp.setImageBitmap(photo);
                         PreferenceManager.getINSTANCE().writeToPref(getActivity(), PreferenceKeys.SP_PROFILEPIC, Utils.encodeTobase64(photo));
+                        iv_dp.setImageBitmap(photo);
                     } catch (IOException e) {
                         iv_dp.setImageURI(selectedImage);
                         e.printStackTrace();
@@ -373,6 +356,44 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         }
     }
 
+    public void showAlertDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+        builder.setMessage("Are you sure you want to Logout?");
+        builder.setCancelable(true);
+
+        builder.setPositiveButton(
+                "Yes",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        //delete preferences
+                        PreferenceManager.getINSTANCE().clearPreferences(getActivity());
+                        //delete db
+                        DataRepository repository = DataRepository.getINSTANCE(getActivity().getApplication());
+                        repository.deleteAllDoctor();
+                        repository.deleteAllPatient();
+                        repository.deleteAllReport();
+
+                        //back to splash screen
+                        Intent intent = new Intent(getActivity(), SplashActivity.class);
+                        startActivity(intent);
+                        getActivity().finish();
+                        dialog.cancel();
+                    }
+                });
+
+        builder.setNegativeButton(
+                "No",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+
+        AlertDialog logoutAlert = builder.create();
+
+        logoutAlert.show();
+    }
 
 
 }

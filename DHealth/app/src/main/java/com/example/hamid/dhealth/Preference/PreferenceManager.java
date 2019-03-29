@@ -60,7 +60,7 @@ public class PreferenceManager {
     }
 
 
-    public void clearPreferences(Context context){
+    public void clearPreferences(Context context) {
         SharedPreferences sharedPreference = getSharedPreference(context);
         sharedPreference.edit().clear().commit();
     }

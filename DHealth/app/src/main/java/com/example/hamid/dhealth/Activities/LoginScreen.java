@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -72,6 +73,13 @@ public class LoginScreen extends AppCompatActivity {
                     return;
                 }
 
+                if( !Patterns.EMAIL_ADDRESS.matcher(email).matches())
+                {
+                    Toast.makeText(getApplicationContext(), "Enter valid email address!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+
                 if (TextUtils.isEmpty(password)) {
                     Toast.makeText(getApplicationContext(), "Enter password!", Toast.LENGTH_SHORT).show();
                     return;
@@ -130,11 +138,13 @@ public class LoginScreen extends AppCompatActivity {
                                             String profile_type = stream.optString("profile_type");
                                             String gender = stream.optString("gender");
                                             String dp = stream.optString("dp");
+                                            String identity = stream.optString("identity");
 
                                             Log.e("login stream--->", first_name + "");
 
                                             intent = new Intent(LoginScreen.this, DashboardScreen.class);
 
+                                            PreferenceManager.getINSTANCE().writeToPref(LoginScreen.this, PreferenceKeys.SP_IDENTITY, identity);
                                             PreferenceManager.getINSTANCE().writeToPref(LoginScreen.this, PreferenceKeys.SP_NAME, first_name);
                                             PreferenceManager.getINSTANCE().writeToPref(LoginScreen.this, PreferenceKeys.SP_LAST_NAME, last_name);
                                             PreferenceManager.getINSTANCE().writeToPref(LoginScreen.this, PreferenceKeys.SP_EMAIL, email);

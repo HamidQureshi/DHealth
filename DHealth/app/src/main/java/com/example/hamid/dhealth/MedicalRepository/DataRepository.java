@@ -32,12 +32,19 @@ import retrofit2.Response;
 
 public class DataRepository {
 
+    private static volatile DataRepository INSTANCE;
     private DatabaseDAO databaseDAO;
     private LiveData<List<Doctor>> mAllDoctors;
     private LiveData<List<Patient>> mAllPatients;
     private LiveData<List<Report>> mAllReports;
 
-    private static volatile DataRepository INSTANCE;
+    public DataRepository(Application application) {
+        MedicalRoomDatabase roomDatabase = MedicalRoomDatabase.getDatabase(application);
+        databaseDAO = roomDatabase.medicalDao();
+        mAllDoctors = databaseDAO.getDoctorList();
+        mAllPatients = databaseDAO.getPatientList();
+        mAllReports = databaseDAO.getReportList();
+    }
 
     public static DataRepository getINSTANCE(Application application) {
         if (INSTANCE == null) {
@@ -49,15 +56,6 @@ public class DataRepository {
         }
         return INSTANCE;
     }
-
-    public DataRepository(Application application) {
-        MedicalRoomDatabase roomDatabase = MedicalRoomDatabase.getDatabase(application);
-        databaseDAO = roomDatabase.medicalDao();
-        mAllDoctors = databaseDAO.getDoctorList();
-        mAllPatients = databaseDAO.getPatientList();
-        mAllReports = databaseDAO.getReportList();
-    }
-
 
     public LiveData<List<Doctor>> getDoctorList() {
         return mAllDoctors;

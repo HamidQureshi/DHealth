@@ -46,20 +46,18 @@ public class DoctorPatientFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-
         mViewModel = ViewModelProviders.of(this).get(DoctorPatientViewModel.class);
 
         rv_dplist = (RecyclerView) getView().findViewById(R.id.rv_doctor_patient_list);
         doctorList = new ArrayList<>();
         patientList = new ArrayList<>();
-        String profileType = PreferenceManager.getINSTANCE().readFromPref(getActivity(),PreferenceKeys.SP_PROFILE_TYPE,PreferenceKeys.LBL_DOCTOR);
-        doctorPatientListAdapter = new DoctorPatientListAdapter(getContext(), doctorList, patientList,profileType);
+        String profileType = PreferenceManager.getINSTANCE().readFromPref(getActivity(), PreferenceKeys.SP_PROFILE_TYPE, PreferenceKeys.LBL_DOCTOR);
+        doctorPatientListAdapter = new DoctorPatientListAdapter(getContext(), doctorList, patientList, profileType);
 
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getContext(), 1);
         rv_dplist.setLayoutManager(mLayoutManager);
         rv_dplist.setItemAnimator(new DefaultItemAnimator());
         rv_dplist.setAdapter(doctorPatientListAdapter);
-
 
         if (PreferenceManager.getINSTANCE().readFromPref(getActivity(), PreferenceKeys.SP_PROFILE_TYPE, PreferenceKeys.LBL_DOCTOR).equalsIgnoreCase(PreferenceKeys.LBL_DOCTOR)) {
 
@@ -81,14 +79,12 @@ public class DoctorPatientFragment extends Fragment {
             });
         }
 
-
         populateList();
     }
 
     private void populateList() {
         if (PreferenceManager.getINSTANCE().readFromPref(getActivity(), PreferenceKeys.SP_PROFILE_TYPE, PreferenceKeys.LBL_DOCTOR).equalsIgnoreCase(PreferenceKeys.LBL_DOCTOR)) {
             mViewModel.getPatientListFromServer(PreferenceManager.getINSTANCE().readFromPref(getActivity(), PreferenceKeys.SP_APP_TOKEN, "null"));
-
         } else {
             mViewModel.getDoctorListFromServer(PreferenceManager.getINSTANCE().readFromPref(getActivity(), PreferenceKeys.SP_APP_TOKEN, "null"));
         }

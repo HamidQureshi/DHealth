@@ -48,8 +48,7 @@ public class DoctorPatientDescriptionActivity extends AppCompatActivity {
                 iv_dp.setImageBitmap(Utils.decodeBase64(patient.getDp()));
 
             }
-        }
-        else{
+        } else {
             Doctor doctor = (Doctor) getIntent().getSerializableExtra(DATA);
 
             if (doctor != null) {
@@ -63,8 +62,6 @@ public class DoctorPatientDescriptionActivity extends AppCompatActivity {
 
             }
         }
-
-
 
 
     }

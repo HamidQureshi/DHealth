@@ -171,7 +171,7 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
                 ActiveLedgerHelper.getInstance().generatekeys(this, et_name.getText().toString(), et_last_name.getText().toString(), et_email.getText().toString(),
                         et_dob.getText().toString(), et_phone.getText().toString(), et_address.getText().toString(), encryption, profile_type,
                         gender,
-                        PreferenceManager.getINSTANCE().readFromPref(this, PreferenceKeys.SP_PROFILEPIC, "null"));
+                        PreferenceManager.getINSTANCE().readFromPref(this, PreferenceKeys.SP_PROFILEPIC, "null"),true,false);
 
                 break;
 
