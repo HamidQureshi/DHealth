@@ -59,4 +59,10 @@ public class PreferenceManager {
         return sharedPreference.getInt(key, defaultValue);
     }
 
+
+    public void clearPreferences(Context context){
+        SharedPreferences sharedPreference = getSharedPreference(context);
+        sharedPreference.edit().clear().commit();
+    }
+
 }

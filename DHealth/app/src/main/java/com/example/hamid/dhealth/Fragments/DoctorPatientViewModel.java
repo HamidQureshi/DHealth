@@ -20,7 +20,7 @@ public class DoctorPatientViewModel extends AndroidViewModel {
 
     public DoctorPatientViewModel(Application application) {
         super(application);
-        repository = new DataRepository(application);
+        repository = DataRepository.getINSTANCE(application);
 
         doctor_list = repository.getDoctorList();
         patient_list = repository.getPatientList();
@@ -60,7 +60,7 @@ public class DoctorPatientViewModel extends AndroidViewModel {
     }
 
     public void getPatientListFromServer(String token) {
-        repository.getDoctorListFromServer(token);
+        repository.getPatientListFromServer(token);
     }
 
 }

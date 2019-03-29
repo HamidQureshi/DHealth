@@ -12,6 +12,7 @@ import com.example.hamid.dhealth.MedicalRepository.DB.Entity.Doctor;
 import com.example.hamid.dhealth.MedicalRepository.DB.Entity.Patient;
 import com.example.hamid.dhealth.MedicalRepository.DB.Entity.Report;
 import com.example.hamid.dhealth.MedicalRepository.HTTP.HttpClient;
+import com.example.hamid.dhealth.Preference.PreferenceManager;
 import com.example.hamid.dhealth.Utils.Utils;
 
 import org.json.JSONArray;
@@ -35,6 +36,19 @@ public class DataRepository {
     private LiveData<List<Doctor>> mAllDoctors;
     private LiveData<List<Patient>> mAllPatients;
     private LiveData<List<Report>> mAllReports;
+
+    private static volatile DataRepository INSTANCE;
+
+    public static DataRepository getINSTANCE(Application application) {
+        if (INSTANCE == null) {
+            synchronized (PreferenceManager.class) {
+                if (INSTANCE == null) {
+                    INSTANCE = new DataRepository(application);
+                }
+            }
+        }
+        return INSTANCE;
+    }
 
     public DataRepository(Application application) {
         MedicalRoomDatabase roomDatabase = MedicalRoomDatabase.getDatabase(application);
@@ -133,7 +147,7 @@ public class DataRepository {
 
         Utils.Log("patientlist--->", "");
         //fetch data from server
-        HttpClient.getInstance().getDoctorListFromServer(token)
+        HttpClient.getInstance().getPatientListFromServer(token)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<Response<String>>() {
@@ -188,7 +202,6 @@ public class DataRepository {
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
-
 
                         }
 

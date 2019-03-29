@@ -27,9 +27,11 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.hamid.dhealth.MedicalRepository.DataRepository;
 import com.example.hamid.dhealth.Preference.PreferenceKeys;
 import com.example.hamid.dhealth.Preference.PreferenceManager;
 import com.example.hamid.dhealth.R;
+import com.example.hamid.dhealth.SplashActivity;
 import com.example.hamid.dhealth.Utils.ImageUtils;
 import com.example.hamid.dhealth.Utils.Utils;
 
@@ -46,7 +48,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     private static final int MY_CAMERA_PERMISSION_CODE = 100;
     EditText et_name, et_last_name, et_email, et_dob, et_phone, et_address;
     ImageView iv_camera, iv_dp;
-    Button btn_submit;
+    Button btn_submit, btn_logout;
     private ProfileViewModel mViewModel;
     private DatePickerDialog datePickerDialog;
     private String profile_type = PreferenceKeys.LBL_DOCTOR;
@@ -151,17 +153,14 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         btn_submit = (Button) getView().findViewById(R.id.btn_submit);
         btn_submit.setOnClickListener(this);
 
+        btn_logout = (Button) getView().findViewById(R.id.btn_logout);
+        btn_logout.setOnClickListener(this);
+
         iv_camera = (ImageView) getView().findViewById(R.id.iv_camera);
         iv_camera.setOnClickListener(this);
         iv_dp = (ImageView) getView().findViewById(R.id.iv_dp);
 
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//            iv_dp.setImageDrawable(getActivity().getDrawable(R.drawable.activeledgerlogo));
-//        }
-
-
         fetchDataFromPref();
-
     }
 
     private void prepareDatePickerDialog() {
@@ -189,6 +188,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
                 updatePref();
                 btn_submit.setVisibility(View.INVISIBLE);
+                btn_logout.setVisibility(View.INVISIBLE);
 
                 Log.e("===>", "submit");
 
@@ -197,8 +197,24 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
                 break;
 
+            case R.id.btn_logout:
+
+                //delete preferences
+                PreferenceManager.getINSTANCE().clearPreferences(getActivity());
+                //delete db
+                DataRepository repository = DataRepository.getINSTANCE(getActivity().getApplication());
+                repository.deleteAllDoctor();
+                repository.deleteAllPatient();
+                repository.deleteAllReport();
+
+                //back to splash screen
+                Intent intent = new Intent(getActivity(),SplashActivity.class);
+                startActivity(intent);
+                getActivity().finish();
+
+                break;
+
             case R.id.iv_camera:
-                Log.e("===>", "camera");
                 takePhoto(v);
                 break;
         }
@@ -244,6 +260,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
             Toast.makeText(getActivity(), "Profile Editing Enabled", Toast.LENGTH_LONG).show();
 
             btn_submit.setVisibility(View.VISIBLE);
+            btn_logout.setVisibility(View.VISIBLE);
 
             et_name.setFocusable(true);
             et_name.setFocusableInTouchMode(true);
@@ -317,7 +334,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 if (resultCode == RESULT_OK) {
                     Bitmap photo = (Bitmap) imageReturnedIntent.getExtras().get("data");
                     photo = ImageUtils.scaleDownBitmap(photo, getActivity());
-                    Log.e("---", Utils.encodeTobase64(photo));
                     iv_dp.setImageBitmap(photo);
                     PreferenceManager.getINSTANCE().writeToPref(getActivity(), PreferenceKeys.SP_PROFILEPIC, Utils.encodeTobase64(photo));
                 }
@@ -329,7 +345,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                     try {
                         Bitmap photo = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), selectedImage);
                         photo = ImageUtils.scaleDownBitmap(photo, getActivity());
-                        Log.e("---", Utils.encodeTobase64(photo));
                         iv_dp.setImageBitmap(photo);
                         PreferenceManager.getINSTANCE().writeToPref(getActivity(), PreferenceKeys.SP_PROFILEPIC, Utils.encodeTobase64(photo));
                     } catch (IOException e) {
@@ -357,5 +372,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
         }
     }
+
+
 
 }

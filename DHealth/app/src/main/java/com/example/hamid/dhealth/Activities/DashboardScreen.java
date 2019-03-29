@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.example.hamid.dhealth.Fragments.DoctorPatientFragment;
 import com.example.hamid.dhealth.Fragments.ProfileFragment;
 import com.example.hamid.dhealth.Fragments.ReportsFragment;
+import com.example.hamid.dhealth.MedicalRepository.DataRepository;
 import com.example.hamid.dhealth.Preference.PreferenceKeys;
 import com.example.hamid.dhealth.Preference.PreferenceManager;
 import com.example.hamid.dhealth.R;
@@ -33,6 +34,7 @@ public class DashboardScreen extends AppCompatActivity {
     private NavigationView nv;
     private String title = "Profile";
     private Toolbar toolbar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,6 +131,7 @@ public class DashboardScreen extends AppCompatActivity {
         tv_last_name.setText(PreferenceManager.getINSTANCE().readFromPref(this, PreferenceKeys.SP_LAST_NAME, "Doe"));
 
 
+
     }
 
 
@@ -154,6 +157,5 @@ public class DashboardScreen extends AppCompatActivity {
         // Pass any configuration change to the drawer toggles
         drawerToggle.onConfigurationChanged(newConfig);
     }
-
 
 }
