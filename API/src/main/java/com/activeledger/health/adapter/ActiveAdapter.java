@@ -1,6 +1,9 @@
 package com.activeledger.health.adapter;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import org.activeledger.java.sdk.activeledgerjavasdk.ActiveledgerJavaSdkApplication;
@@ -10,14 +13,19 @@ import org.activeledger.java.sdk.generic.transaction.TxObject;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.utils.URIBuilder;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.apache.log4j.Logger;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.stereotype.Component;
+
+import com.mongodb.BasicDBObject;
 
 @Component
 public class ActiveAdapter {
@@ -101,8 +109,8 @@ public class ActiveAdapter {
 
 	public JSONObject getUsers(String type) throws Exception{
 		
-		String doctorSql="SELECT * FROM X WHERE type='dhealth.activeledger.identity.Doctor'";
-		String patientSql="SELECT * FROM X WHERE type='dhealth.activeledger.identity.Patient'";
+		String doctorSql="SELECT * FROM X WHERE type='healthtestnet.Doctor'";
+		String patientSql="SELECT * FROM X WHERE type='healthtestnet.Patient'";
 		URIBuilder builder=builder = new URIBuilder("http://testnet-uk.activeledger.io:5261/api/stream/search");
 		
 		if(type.equalsIgnoreCase("patients"))
@@ -126,6 +134,72 @@ public class ActiveAdapter {
  
 
 		JSONObject obj=new JSONObject(responseAsString);
+
+		return obj;
+	}
+
+	public JSONObject getAssignedpatients(String identity) throws Exception {
+		System.out.print("----------hello1");
+		JSONObject sql=new  JSONObject();
+		BasicDBObject inQuery3 = new BasicDBObject();
+		BasicDBObject inQuery2 = new BasicDBObject();
+		BasicDBObject inQuery1 = new BasicDBObject();
+		BasicDBObject inQuery = new BasicDBObject();
+		List<String> list = new ArrayList<>();
+		List<String> list2 = new ArrayList<>();
+		list2.add("_id");
+		list2.add("first_name");
+		list2.add("profile_type");
+		list2.add("reports");
+		list.add("402afc3bcf4a43384bcaf14ba0cafd3812af94aba71a4e62b9bf60f2b704be49");
+		inQuery.put("doctors", new BasicDBObject("$in", list));
+		inQuery1.put("$elemMatch", inQuery);
+		inQuery2.put("reports", inQuery1);
+		inQuery3.put("selector", inQuery2);
+		inQuery3.put("fields", list2);
+		sql.put("sql","string");
+		sql.put("mango",inQuery3);
+		System.out.println("Query:"+sql.toString());
+
+		URIBuilder builder=builder = new URIBuilder("http://testnet-uk.activeledger.io:5261/api/stream/search");
+		
+	
+			
+		
+		HttpClient httpclient = HttpClients.createDefault();
+		HttpPost httppost = new HttpPost(builder.build());
+		
+		StringEntity entity = new StringEntity(sql.toString());
+		entity.setContentType("application/json");
+		httppost.setEntity(entity);
+		HttpResponse response = httpclient.execute(httppost);
+
+		String responseAsString = EntityUtils.toString(response.getEntity());
+
+		JSONObject obj=new JSONObject(responseAsString);
+		JSONArray reps=obj.getJSONArray("streams").getJSONObject(0).getJSONArray("reports");
+		boolean assigned=false;
+			//JSONObject rr=(JSONObject)r;
+			Iterator itr = reps.iterator();
+	        while (itr.hasNext()) {
+	            JSONObject obj1 = (JSONObject) itr.next();
+	            Iterator itr1 = obj1.getJSONArray("doctors").iterator();
+	            while (itr1.hasNext()) 
+	            { String id=(String) itr1.next();
+	            	if(id.equals("402afc3bcf4a43384bcaf14ba0cafd3812af94aba71a4e62b9bf60f2b704be49"))
+	            	{
+	            		assigned=true;
+	            		break;
+	            	}
+	            }
+	            if(!assigned)
+	            {
+	            	itr.remove();
+	            }
+	            
+	        }
+	
+		obj.remove("warning");
 
 		return obj;
 	}

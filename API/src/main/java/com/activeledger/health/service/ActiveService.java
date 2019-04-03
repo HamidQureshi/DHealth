@@ -112,4 +112,12 @@ public class ActiveService {
 		return json;
 	}
 
+	public JSONObject getAssignedPatients(String token) throws Exception {
+		token=token.replace("Token ", "");
+		Claims body = Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
+		User user = userDao.findByUsername(body.getSubject());
+		JSONObject patients=activeledgerAdapter.getAssignedpatients(user.getIdentity());
+		return patients;
+	}
+
 }

@@ -149,15 +149,20 @@ public class ActiveController {
 
 		logger.info("------fetching users-----:"+type);
 		JSONObject docs=activeService.getUsers(type);
-		/*Resp resp=new Resp();
-		resp.setCode(200);
-		resp.setDesc("User Registered Successfully");
-		Map<String,String> temp=new HashMap<>();
-		temp.put("test",docs.toString());
-		ActiveResponse activeResp=new ActiveResponse();
-		activeResp.setResp(resp);
-		activeResp.getStream().p;*/
 		return Response.ok().header("Content-Type", "application/json").entity(docs.toString()).build();//header("Content-Type", "application/json").entity(activeResp).build();
+	
+	}
+	
+	@GET
+	@Path("/transaction/patients")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public Response getAssignedPatients(@HeaderParam("Authorization") String token) throws Exception {
+
+		System.out.print("----------hello");
+		JSONObject docs=activeService.getAssignedPatients(token);
+		return Response.ok().entity(docs.toString()).build();
+		//return Response.ok().header("Content-Type", "application/json").entity(docs.toString()).build();//header("Content-Type", "application/json").entity(activeResp).build();
 	
 	}
 
