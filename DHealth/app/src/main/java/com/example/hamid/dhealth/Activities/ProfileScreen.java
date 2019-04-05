@@ -12,26 +12,41 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.example.activeledgersdk.ActiveLedgerSDK;
 import com.example.activeledgersdk.utility.KeyType;
+import com.example.activeledgersdk.utility.Utility;
 import com.example.hamid.dhealth.ActiveLedgerHelper;
+import com.example.hamid.dhealth.MedicalRepository.HTTP.HttpClient;
 import com.example.hamid.dhealth.Preference.PreferenceKeys;
 import com.example.hamid.dhealth.Preference.PreferenceManager;
 import com.example.hamid.dhealth.R;
 import com.example.hamid.dhealth.Utils.ImageUtils;
 import com.example.hamid.dhealth.Utils.Utils;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
+import java.security.KeyPair;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Calendar;
 
 import belka.us.androidtoggleswitch.widgets.ToggleSwitch;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
+import retrofit2.Response;
 
 public class ProfileScreen extends AppCompatActivity implements View.OnClickListener {
 
@@ -43,6 +58,10 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
     private String profile_type = PreferenceKeys.LBL_DOCTOR;
     private String gender = PreferenceKeys.LBL_MALE;
     private String encryption = PreferenceKeys.LBL_RSA;
+    private Disposable disposable;
+    private ProgressBar progressBar;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +91,8 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
         iv_camera = (ImageView) findViewById(R.id.iv_camera);
         iv_camera.setOnClickListener(this);
         iv_dp = (ImageView) findViewById(R.id.iv_dp);
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+
 
 
         ToggleSwitch dp_toggleSwitch = (ToggleSwitch) findViewById(R.id.dp_toggle);
@@ -162,16 +183,14 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
                 break;
 
             case R.id.btn_submit:
-                //do req to the ledger onboarding and upload data to the ledger
                 ActiveLedgerHelper.getInstance().setupALSDK(getApplicationContext());
 
-//                ActiveLedgerHelper.getInstance().generatekeys("hamid", "mehmood", "hamid@agilitysciences.com",
-//                        "24/07/1994", "07400633866", "queen mary", "RSA", "Doctor", "Male","dp");
+                progressBar.setVisibility(View.VISIBLE);
 
-                ActiveLedgerHelper.getInstance().generatekeys(this, et_name.getText().toString(), et_last_name.getText().toString(), et_email.getText().toString(),
+                generateKeys(et_name.getText().toString(), et_last_name.getText().toString(), et_email.getText().toString(),
                         et_dob.getText().toString(), et_phone.getText().toString(), et_address.getText().toString(), encryption, profile_type,
                         gender,
-                        PreferenceManager.getINSTANCE().readFromPref(this, PreferenceKeys.SP_PROFILEPIC, "null"),true,false);
+                        PreferenceManager.getINSTANCE().readFromPref(this, PreferenceKeys.SP_PROFILEPIC, "null"));
 
                 break;
 
@@ -293,4 +312,121 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
         }
     }
 
+
+    private void generateKeys( String first_name, String last_name, String email,
+                             String date_of_birth, String phone_number, String address, String security, String profile_type, String gender, String dp){
+
+        ActiveLedgerSDK.getInstance().generateAndSetKeyPair(ActiveLedgerHelper.getInstance().getKeyType(), true)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<KeyPair>() {
+
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        disposable = d;
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        Log.d("MainActivity", "onComplete");
+
+                        try {
+                            ActiveLedgerHelper.getInstance().setPublickey(ActiveLedgerSDK.readFileAsString((Utility.PUBLICKEY_FILE)));
+                            ActiveLedgerHelper.getInstance().setPrivatekey(ActiveLedgerSDK.readFileAsString((Utility.PRIVATEKEY_FILE)));
+
+                            if (ActiveLedgerHelper.getInstance().getKey_Pair() != null) {
+                                onboardKeys(first_name, last_name, email,
+                                        date_of_birth, phone_number, address, security, profile_type, gender, dp);
+
+                            }
+
+                            else {
+                                Toast.makeText(ProfileScreen.this,"Generate Keys First",Toast.LENGTH_SHORT);
+                            }
+
+
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onNext(KeyPair keyPair) {
+                        ActiveLedgerHelper.getInstance().setKey_Pair(keyPair);
+                    }
+                });
+
+    }
+
+    public void onboardKeys( String first_name, String last_name, String email,
+                             String date_of_birth, String phone_number, String address, String security, String profile_type, String gender, String dp){
+
+        ActiveLedgerSDK.KEYNAME =ActiveLedgerHelper.getInstance().getKeyname();
+
+        JSONObject onboardTransaction = ActiveLedgerHelper.getInstance().onboardTransaction(null, ActiveLedgerSDK.getInstance().getKeyType(), first_name, last_name, email,
+                date_of_birth, phone_number, address, security, profile_type, gender, dp);
+
+        String transactionString = Utility.getInstance().convertJSONObjectToString(onboardTransaction);
+
+        Utils.Log("Onboard Transaction", transactionString);
+        Log.e("Onboard token", com.example.hamid.dhealth.Preference.PreferenceManager.getINSTANCE().readFromPref(this, PreferenceKeys.SP_APP_TOKEN, "null"));
+
+        HttpClient.getInstance().createProfile(com.example.hamid.dhealth.Preference.PreferenceManager.getINSTANCE().readFromPref(this, PreferenceKeys.SP_APP_TOKEN, "null"), transactionString)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Response<String>>() {
+
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        disposable = d;
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+
+                    @Override
+                    public void onNext(Response<String> response) {
+                        progressBar.setVisibility(View.GONE);
+                        Log.e("onboard response--->", response.code() + "");
+                        if (response.code() == 200) {
+
+                            try {
+                                Utils.Log("onboard response--->", response.body() + "");
+
+                                JSONObject responseJSON = new JSONObject(response.body());
+
+                                JSONObject stream = responseJSON.optJSONObject("stream");
+                                if (stream != null) {
+                                    String identity = stream.optString("identity");
+                                    PreferenceManager.getINSTANCE().writeToPref(ProfileScreen.this, PreferenceKeys.SP_IDENTITY, identity);
+                                }
+                                submitProfile();
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+
+                        }
+                    }
+                });
+
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (disposable != null && !disposable.isDisposed())
+            disposable.dispose();
+    }
 }

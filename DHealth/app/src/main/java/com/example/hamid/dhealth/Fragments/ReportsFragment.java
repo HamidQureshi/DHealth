@@ -153,14 +153,8 @@ public class ReportsFragment extends Fragment implements View.OnClickListener {
         MenuInflater inflater = getActivity().getMenuInflater();
         inflater.inflate(R.menu.options_menu, menu);
 
-        // Associate searchable configuration with the SearchView
-//        SearchManager searchManager =
-//                (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
         searchView =
                 (SearchView) menu.findItem(R.id.search).getActionView();
-//        searchView.setSearchableInfo(
-//                searchManager.getSearchableInfo(getActivity().getComponentName()));
-
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override

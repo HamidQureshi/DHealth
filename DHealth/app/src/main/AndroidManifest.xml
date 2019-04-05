@@ -28,37 +28,36 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.example.hamid.dhealth.Activities.ProfileScreen" >
+        <activity android:name=".Activities.ProfileScreen">
 
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.VIEW" />-->
-                <!--<action android:name="android.intent.action.MAIN" />-->
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.VIEW" /> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
 
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
 
         </activity>
+        <activity android:name=".Activities.SignUpScreen" />
+        <activity android:name=".Activities.LoginScreen">
 
-        <activity android:name="com.example.hamid.dhealth.Activities.SignUpScreen" />
-
-        <activity android:name="com.example.hamid.dhealth.Activities.LoginScreen">
-
-             <!--<intent-filter>-->
-             <!--<action android:name="android.intent.action.VIEW" />-->
-             <!--<action android:name="android.intent.action.MAIN" />-->
-             <!--<category android:name="android.intent.category.LAUNCHER" />-->
-             <!--</intent-filter>-->
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.VIEW" /> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
         </activity>
+        <activity android:name=".Activities.ResetPasswordScreen" />
+        <activity android:name=".Activities.DashboardScreen">
 
-        <activity android:name="com.example.hamid.dhealth.Activities.ResetPasswordScreen" />
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.VIEW" /> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
 
-        <activity android:name="com.example.hamid.dhealth.Activities.DashboardScreen">
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.VIEW" />-->
-                <!--<action android:name="android.intent.action.MAIN" />-->
 
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
 
             <meta-data
                 android:name="android.app.searchable"
@@ -68,36 +67,31 @@
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
         </activity>
-
         <activity
-            android:name="com.example.hamid.dhealth.SettingsActivity"
-            android:label="@string/title_activity_settings">
-        </activity>
-
-        <activity android:name="com.example.hamid.dhealth.SplashActivity" >
+            android:name=".SettingsActivity"
+            android:label="@string/title_activity_settings"></activity>
+        <activity android:name=".SplashActivity">
             <intent-filter>
-            <action android:name="android.intent.action.VIEW" />
-            <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.VIEW" />
+                <action android:name="android.intent.action.MAIN" />
 
-            <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
-            android:name="com.example.hamid.dhealth.Activities.UploadFileActivity"
+            android:name=".Activities.UploadFileActivity"
             android:label="@string/title_activity_upload_file"
             android:theme="@style/AppTheme" />
-
         <activity
-            android:name="com.example.hamid.dhealth.Activities.DoctorPatientDescriptionActivity"
+            android:name=".Activities.DoctorPatientDescriptionActivity"
             android:label="@string/title_activity_doctor_patient_description"
             android:launchMode="singleInstance"
             android:theme="@style/AppTheme" />
-
         <activity
-            android:name="com.example.hamid.dhealth.Activities.ReportDetailActivity"
+            android:name=".Activities.ReportDetailActivity"
             android:label="@string/title_activity_report_detail"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
+        <activity android:name=".Activities.PDFViewActivity"></activity>
     </application>
 
 </manifest>

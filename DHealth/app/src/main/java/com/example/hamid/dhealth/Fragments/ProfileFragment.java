@@ -26,10 +26,14 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.example.activeledgersdk.ActiveLedgerSDK;
+import com.example.activeledgersdk.utility.Utility;
 import com.example.hamid.dhealth.ActiveLedgerHelper;
 import com.example.hamid.dhealth.MedicalRepository.DataRepository;
+import com.example.hamid.dhealth.MedicalRepository.HTTP.HttpClient;
 import com.example.hamid.dhealth.Preference.PreferenceKeys;
 import com.example.hamid.dhealth.Preference.PreferenceManager;
 import com.example.hamid.dhealth.R;
@@ -37,11 +41,18 @@ import com.example.hamid.dhealth.SplashActivity;
 import com.example.hamid.dhealth.Utils.ImageUtils;
 import com.example.hamid.dhealth.Utils.Utils;
 
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 
 import belka.us.androidtoggleswitch.widgets.ToggleSwitch;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
+import retrofit2.Response;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -56,6 +67,10 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     private String profile_type = PreferenceKeys.LBL_DOCTOR;
     private String gender = PreferenceKeys.LBL_MALE;
     private String encryption = PreferenceKeys.LBL_RSA;
+    private Disposable disposable;
+    private ProgressBar progressBar;
+
+
 
     public static ProfileFragment newInstance() {
         return new ProfileFragment();
@@ -160,6 +175,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         iv_camera = (ImageView) getView().findViewById(R.id.iv_camera);
         iv_camera.setOnClickListener(this);
         iv_dp = (ImageView) getView().findViewById(R.id.iv_dp);
+        progressBar = (ProgressBar) getView().findViewById(R.id.progressBar);
 
         fetchDataFromPref();
     }
@@ -186,16 +202,10 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
             case R.id.btn_submit:
 
-                btn_submit.setVisibility(View.INVISIBLE);
-                btn_logout.setVisibility(View.INVISIBLE);
+                progressBar.setVisibility(View.VISIBLE);
+                updateUserTransaction(et_name.getText().toString(),et_last_name.getText().toString(),et_dob.getText().toString(),et_phone.getText().toString(),
+                        et_address.getText().toString(),PreferenceManager.getINSTANCE().readFromPref(getActivity(), PreferenceKeys.SP_PROFILEPIC, ""));
 
-                ActiveLedgerHelper.getInstance().generatekeys(null,et_name.getText().toString(),et_last_name.getText().toString(),null,et_dob.getText().toString(),et_phone.getText().toString(),
-                        et_address.getText().toString(),null,null,null,PreferenceManager.getINSTANCE().readFromPref(getActivity(), PreferenceKeys.SP_PROFILEPIC, ""),false,true);
-
-
-//                ActiveLedgerHelper.getInstance().updateUserTransaction(et_name.getText().toString(),et_last_name.getText().toString(),et_dob.getText().toString(),et_phone.getText().toString(),
-//                        et_address.getText().toString(),PreferenceManager.getINSTANCE().readFromPref(getActivity(), PreferenceKeys.SP_PROFILEPIC, ""));
-                updatePref();
                 break;
 
             case R.id.btn_logout:
@@ -396,4 +406,60 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     }
 
 
+    public void updateUserTransaction(String first_name, String last_name,
+                                      String date_of_birth, String phone_number, String address, String dp) {
+
+
+        ActiveLedgerSDK.KEYNAME = ActiveLedgerHelper.getInstance().getKeyname();
+
+        JSONObject updateUserTransaction = ActiveLedgerHelper.getInstance().createUpdateUserTransaction(null, ActiveLedgerSDK.getInstance().getKeyType(), first_name, last_name,
+                date_of_birth, phone_number, address, dp);
+
+        String transactionString = Utility.getInstance().convertJSONObjectToString(updateUserTransaction);
+
+        Utils.Log("UpdateUser Transaction", transactionString);
+        Log.e("UpdateUser token", com.example.hamid.dhealth.Preference.PreferenceManager.getINSTANCE().readFromPref(getActivity(), PreferenceKeys.SP_APP_TOKEN, "null"));
+
+        HttpClient.getInstance().sendTransaction(com.example.hamid.dhealth.Preference.PreferenceManager.getINSTANCE().readFromPref(getActivity(), PreferenceKeys.SP_APP_TOKEN, "null"), transactionString)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Response<String>>() {
+
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        disposable = d;
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+
+                    @Override
+                    public void onNext(Response<String> response) {
+                        progressBar.setVisibility(View.GONE);
+                        Log.e("UpdateUser response--->", response.code() + "");
+                        if (response.code() == 200) {
+                            updatePref();
+                            Utils.Log("UpdateUser response--->", response.body() + "");
+                            btn_submit.setVisibility(View.INVISIBLE);
+                            btn_logout.setVisibility(View.INVISIBLE);
+                            Toast.makeText(getActivity(),"User Updated Successfully!",Toast.LENGTH_SHORT);
+                        }
+                        else{
+                            Toast.makeText(getActivity(),"User Updated Failed!",Toast.LENGTH_SHORT);
+                        }
+                    }
+                });
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (disposable != null && !disposable.isDisposed())
+            disposable.dispose();
+    }
 }

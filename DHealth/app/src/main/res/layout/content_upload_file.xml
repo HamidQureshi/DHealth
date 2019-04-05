@@ -220,9 +220,34 @@
                 app:layout_constraintStart_toStartOf="@+id/et_description"
                 app:layout_constraintTop_toTopOf="@+id/tv_lbl_content" />
 
+            <TextView
+                android:id="@+id/tv_lbl_document"
+                android:layout_width="126dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:text="Document Attached: "
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/tv_lbl_content"
+                app:layout_constraintTop_toBottomOf="@+id/et_content" />
+
+            <TextView
+                android:id="@+id/tv_document"
+                android:layout_width="187dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:hint="NONE"
+                android:textColor="@color/black"
+                android:textColorHint="@color/bg_register"
+                android:textSize="15sp"
+                android:lines="2"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_lbl_document"
+                app:layout_constraintStart_toEndOf="@+id/tv_lbl_document"
+                app:layout_constraintTop_toTopOf="@+id/tv_lbl_document" />
 
             <Button
-                android:id="@+id/btn_finish"
+                android:id="@+id/btn_upload_file"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -230,13 +255,30 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
                 android:background="@drawable/button"
+                android:onClick="uploadFILE"
+                android:text="upload file"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/btn_finish"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_document"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <Button
+                android:id="@+id/btn_finish"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="52dp"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/button"
                 android:onClick="AddReport"
                 android:text="Finish"
                 android:textColor="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/et_content" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_document"
+                app:layout_constraintVertical_bias="0.0" />
 
 
         </android.support.constraint.ConstraintLayout>

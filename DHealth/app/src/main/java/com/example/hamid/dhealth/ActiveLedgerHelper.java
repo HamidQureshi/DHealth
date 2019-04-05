@@ -121,6 +121,8 @@ public class ActiveLedgerHelper {
                 });
     }
 
+
+
     public void onboardkeysTransaction(String first_name, String last_name, String email,
                                        String date_of_birth, String phone_number, String address, String security, String profile_type, String gender, String dp) {
 
@@ -471,12 +473,12 @@ public class ActiveLedgerHelper {
             $tx.put("$namespace", Configurations.namespace);
             $tx.put("$entry", "update");
 
-            identity.put("publicKey", pubKey);
-
-            if (type == KeyType.RSA)
-                identity.put("type", "rsa");
-            else if (type == KeyType.EC)
-                identity.put("type", "secp256k1");
+//            identity.put("publicKey", pubKey);
+//
+//            if (type == KeyType.RSA)
+//                identity.put("type", "rsa");
+//            else if (type == KeyType.EC)
+//                identity.put("type", "secp256k1");
 
             $i.put(onboard_id, identity);
 
@@ -504,7 +506,7 @@ public class ActiveLedgerHelper {
 
 
             transaction.put("$tx", $tx);
-            transaction.put("$selfsign", true);
+            transaction.put("$selfsign", false);
             transaction.put("$sigs", $sigs);
 
         } catch (JSONException e) {
