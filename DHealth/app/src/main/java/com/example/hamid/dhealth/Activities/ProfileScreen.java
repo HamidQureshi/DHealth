@@ -37,7 +37,6 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.security.KeyPair;
-import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -60,7 +59,6 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
     private String encryption = PreferenceKeys.LBL_RSA;
     private Disposable disposable;
     private ProgressBar progressBar;
-
 
 
     @Override
@@ -92,7 +90,6 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
         iv_camera.setOnClickListener(this);
         iv_dp = (ImageView) findViewById(R.id.iv_dp);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
-
 
 
         ToggleSwitch dp_toggleSwitch = (ToggleSwitch) findViewById(R.id.dp_toggle);
@@ -313,8 +310,8 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
     }
 
 
-    private void generateKeys( String first_name, String last_name, String email,
-                             String date_of_birth, String phone_number, String address, String security, String profile_type, String gender, String dp){
+    private void generateKeys(String first_name, String last_name, String email,
+                              String date_of_birth, String phone_number, String address, String security, String profile_type, String gender, String dp) {
 
         ActiveLedgerSDK.getInstance().generateAndSetKeyPair(ActiveLedgerHelper.getInstance().getKeyType(), true)
                 .subscribeOn(Schedulers.io())
@@ -335,6 +332,7 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
                         Log.d("MainActivity", "onComplete");
 
                         try {
+                            ActiveLedgerSDK.getInstance().setKeyType(ActiveLedgerHelper.getInstance().getKeyType());
                             ActiveLedgerHelper.getInstance().setPublickey(ActiveLedgerSDK.readFileAsString((Utility.PUBLICKEY_FILE)));
                             ActiveLedgerHelper.getInstance().setPrivatekey(ActiveLedgerSDK.readFileAsString((Utility.PRIVATEKEY_FILE)));
 
@@ -342,10 +340,8 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
                                 onboardKeys(first_name, last_name, email,
                                         date_of_birth, phone_number, address, security, profile_type, gender, dp);
 
-                            }
-
-                            else {
-                                Toast.makeText(ProfileScreen.this,"Generate Keys First",Toast.LENGTH_SHORT);
+                            } else {
+                                Toast.makeText(ProfileScreen.this, "Generate Keys First", Toast.LENGTH_SHORT);
                             }
 
 
@@ -362,10 +358,10 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
 
     }
 
-    public void onboardKeys( String first_name, String last_name, String email,
-                             String date_of_birth, String phone_number, String address, String security, String profile_type, String gender, String dp){
+    public void onboardKeys(String first_name, String last_name, String email,
+                            String date_of_birth, String phone_number, String address, String security, String profile_type, String gender, String dp) {
 
-        ActiveLedgerSDK.KEYNAME =ActiveLedgerHelper.getInstance().getKeyname();
+        ActiveLedgerSDK.KEYNAME = ActiveLedgerHelper.getInstance().getKeyname();
 
         JSONObject onboardTransaction = ActiveLedgerHelper.getInstance().onboardTransaction(null, ActiveLedgerSDK.getInstance().getKeyType(), first_name, last_name, email,
                 date_of_birth, phone_number, address, security, profile_type, gender, dp);
@@ -406,7 +402,7 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
 
                                 JSONObject stream = responseJSON.optJSONObject("stream");
                                 if (stream != null) {
-                                    String identity = stream.optString("identity");
+                                    String identity = stream.optString("_id");
                                     PreferenceManager.getINSTANCE().writeToPref(ProfileScreen.this, PreferenceKeys.SP_IDENTITY, identity);
                                 }
                                 submitProfile();

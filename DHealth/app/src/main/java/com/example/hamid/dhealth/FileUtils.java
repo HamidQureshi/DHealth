@@ -1,98 +1,55 @@
 package com.example.hamid.dhealth;
 
 
-/*
- * Copyright (C) 2018 OpenIntents.org
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
+import android.Manifest;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
+import android.os.ParcelFileDescriptor;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.provider.OpenableColumns;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.util.Base64;
 import android.util.Log;
 import android.webkit.MimeTypeMap;
 
 import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileFilter;
+import java.io.FileDescriptor;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.text.DecimalFormat;
-import java.util.Comparator;
 
 import okhttp3.ResponseBody;
 
 public class FileUtils {
     public static final String DOCUMENTS_DIR = "documents";
-    // configured android:authorities in AndroidManifest (https://developer.android.com/reference/android/support/v4/content/FileProvider)
-    public static final String AUTHORITY =  "YOUR_AUTHORITY.provider";
+    public static final String AUTHORITY = "YOUR_AUTHORITY.provider";
     public static final String HIDDEN_PREFIX = ".";
-    /**
-     * TAG for log messages.
-     */
+
     static final String TAG = "FileUtils";
     private static final boolean DEBUG = false; // Set to true to enable logging
-    /**
-     * File and folder comparator. TODO Expose sorting option method
-     */
-    public static Comparator<File> sComparator = (f1, f2) -> {
-        // Sort alphabetically by lower case, which is much cleaner
-        return f1.getName().toLowerCase().compareTo(
-                f2.getName().toLowerCase());
-    };
-    /**
-     * File (not directories) filter.
-     */
-    public static FileFilter sFileFilter = file -> {
-        final String fileName = file.getName();
-        // Return files only (not directories) and skip hidden files
-        return file.isFile() && !fileName.startsWith(HIDDEN_PREFIX);
-    };
-    /**
-     * Folder (directories) filter.
-     */
-    public static FileFilter sDirFilter = file -> {
-        final String fileName = file.getName();
-        // Return directories only and skip hidden directories
-        return file.isDirectory() && !fileName.startsWith(HIDDEN_PREFIX);
-    };
+
 
     private FileUtils() {
-    } //private constructor to enforce Singleton pattern
+    }
 
-    /**
-     * Gets the extension of a file name, like ".png" or ".jpg".
-     *
-     * @param uri
-     * @return Extension including the dot("."); "" if there is no extension;
-     * null if uri was null.
-     */
     public static String getExtension(String uri) {
         if (uri == null) {
             return null;
@@ -107,9 +64,7 @@ public class FileUtils {
         }
     }
 
-    /**
-     * @return Whether the URI is a local one.
-     */
+
     public static boolean isLocal(String url) {
         return url != null && !url.startsWith("http://") && !url.startsWith("https://");
     }
@@ -260,7 +215,7 @@ public class FileUtils {
                 final int column_index = cursor.getColumnIndexOrThrow(column);
                 return cursor.getString(column_index);
             }
-        }  catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         } finally {
             if (cursor != null)
@@ -342,7 +297,8 @@ public class FileUtils {
                         if (path != null) {
                             return path;
                         }
-                    } catch (Exception e) {}
+                    } catch (Exception e) {
+                    }
                 }
 
                 // path could not be retrieved using ContentResolver, therefore copy file to accessible cache using streams
@@ -534,7 +490,7 @@ public class FileUtils {
     }
 
     private static void logDir(File dir) {
-        if(!DEBUG) return;
+        if (!DEBUG) return;
         Log.d(TAG, "Dir=" + dir);
         File[] files = dir.listFiles();
         for (File file : files) {
@@ -691,30 +647,53 @@ public class FileUtils {
         return File.createTempFile(fileName, ".jpg", storageDir);
     }
 
-    public static String getFileName(@NonNull Context context, Uri uri) {
-        String mimeType = context.getContentResolver().getType(uri);
-        String filename = null;
+//    public static String getFileName(@NonNull Context context, Uri uri) {
+//        String mimeType = context.getContentResolver().getType(uri);
+//        String filename = null;
+//
+//        if (mimeType == null && context != null) {
+//            String path = getPath(context, uri);
+//            if (path == null) {
+//                filename = getName(uri.toString());
+//            } else {
+//                File file = new File(path);
+//                filename = file.getName();
+//            }
+//        } else {
+//            Cursor returnCursor = context.getContentResolver().query(uri, null,
+//                    null, null, null);
+//            if (returnCursor != null) {
+//                int nameIndex = returnCursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
+//                returnCursor.moveToFirst();
+//                filename = returnCursor.getString(nameIndex);
+//                returnCursor.close();
+//            }
+//        }
+//
+//        return filename;
+//    }
 
-        if (mimeType == null && context != null) {
-            String path = getPath(context, uri);
-            if (path == null) {
-                filename = getName(uri.toString());
-            } else {
-                File file = new File(path);
-                filename = file.getName();
-            }
-        } else {
-            Cursor returnCursor = context.getContentResolver().query(uri, null,
-                    null, null, null);
-            if (returnCursor != null) {
-                int nameIndex = returnCursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
-                returnCursor.moveToFirst();
-                filename = returnCursor.getString(nameIndex);
-                returnCursor.close();
+
+    public static String getFileName(Context context, Uri uri) {
+        String result = null;
+        if (uri.getScheme().equals("content")) {
+            Cursor cursor = context.getContentResolver().query(uri, null, null, null, null);
+            try {
+                if (cursor != null && cursor.moveToFirst()) {
+                    result = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
+                }
+            } finally {
+                cursor.close();
             }
         }
-
-        return filename;
+        if (result == null) {
+            result = uri.getPath();
+            int cut = result.lastIndexOf('/');
+            if (cut != -1) {
+                result = result.substring(cut + 1);
+            }
+        }
+        return result;
     }
 
     public static String getName(String filename) {
@@ -728,7 +707,7 @@ public class FileUtils {
     public static String getBase64FromURI(Context context, Uri uri) {
         String base64 = "";
         try {
-            File file = getFile(context,uri);
+            File file = getFile(context, uri);
 
             Log.e(TAG, "file path Canonical--->" + file.getCanonicalPath());
             Log.e(TAG, "file path--->" + file.getPath());
@@ -743,6 +722,59 @@ public class FileUtils {
         }
         return base64;
     }
+
+
+    public static String readTextFromUri(Context context, Uri uri) throws IOException {
+
+        ParcelFileDescriptor parcelFileDescriptor =
+                context.getContentResolver().openFileDescriptor(uri, "r");
+        FileDescriptor fileDescriptor = parcelFileDescriptor.getFileDescriptor();
+        FileInputStream fileInputStream =
+                new FileInputStream(parcelFileDescriptor.getFileDescriptor());
+
+        InputStream inputStream = context.getContentResolver().openInputStream(uri);
+        BufferedReader reader = new BufferedReader(new InputStreamReader(
+                inputStream));
+        StringBuilder stringBuilder = new StringBuilder();
+        String line;
+        while ((line = reader.readLine()) != null) {
+            stringBuilder.append(line);
+        }
+        fileInputStream.close();
+        parcelFileDescriptor.close();
+        return stringBuilder.toString();
+    }
+
+
+    public static void saveFile(Context context, Uri uri, String base64File) {
+
+        String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/d-health";
+
+        File dir = new File(path);
+        if (!dir.exists())
+            dir.mkdirs();
+
+        File pdfFile = new File(dir, getFileName(context, uri));
+
+
+        Log.e("--------->", getFileName(context, uri) +"/" + getFileName(context, uri));
+
+        byte[] pdfAsBytes = Base64.decode(base64File, 0);
+        FileOutputStream os;
+        try {
+            os = new FileOutputStream(pdfFile, false);
+            os.write(pdfAsBytes);
+            os.flush();
+            os.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
 
 
 }

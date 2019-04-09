@@ -35,6 +35,9 @@ public class DashboardScreen extends AppCompatActivity {
     private String title = "Profile";
     private Toolbar toolbar;
 
+    public static void updateDrawerDP() {
+//        iv_dp.setImageBitmap(Utils.decodeBase64(PreferenceManager.getINSTANCE().readFromPref(this, PreferenceKeys.SP_PROFILEPIC, "")));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -134,7 +137,6 @@ public class DashboardScreen extends AppCompatActivity {
 
 
     }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

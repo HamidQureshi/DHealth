@@ -83,8 +83,6 @@ public class ReportsFragment extends Fragment implements View.OnClickListener {
             }
         });
         populateList();
-
-
     }
 
 
@@ -196,9 +194,17 @@ public class ReportsFragment extends Fragment implements View.OnClickListener {
 
 
     private void populateList() {
-        mViewModel.deleteReportData();
-        Report report = new Report("Diabetic Report", "abc", "john", "Jhonny Depp", "10/20/2012", "10/20/2012", "report diabetic etc", "Pending");
-        mViewModel.insert(report);
+        //TODO get reportlist from server
+
+        //get reports from http
+        //delete all reports in db
+        //        mViewModel.deleteReportData();
+
+        //insert into db
+        //        mViewModel.insert(report);
+// can be inserted in the form of list
+
+//        Report report = new Report("Diabetic Report", "abc", "john", "Jhonny Depp", "10/20/2012", "10/20/2012", "report diabetic etc", "Pending");
     }
 
 

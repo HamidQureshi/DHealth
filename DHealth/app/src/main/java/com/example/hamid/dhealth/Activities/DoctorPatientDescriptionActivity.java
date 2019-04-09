@@ -29,7 +29,6 @@ public class DoctorPatientDescriptionActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
@@ -37,7 +36,6 @@ public class DoctorPatientDescriptionActivity extends AppCompatActivity {
 
         if (PreferenceManager.getINSTANCE().readFromPref(this, PreferenceKeys.SP_PROFILE_TYPE, PreferenceKeys.LBL_DOCTOR).equalsIgnoreCase(PreferenceKeys.LBL_DOCTOR)) {
             Patient patient = (Patient) getIntent().getSerializableExtra(DATA);
-
             if (patient != null) {
                 et_name.setText(patient.getFirst_name());
                 et_last_name.setText(patient.getLast_name());
@@ -46,11 +44,9 @@ public class DoctorPatientDescriptionActivity extends AppCompatActivity {
                 et_address.setText(patient.getAddress());
                 et_dob.setText(patient.getDate_of_birth());
                 iv_dp.setImageBitmap(Utils.decodeBase64(patient.getDp()));
-
             }
         } else {
             Doctor doctor = (Doctor) getIntent().getSerializableExtra(DATA);
-
             if (doctor != null) {
                 et_name.setText(doctor.getFirst_name());
                 et_last_name.setText(doctor.getLast_name());
@@ -59,15 +55,12 @@ public class DoctorPatientDescriptionActivity extends AppCompatActivity {
                 et_address.setText(doctor.getAddress());
                 et_dob.setText(doctor.getDate_of_birth());
                 iv_dp.setImageBitmap(Utils.decodeBase64(doctor.getDp()));
-
             }
         }
-
 
     }
 
     private void initLayouts() {
-
         iv_dp = (ImageView) findViewById(R.id.iv_dp);
         et_name = (TextView) findViewById(R.id.et_name);
         et_last_name = (TextView) findViewById(R.id.et_last_name);
@@ -75,8 +68,6 @@ public class DoctorPatientDescriptionActivity extends AppCompatActivity {
         et_phone = (TextView) findViewById(R.id.et_phone);
         et_address = (TextView) findViewById(R.id.et_address);
         et_dob = (TextView) findViewById(R.id.et_dob);
-
-
     }
 
     @Override

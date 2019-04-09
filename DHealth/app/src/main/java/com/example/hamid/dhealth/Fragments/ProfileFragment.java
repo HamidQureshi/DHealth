@@ -32,6 +32,7 @@ import android.widget.Toast;
 import com.example.activeledgersdk.ActiveLedgerSDK;
 import com.example.activeledgersdk.utility.Utility;
 import com.example.hamid.dhealth.ActiveLedgerHelper;
+import com.example.hamid.dhealth.Activities.DashboardScreen;
 import com.example.hamid.dhealth.MedicalRepository.DataRepository;
 import com.example.hamid.dhealth.MedicalRepository.HTTP.HttpClient;
 import com.example.hamid.dhealth.Preference.PreferenceKeys;
@@ -69,7 +70,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     private String encryption = PreferenceKeys.LBL_RSA;
     private Disposable disposable;
     private ProgressBar progressBar;
-
 
 
     public static ProfileFragment newInstance() {
@@ -203,8 +203,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
             case R.id.btn_submit:
 
                 progressBar.setVisibility(View.VISIBLE);
-                updateUserTransaction(et_name.getText().toString(),et_last_name.getText().toString(),et_dob.getText().toString(),et_phone.getText().toString(),
-                        et_address.getText().toString(),PreferenceManager.getINSTANCE().readFromPref(getActivity(), PreferenceKeys.SP_PROFILEPIC, ""));
+                updateUserTransaction(et_name.getText().toString(), et_last_name.getText().toString(), et_dob.getText().toString(), et_phone.getText().toString(),
+                        et_address.getText().toString(), PreferenceManager.getINSTANCE().readFromPref(getActivity(), PreferenceKeys.SP_PROFILEPIC, ""));
 
                 break;
 
@@ -329,6 +329,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                     photo = ImageUtils.scaleDownBitmap(photo, getActivity());
                     iv_dp.setImageBitmap(photo);
                     PreferenceManager.getINSTANCE().writeToPref(getActivity(), PreferenceKeys.SP_PROFILEPIC, Utils.encodeTobase64(photo));
+                    ((DashboardScreen) getActivity()).updateDrawerDP();
                 }
 
                 break;
@@ -339,6 +340,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                         Bitmap photo = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), selectedImage);
                         photo = ImageUtils.scaleDownBitmap(photo, getActivity());
                         PreferenceManager.getINSTANCE().writeToPref(getActivity(), PreferenceKeys.SP_PROFILEPIC, Utils.encodeTobase64(photo));
+                        ((DashboardScreen) getActivity()).updateDrawerDP();
                         iv_dp.setImageBitmap(photo);
                     } catch (IOException e) {
                         iv_dp.setImageURI(selectedImage);
@@ -366,7 +368,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-    public void showAlertDialog(){
+    public void showAlertDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         builder.setMessage("Are you sure you want to Logout?");
@@ -411,9 +413,11 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
 
         ActiveLedgerSDK.KEYNAME = ActiveLedgerHelper.getInstance().getKeyname();
+        ActiveLedgerSDK.getInstance().setKeyType(ActiveLedgerHelper.getInstance().getKeyType());
 
-        JSONObject updateUserTransaction = ActiveLedgerHelper.getInstance().createUpdateUserTransaction(null, ActiveLedgerSDK.getInstance().getKeyType(), first_name, last_name,
-                date_of_birth, phone_number, address, dp);
+
+        JSONObject updateUserTransaction = ActiveLedgerHelper.getInstance().createUpdateUserTransaction(null, ActiveLedgerHelper.getInstance().getKeyType(), first_name, last_name,
+                date_of_birth, phone_number, address, "");
 
         String transactionString = Utility.getInstance().convertJSONObjectToString(updateUserTransaction);
 
@@ -445,12 +449,12 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                         if (response.code() == 200) {
                             updatePref();
                             Utils.Log("UpdateUser response--->", response.body() + "");
+                            iv_camera.setVisibility(View.INVISIBLE);
                             btn_submit.setVisibility(View.INVISIBLE);
                             btn_logout.setVisibility(View.INVISIBLE);
-                            Toast.makeText(getActivity(),"User Updated Successfully!",Toast.LENGTH_SHORT);
-                        }
-                        else{
-                            Toast.makeText(getActivity(),"User Updated Failed!",Toast.LENGTH_SHORT);
+                            Toast.makeText(getActivity(), "User Updated Successfully!", Toast.LENGTH_LONG);
+                        } else {
+                            Toast.makeText(getActivity(), "User Updated Failed!", Toast.LENGTH_LONG);
                         }
                     }
                 });

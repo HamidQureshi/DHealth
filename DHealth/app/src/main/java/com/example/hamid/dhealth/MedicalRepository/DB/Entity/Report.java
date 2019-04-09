@@ -21,7 +21,6 @@ public class Report implements Serializable {
     private String uploadedDate;
     private String signDate;
     private String content;
-
     private String status;
 
     public Report(String title, String description, String ownership, String assignedTo, String uploadedDate, String signDate, String content, String status) {

@@ -78,8 +78,7 @@ public class SignUpScreen extends AppCompatActivity {
                     return;
                 }
 
-                if(! Patterns.EMAIL_ADDRESS.matcher(email).matches())
-                {
+                if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
                     Toast.makeText(getApplicationContext(), "Enter valid email address!", Toast.LENGTH_SHORT).show();
                     return;
                 }

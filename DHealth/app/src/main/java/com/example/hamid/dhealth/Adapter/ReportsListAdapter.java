@@ -50,9 +50,7 @@ public class ReportsListAdapter extends RecyclerView.Adapter<ReportsListAdapter.
     public void onBindViewHolder(final ReportsListAdapter.ViewHolder holder, int position) {
         Report report = reportList.get(position);
         holder.tv_name.setText(report.getOwnership());
-
-        // loading album cover using Glide library
-//        Glide.with(mContext).load(album.getThumbnail()).into(holder.thumbnail);
+        holder.tv_title.setText(report.getTitle());
 
     }
 
@@ -73,7 +71,7 @@ public class ReportsListAdapter extends RecyclerView.Adapter<ReportsListAdapter.
 
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        public TextView tv_name;
+        public TextView tv_name,tv_title;
         public ImageView iv_display;
 
         private ReportsListAdapter.ViewHolder.IItemClickListener itemClickListener;
@@ -84,6 +82,7 @@ public class ReportsListAdapter extends RecyclerView.Adapter<ReportsListAdapter.
 
             tv_name = (TextView) view.findViewById(R.id.tv_name);
             iv_display = (ImageView) view.findViewById(R.id.iv_dp);
+            tv_title = (TextView)  view.findViewById(R.id.tv_title);
 
             this.itemClickListener = itemClickListener;
             view.setOnClickListener(this);

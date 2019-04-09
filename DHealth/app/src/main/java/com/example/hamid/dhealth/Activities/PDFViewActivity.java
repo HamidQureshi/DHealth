@@ -30,7 +30,7 @@ public class PDFViewActivity extends AppCompatActivity implements OnPageChangeLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pdfview);
         Bundle bundle = getIntent().getExtras();
-        if(bundle!=null){
+        if (bundle != null) {
             URI = Uri.parse(bundle.getString("URI"));
         }
         init();
@@ -38,8 +38,8 @@ public class PDFViewActivity extends AppCompatActivity implements OnPageChangeLi
 
     private void init() {
         pdfView = (PDFView) findViewById(R.id.pdfView);
-        position = getIntent().getIntExtra("position",-1);
-                displayFromSdcard();
+        position = getIntent().getIntExtra("position", -1);
+        displayFromSdcard();
     }
 
     private void displayFromSdcard() {

@@ -20,11 +20,12 @@ public class Patient implements Serializable {
     private String phone_number;
     private String gender;
     private String dp;
+    private String identity;
 //    private String disease;
 //    private String doctor;
 //    private String hospital;
 
-    public Patient(String first_name, String last_name, @NonNull String email, String date_of_birth, String address, String phone_number, String gender, String dp) {
+    public Patient(String first_name, String last_name, @NonNull String email, String date_of_birth, String address, String phone_number, String gender, String dp, String identity) {
         this.first_name = first_name;
         this.last_name = last_name;
         this.email = email;
@@ -33,6 +34,7 @@ public class Patient implements Serializable {
         this.phone_number = phone_number;
         this.gender = gender;
         this.dp = dp;
+        this.identity = identity;
     }
 
     public int getId() {
@@ -106,6 +108,14 @@ public class Patient implements Serializable {
 
     public void setDp(String dp) {
         this.dp = dp;
+    }
+
+    public String getIdentity() {
+        return identity;
+    }
+
+    public void setIdentity(String identity) {
+        this.identity = identity;
     }
 
 }

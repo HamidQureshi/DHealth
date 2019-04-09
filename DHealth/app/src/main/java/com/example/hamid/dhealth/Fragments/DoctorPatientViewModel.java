@@ -7,12 +7,21 @@ import android.arch.lifecycle.LiveData;
 import com.example.hamid.dhealth.MedicalRepository.DB.Entity.Doctor;
 import com.example.hamid.dhealth.MedicalRepository.DB.Entity.Patient;
 import com.example.hamid.dhealth.MedicalRepository.DataRepository;
+import com.example.hamid.dhealth.Preference.PreferenceKeys;
+import com.example.hamid.dhealth.Preference.PreferenceManager;
 
 import java.util.List;
 
 public class DoctorPatientViewModel extends AndroidViewModel {
 
     private DataRepository repository;
+
+    public LiveData<List<Doctor>> getDoctor_list() {
+        if (doctor_list.getValue() == null){
+            getDoctorListFromServer(PreferenceManager.getINSTANCE().readFromPref(getApplication(), PreferenceKeys.SP_APP_TOKEN, "null"));
+        }
+        return doctor_list;
+    }
 
     private LiveData<List<Doctor>> doctor_list;
 
@@ -26,7 +35,7 @@ public class DoctorPatientViewModel extends AndroidViewModel {
         patient_list = repository.getPatientList();
     }
 
-    LiveData<List<Doctor>> getDoctorList() {
+    public LiveData<List<Doctor>> getDoctorList() {
         return doctor_list;
     }
 

@@ -79,5 +79,8 @@ public class HttpClient {
         return apiService.getPatientList(token);
     }
 
+    public Observable<Response<String>> getAssignedPatientListFromServer(String token) {
+        return apiService.getAssignedPatientList(token);
+    }
 
 }

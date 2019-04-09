@@ -54,7 +54,7 @@ public class DoctorPatientFragment extends Fragment {
         if (PreferenceManager.getINSTANCE().readFromPref(getActivity(), PreferenceKeys.SP_PROFILE_TYPE, PreferenceKeys.LBL_DOCTOR).equalsIgnoreCase(PreferenceKeys.LBL_DOCTOR)) {
             patientList = mViewModel.getPatientList().getValue();
             doctorList = new ArrayList<>();
-        }else{
+        } else {
             patientList = new ArrayList<>();
             doctorList = mViewModel.getDoctorList().getValue();
         }

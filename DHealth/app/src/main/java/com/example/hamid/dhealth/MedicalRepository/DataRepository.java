@@ -98,10 +98,14 @@ public class DataRepository {
 
                         if (response.code() == 200) {
 
+                            deleteAllDoctor();
 
                             JSONObject responseObj = null;
                             try {
                                 responseObj = new JSONObject(response.body());
+
+                                Utils.Log("doctorlist resp--->", response.body() + "");
+
 
                                 JSONArray doctorsArray = responseObj.optJSONArray("streams");
 
@@ -118,14 +122,15 @@ public class DataRepository {
                                     String phone_number = jsonobject.optString("phone_number");
                                     String gender = jsonobject.optString("gender");
                                     String dp = jsonobject.optString("dp");
+                                    String identity = jsonobject.optString("_id");
 
-                                    Log.e("doctorlist code--->", email);
+                                    Log.e("doctorlist email--->", email);
+                                    Log.e("doctorlist identity--->", identity);
 
-                                    Doctor doctor = new Doctor(first_name, last_name, email, date_of_birth, address, phone_number, gender, dp);
+                                    Doctor doctor = new Doctor(first_name, last_name, email, date_of_birth, address, phone_number, gender, dp,identity);
                                     doctorList.add(doctor);
                                 }
 
-                                deleteAllDoctor();
                                 insertDoctorList(doctorList);
 
                             } catch (JSONException e) {
@@ -138,14 +143,12 @@ public class DataRepository {
                     }
                 });
 
-        //update database and everything should update automatically
     }
 
     public void getPatientListFromServer(String token) {
 
-        Utils.Log("patientlist--->", "");
-        //fetch data from server
         HttpClient.getInstance().getPatientListFromServer(token)
+//        HttpClient.getInstance().getAssignedPatientListFromServer(token)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<Response<String>>() {
@@ -157,6 +160,7 @@ public class DataRepository {
 
                     @Override
                     public void onError(Throwable e) {
+                        e.printStackTrace();
                     }
 
                     @Override
@@ -189,8 +193,12 @@ public class DataRepository {
                                     String phone_number = jsonobject.optString("phone_number");
                                     String gender = jsonobject.optString("gender");
                                     String dp = jsonobject.optString("dp");
+                                    String identity = jsonobject.optString("_id");
 
-                                    Patient patient = new Patient(first_name, last_name, email, date_of_birth, address, phone_number, gender, dp);
+                                    Log.e("patientlist email--->", email);
+                                    Log.e("patientlist identity-->", identity);
+
+                                    Patient patient = new Patient(first_name, last_name, email, date_of_birth, address, phone_number, gender, dp, identity);
                                     patientList.add(patient);
                                 }
 
@@ -206,7 +214,6 @@ public class DataRepository {
                     }
                 });
 
-        //update database and everything should update automatically
     }
 
     public List<Report> searchReportList(String name) {
