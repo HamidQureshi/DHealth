@@ -197,6 +197,7 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
         }
     }
 
+
     public void submitProfile() {
 
         updatePref();
@@ -313,7 +314,7 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
     private void generateKeys(String first_name, String last_name, String email,
                               String date_of_birth, String phone_number, String address, String security, String profile_type, String gender, String dp) {
 
-        ActiveLedgerSDK.getInstance().generateAndSetKeyPair(ActiveLedgerHelper.getInstance().getKeyType(), true)
+        ActiveLedgerSDK.getInstance().generateAndSetKeyPair(ActiveLedgerHelper.getInstance().getKeyType(), true, email)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<KeyPair>() {
@@ -333,8 +334,8 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
 
                         try {
                             ActiveLedgerSDK.getInstance().setKeyType(ActiveLedgerHelper.getInstance().getKeyType());
-                            ActiveLedgerHelper.getInstance().setPublickey(ActiveLedgerSDK.readFileAsString((Utility.PUBLICKEY_FILE)));
-                            ActiveLedgerHelper.getInstance().setPrivatekey(ActiveLedgerSDK.readFileAsString((Utility.PRIVATEKEY_FILE)));
+                            ActiveLedgerHelper.getInstance().setPublickey(ActiveLedgerSDK.readFileAsString((Utility.getPublicKeyFileName(email))));
+                            ActiveLedgerHelper.getInstance().setPrivatekey(ActiveLedgerSDK.readFileAsString((Utility.getPrivateKeyFileName(email))));
 
                             if (ActiveLedgerHelper.getInstance().getKey_Pair() != null) {
                                 onboardKeys(first_name, last_name, email,
@@ -400,7 +401,7 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
 
                                 JSONObject responseJSON = new JSONObject(response.body());
 
-                                JSONObject stream = responseJSON.optJSONObject("stream");
+                                JSONObject stream = responseJSON.optJSONObject("streams");
                                 if (stream != null) {
                                     String identity = stream.optString("_id");
                                     PreferenceManager.getINSTANCE().writeToPref(ProfileScreen.this, PreferenceKeys.SP_IDENTITY, identity);

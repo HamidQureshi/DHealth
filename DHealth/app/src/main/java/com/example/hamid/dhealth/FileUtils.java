@@ -1,11 +1,9 @@
 package com.example.hamid.dhealth;
 
 
-import android.Manifest;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.net.Uri;
@@ -17,7 +15,6 @@ import android.provider.MediaStore;
 import android.provider.OpenableColumns;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.util.Base64;
 import android.util.Log;
@@ -746,7 +743,7 @@ public class FileUtils {
     }
 
 
-    public static void saveFile(Context context, Uri uri, String base64File) {
+    public static Uri saveFile(String fileName, String base64File) {
 
         String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/d-health";
 
@@ -754,10 +751,7 @@ public class FileUtils {
         if (!dir.exists())
             dir.mkdirs();
 
-        File pdfFile = new File(dir, getFileName(context, uri));
-
-
-        Log.e("--------->", getFileName(context, uri) +"/" + getFileName(context, uri));
+        File pdfFile = new File(dir, fileName);
 
         byte[] pdfAsBytes = Base64.decode(base64File, 0);
         FileOutputStream os;
@@ -772,9 +766,16 @@ public class FileUtils {
             e.printStackTrace();
         }
 
+        return Uri.fromFile(pdfFile);
     }
 
+    public static String uriToString(Uri uri) {
+        return uri.toString();
+    }
 
+    public static Uri stringToURI(String uri) {
+        return Uri.parse(uri);
+    }
 
 
 }

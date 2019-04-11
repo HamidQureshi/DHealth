@@ -22,8 +22,11 @@ public class Report implements Serializable {
     private String signDate;
     private String content;
     private String status;
+    private String uri;
+    private String doctors;
+    private String fileName;
 
-    public Report(String title, String description, String ownership, String assignedTo, String uploadedDate, String signDate, String content, String status) {
+    public Report(String title, String description, String ownership, String assignedTo, String uploadedDate, String signDate, String content, String status, String uri, String doctors, String fileName) {
         this.title = title;
         this.description = description;
         this.ownership = ownership;
@@ -32,6 +35,9 @@ public class Report implements Serializable {
         this.signDate = signDate;
         this.content = content;
         this.status = status;
+        this.uri = uri;
+        this.doctors = doctors;
+        this.fileName = fileName;
     }
 
     public String getTitle() {
@@ -104,6 +110,30 @@ public class Report implements Serializable {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getUri() {
+        return uri;
+    }
+
+    public void setUri(String uri) {
+        this.uri = uri;
+    }
+
+    public String getDoctors() {
+        return doctors;
+    }
+
+    public void setDoctors(String doctors) {
+        this.doctors = doctors;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
     }
 
 }

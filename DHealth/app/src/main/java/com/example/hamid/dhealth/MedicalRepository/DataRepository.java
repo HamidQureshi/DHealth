@@ -127,7 +127,7 @@ public class DataRepository {
                                     Log.e("doctorlist email--->", email);
                                     Log.e("doctorlist identity--->", identity);
 
-                                    Doctor doctor = new Doctor(first_name, last_name, email, date_of_birth, address, phone_number, gender, dp,identity);
+                                    Doctor doctor = new Doctor(first_name, last_name, email, date_of_birth, address, phone_number, gender, dp, identity);
                                     doctorList.add(doctor);
                                 }
 

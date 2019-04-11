@@ -1,15 +1,11 @@
 package com.example.hamid.dhealth.Activities;
 
-import android.Manifest;
 import android.app.Activity;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -36,6 +32,7 @@ import com.example.hamid.dhealth.Preference.PreferenceManager;
 import com.example.hamid.dhealth.R;
 import com.example.hamid.dhealth.Utils.Utils;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -55,7 +52,7 @@ public class UploadFileActivity extends AppCompatActivity {
     private static final int READ_REQUEST_CODE = 42;
     private static final int WRITE_REQUEST_CODE = 43;
     static Uri uri = null;
-    EditText  et_title, et_uploaddate, et_signeddate, et_description, et_content;
+    EditText et_title, et_uploaddate, et_signeddate, et_description, et_content;
     MultiSelectSpinner et_assigned_to;
     TextView tv_staus, tv_document, et_name;
     Report report = null;
@@ -64,6 +61,8 @@ public class UploadFileActivity extends AppCompatActivity {
     private ProgressBar progressBar;
     private DoctorPatientViewModel mViewModel;
     private ArrayList<String> doctors_array = new ArrayList<>();
+    private JSONArray obj_doctors_array = new JSONArray();
+//    private JSONObject obj_doctors = new JSONObject();
 
 
     @Override
@@ -72,8 +71,8 @@ public class UploadFileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_upload_file);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        setTitle("File Upload Activity");
         mViewModel = ViewModelProviders.of(this).get(DoctorPatientViewModel.class);
-
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -105,7 +104,7 @@ public class UploadFileActivity extends AppCompatActivity {
                 options.clear();
 
                 for (int i = 0; i < doctors.size(); i++) {
-                    options.add(doctors.get(i).getFirst_name() + " " +doctors.get(i).getLast_name());
+                    options.add(doctors.get(i).getFirst_name() + " " + doctors.get(i).getLast_name());
                     Log.e("--->", doctors.get(i).getFirst_name());
                 }
 
@@ -117,12 +116,20 @@ public class UploadFileActivity extends AppCompatActivity {
                         .setListener(new MultiSelectSpinner.MultiSpinnerListener() {
                             @Override
                             public void onItemsSelected(boolean[] selected) {
+
                                 doctors_array.clear();
-                                for(int i=0;i<selected.length ;i++) {
-                                    if (selected[i]){
-                                        doctors_array.add(""+doctors.get(i).getIdentity());
+                                for (int i = 0; i < selected.length; i++) {
+                                    if (selected[i]) {
+                                        doctors_array.add("" + doctors.get(i).getIdentity());
+                                        obj_doctors_array.put("" + doctors.get(i).getIdentity());
                                     }
                                 }
+//                                try {
+//                                    obj_doctors.put("doctors",obj_doctors_array);
+//                                } catch (JSONException e) {
+//                                    e.printStackTrace();
+//                                }
+                                Log.e("------->", doctors_array.toString());
                             }
                         })
                         .setAllCheckedText("All")
@@ -139,9 +146,9 @@ public class UploadFileActivity extends AppCompatActivity {
     private void initLayout() {
 
         et_name = (TextView) findViewById(R.id.et_name);
-        String firstName = PreferenceManager.getINSTANCE().readFromPref(this,PreferenceKeys.SP_NAME,"");
-        String lastName = PreferenceManager.getINSTANCE().readFromPref(this,PreferenceKeys.SP_LAST_NAME,"");
-        et_name.setText(firstName+" "+lastName);
+        String firstName = PreferenceManager.getINSTANCE().readFromPref(this, PreferenceKeys.SP_NAME, "");
+        String lastName = PreferenceManager.getINSTANCE().readFromPref(this, PreferenceKeys.SP_LAST_NAME, "");
+        et_name.setText(firstName + " " + lastName);
         et_title = (EditText) findViewById(R.id.et_title);
         et_uploaddate = (EditText) findViewById(R.id.et_uploaddate);
         et_assigned_to = (MultiSelectSpinner) findViewById(R.id.et_assigned_to);
@@ -177,20 +184,17 @@ public class UploadFileActivity extends AppCompatActivity {
 
         progressBar.setVisibility(View.VISIBLE);
 
-        if(uri == null){
-            Toast.makeText(this,"Select a File first",Toast.LENGTH_LONG);
+        if (uri == null) {
+            Toast.makeText(this, "Select a File first", Toast.LENGTH_SHORT).show();
             return;
         }
 
         String title = et_title.getText().toString();
         String name = et_name.getText().toString();
         String uploaddate = et_uploaddate.getText().toString();
-        String assignedto = ""; //et_assigned_to.getText().toString();
         String signeddate = et_signeddate.getText().toString();
         String description = et_description.getText().toString();
-        String content = et_content.getText().toString();
         String status = tv_staus.getText().toString();
-        report = new Report(title, description, name, assignedto, uploaddate, signeddate, content, status);
 
         //convert the contents to base 64
         base64File = FileUtils.getBase64FromURI(this, uri);
@@ -198,8 +202,10 @@ public class UploadFileActivity extends AppCompatActivity {
 
         String fileName = FileUtils.getFileName(this, uri);
 
+        report = new Report(title, description, name, "", uploaddate, signeddate, base64File, status, FileUtils.uriToString(uri), obj_doctors_array.toString(), fileName);
+
         //send the report to ledger
-        uploadReport(name, title, status, uploaddate, assignedto, signeddate, description, "", fileName, doctors_array);
+        uploadReport(name, title, status, uploaddate, "", signeddate, description, base64File, fileName, doctors_array, PreferenceManager.getINSTANCE().readFromPref(this, PreferenceKeys.SP_EMAIL, ""));
 
     }
 
@@ -211,7 +217,6 @@ public class UploadFileActivity extends AppCompatActivity {
 //        intent.setType("image/*");
         intent.setType("application/pdf");
 //        intent.setType("*/*");
-
 
         startActivityForResult(intent, READ_REQUEST_CODE);
     }
@@ -232,26 +237,9 @@ public class UploadFileActivity extends AppCompatActivity {
                         tv_document.setText(FileUtils.getFileName(this, uri));
 
                         Log.i(TAG, "FileContent: " + FileUtils.readTextFromUri(this, uri));
-                        openPDF(uri);
+                        openPDF(FileUtils.getFileName(this, uri), uri);
 
-                        //convert the contents to base 64
-                        base64File = FileUtils.getBase64FromURI(this, uri);
-                        Log.e(TAG, "file--> " + base64File);
-
-
-//                        //convert back from base 64
-//                        //create a pdf file with diff name
-                        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                                != PackageManager.PERMISSION_GRANTED) {
-                            // Permission is not granted
-
-                        ActivityCompat.requestPermissions(this,
-                                new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                                WRITE_REQUEST_CODE);
-                        }
-                        else{
-                            FileUtils.saveFile(this, uri, base64File);
-                        }
+                        //TODO give read permissions already given at some point
 
 
                     } catch (IOException e) {
@@ -262,30 +250,13 @@ public class UploadFileActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           String[] permissions, int[] grantResults) {
-        switch (requestCode) {
-            case WRITE_REQUEST_CODE: {
-                // If request is cancelled, the result arrays are empty.
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    FileUtils.saveFile(this, uri, base64File);
 
-                } else {
-                    Toast.makeText(this, "Writing permission denied",Toast.LENGTH_LONG);
-                }
-                return;
-            }
-
-        }
-    }
-
-
-    private void openPDF(Uri uri) {
+    private void openPDF(String fileName, Uri uri) {
         Intent intent = new Intent(this, PDFViewActivity.class);
         Bundle bundle = new Bundle();
         bundle.putString("URI", uri.toString());
+        bundle.putString("filename", fileName);
+        bundle.putBoolean("showAttachButton", true);
         intent.putExtras(bundle);
         //TODO should be start activity for result
         startActivity(intent);
@@ -293,14 +264,14 @@ public class UploadFileActivity extends AppCompatActivity {
 
 
     public void uploadReport(String name, String title, String status, String uploaddate, String assignedto,
-                             String signeddate, String description, String base64document, String documentName, ArrayList<String> doctors_array) {
+                             String signeddate, String description, String base64document, String documentName, ArrayList<String> doctors_array, String email) {
 
 
         ActiveLedgerSDK.KEYNAME = ActiveLedgerHelper.getInstance().getKeyname();
         ActiveLedgerSDK.keyType = ActiveLedgerHelper.getInstance().getKeyType();
 
         JSONObject uploadReportTransaction = ActiveLedgerHelper.getInstance().createUploadReportTransaction(null, ActiveLedgerSDK.getInstance().getKeyType(), name, title,
-                status, uploaddate, assignedto, signeddate, description, base64document, documentName,doctors_array);
+                status, uploaddate, assignedto, signeddate, description, base64document, documentName, doctors_array, email);
 
         String transactionString = Utility.getInstance().convertJSONObjectToString(uploadReportTransaction);
 
@@ -332,7 +303,7 @@ public class UploadFileActivity extends AppCompatActivity {
                         if (response.code() == 200) {
                             Utils.Log("UploadReport res--->", response.body() + "");
 
-                            Toast.makeText(UploadFileActivity.this, "Report Uploaded Successfully!", Toast.LENGTH_LONG);
+                            Toast.makeText(UploadFileActivity.this, "Report Uploaded Successfully!", Toast.LENGTH_SHORT).show();
 
                             //add the report to db if response is 200
                             DataRepository dataRepository = DataRepository.getINSTANCE(getApplication());
@@ -341,7 +312,7 @@ public class UploadFileActivity extends AppCompatActivity {
                             finish();
 
                         } else {
-                            Toast.makeText(UploadFileActivity.this, "Report Uploading  Failed!", Toast.LENGTH_LONG);
+                            Toast.makeText(UploadFileActivity.this, "Report Uploading  Failed!", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

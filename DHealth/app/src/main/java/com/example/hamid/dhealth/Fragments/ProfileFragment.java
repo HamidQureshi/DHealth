@@ -204,7 +204,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
                 progressBar.setVisibility(View.VISIBLE);
                 updateUserTransaction(et_name.getText().toString(), et_last_name.getText().toString(), et_dob.getText().toString(), et_phone.getText().toString(),
-                        et_address.getText().toString(), PreferenceManager.getINSTANCE().readFromPref(getActivity(), PreferenceKeys.SP_PROFILEPIC, ""));
+                        et_address.getText().toString(), PreferenceManager.getINSTANCE().readFromPref(getActivity(), PreferenceKeys.SP_PROFILEPIC, ""), et_email.getText().toString());
 
                 break;
 
@@ -252,7 +252,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
         if (id == R.id.edit) {
 
-            Toast.makeText(getActivity(), "Profile Editing Enabled", Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), "Profile Editing Enabled", Toast.LENGTH_SHORT).show();
 
             btn_submit.setVisibility(View.VISIBLE);
             btn_logout.setVisibility(View.VISIBLE);
@@ -357,12 +357,12 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == MY_CAMERA_PERMISSION_CODE) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(getActivity(), "camera permission granted", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), "camera permission granted", Toast.LENGTH_SHORT).show();
                 Intent cameraIntent = new
                         Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
                 startActivityForResult(cameraIntent, 0);
             } else {
-                Toast.makeText(getActivity(), "camera permission denied", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), "camera permission denied", Toast.LENGTH_SHORT).show();
             }
 
         }
@@ -409,7 +409,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
 
     public void updateUserTransaction(String first_name, String last_name,
-                                      String date_of_birth, String phone_number, String address, String dp) {
+                                      String date_of_birth, String phone_number, String address, String dp, String email) {
 
 
         ActiveLedgerSDK.KEYNAME = ActiveLedgerHelper.getInstance().getKeyname();
@@ -417,7 +417,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
 
         JSONObject updateUserTransaction = ActiveLedgerHelper.getInstance().createUpdateUserTransaction(null, ActiveLedgerHelper.getInstance().getKeyType(), first_name, last_name,
-                date_of_birth, phone_number, address, "");
+                date_of_birth, phone_number, address, dp, email);
 
         String transactionString = Utility.getInstance().convertJSONObjectToString(updateUserTransaction);
 
@@ -452,9 +452,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                             iv_camera.setVisibility(View.INVISIBLE);
                             btn_submit.setVisibility(View.INVISIBLE);
                             btn_logout.setVisibility(View.INVISIBLE);
-                            Toast.makeText(getActivity(), "User Updated Successfully!", Toast.LENGTH_LONG);
+                            Toast.makeText(getActivity(), "User Updated Successfully!", Toast.LENGTH_SHORT).show();
                         } else {
-                            Toast.makeText(getActivity(), "User Updated Failed!", Toast.LENGTH_LONG);
+                            Toast.makeText(getActivity(), "User Updated Failed!", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

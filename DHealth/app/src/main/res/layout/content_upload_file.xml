@@ -139,18 +139,6 @@
                 app:layout_constraintStart_toStartOf="@+id/tv_lbl_uploaddate"
                 app:layout_constraintTop_toBottomOf="@+id/tv_lbl_uploaddate" />
 
-            <!--<EditText-->
-            <!--android:id="@+id/et_assigned_to"-->
-            <!--android:layout_width="187dp"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:hint="DR AVC"-->
-            <!--android:textColor="@color/black"-->
-            <!--android:textColorHint="@color/bg_register"-->
-            <!--android:textSize="15sp"-->
-            <!--app:layout_constraintBottom_toBottomOf="@+id/tv_lbl_assigned_to"-->
-            <!--app:layout_constraintStart_toStartOf="@+id/et_uploaddate"-->
-            <!--app:layout_constraintTop_toTopOf="@+id/tv_lbl_assigned_to" />-->
-
 
             <io.apptik.widget.multiselectspinner.MultiSelectSpinner
                 android:id="@+id/et_assigned_to"
@@ -279,6 +267,8 @@
                 android:background="@drawable/button"
                 android:onClick="uploadFILE"
                 android:text="upload file"
+                android:paddingLeft="7dp"
+                android:paddingRight="7dp"
                 android:textColor="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/btn_finish"
@@ -297,6 +287,8 @@
                 android:background="@drawable/button"
                 android:onClick="AddReport"
                 android:text="Finish"
+                android:paddingLeft="7dp"
+                android:paddingRight="7dp"
                 android:textColor="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

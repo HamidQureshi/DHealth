@@ -381,9 +381,9 @@ public class ActiveLedgerHelper {
 
             String pubKey = null;
             try {
-                pubKey = Utility.readFileAsString(Utility.PUBLICKEY_FILE);
+                pubKey = Utility.readFileAsString(Utility.getPublicKeyFileName(email));
                 System.out.println("public:::" + pubKey.toString());
-                String priKey = Utility.readFileAsString(Utility.PRIVATEKEY_FILE);
+                String priKey = Utility.readFileAsString(Utility.getPrivateKeyFileName(email));
                 System.out.println("public:::" + priKey.toString());
             } catch (IOException e) {
                 e.printStackTrace();
@@ -418,7 +418,7 @@ public class ActiveLedgerHelper {
             try {
 
                 String signTransactionObject = Utility.getInstance().convertJSONObjectToString($tx);
-                $sigs.put(ActiveLedgerSDK.KEYNAME, signMessage(signTransactionObject.getBytes(), keyPair, type));
+                $sigs.put(ActiveLedgerSDK.KEYNAME, signMessage(signTransactionObject.getBytes(), keyPair, type, email));
 
             } catch (Exception e) {
                 throw new IllegalArgumentException("Unable to sign object:" + e.getMessage());
@@ -436,7 +436,7 @@ public class ActiveLedgerHelper {
     }
 
     public JSONObject createUpdateUserTransaction(KeyPair keyPair, KeyType type, String first_name, String last_name,
-                                                  String date_of_birth, String phone_number, String address, String dp) {
+                                                  String date_of_birth, String phone_number, String address, String dp, String email) {
 
         JSONObject transaction = new JSONObject();
         JSONObject $sigs = new JSONObject();
@@ -488,7 +488,7 @@ public class ActiveLedgerHelper {
             try {
 
                 String signTransactionObject = Utility.getInstance().convertJSONObjectToString($tx);
-                $sigs.put(onboard_id, signMessage(signTransactionObject.getBytes(), keyPair, type));
+                $sigs.put(onboard_id, signMessage(signTransactionObject.getBytes(), keyPair, type, email));
 
             } catch (Exception e) {
                 throw new IllegalArgumentException("Unable to sign object:" + e.getMessage());
@@ -506,7 +506,7 @@ public class ActiveLedgerHelper {
     }
 
     public JSONObject createUploadReportTransaction(KeyPair keyPair, KeyType type, String name, String title, String status, String uploaddate, String assignedto,
-                                                    String signeddate, String description, String base64document, String fileName, ArrayList<String> doctors_array) {
+                                                    String signeddate, String description, String base64document, String fileName, ArrayList<String> doctors_array, String email) {
 
         JSONObject transaction = new JSONObject();
         JSONObject $sigs = new JSONObject();
@@ -527,12 +527,12 @@ public class ActiveLedgerHelper {
             JSONArray reports_array = new JSONArray();
             JSONObject report = new JSONObject();
 
-            report.put("patientName",name);
-            report.put("title",title);
-            report.put("doctors",new JSONArray(doctors_array));
-            report.put("description",description);
-            report.put("fileName",fileName);
-            report.put("content",base64document);
+            report.put("patientName", name);
+            report.put("title", title);
+            report.put("doctors", new JSONArray(doctors_array));
+            report.put("description", description);
+            report.put("fileName", fileName);
+            report.put("content", base64document);
             reports_array.put(report);
             $o.put(onboard_id, reports_array);
 
@@ -542,7 +542,61 @@ public class ActiveLedgerHelper {
             try {
 
                 String signTransactionObject = Utility.getInstance().convertJSONObjectToString($tx);
-                $sigs.put(onboard_id, signMessage(signTransactionObject.getBytes(), keyPair, type));
+                $sigs.put(onboard_id, signMessage(signTransactionObject.getBytes(), keyPair, type, email));
+
+            } catch (Exception e) {
+                throw new IllegalArgumentException("Unable to sign object:" + e.getMessage());
+            }
+
+
+            transaction.put("$tx", $tx);
+            transaction.put("$selfsign", false);
+            transaction.put("$sigs", $sigs);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return transaction;
+    }
+
+    public JSONObject createUpdateReportTransaction(KeyPair keyPair, KeyType type, String name, String title, String status, String uploaddate, String assignedto,
+                                                    String signeddate, String description, String base64document, String fileName, ArrayList<String> doctors_array, String email) {
+
+        JSONObject transaction = new JSONObject();
+        JSONObject $sigs = new JSONObject();
+        JSONObject identity = new JSONObject();
+        JSONObject $i = new JSONObject();
+        JSONObject $o = new JSONObject();
+        JSONObject $tx = new JSONObject();
+        String onboard_id = PreferenceManager.getINSTANCE().readFromPref(context, PreferenceKeys.SP_IDENTITY, "null");
+
+        try {
+
+            $tx.put("$contract", Configurations.report_contract_lbl);
+            $tx.put("$namespace", Configurations.namespace);
+            $tx.put("$entry", "update");
+
+            $i.put(onboard_id, identity);
+
+            JSONArray reports_array = new JSONArray();
+            JSONObject report = new JSONObject();
+
+//            report.put("patientName", name);
+//            report.put("title", title);
+            report.put("doctors", new JSONArray(doctors_array));
+//            report.put("description", description);
+//            report.put("fileName", fileName);
+            report.put("content", base64document);
+            reports_array.put(report);
+            $o.put(onboard_id, reports_array);
+
+            $tx.put("$i", $i);
+            $tx.put("$o", $o);
+
+            try {
+
+                String signTransactionObject = Utility.getInstance().convertJSONObjectToString($tx);
+                $sigs.put(onboard_id, signMessage(signTransactionObject.getBytes(), keyPair, type, email));
 
             } catch (Exception e) {
                 throw new IllegalArgumentException("Unable to sign object:" + e.getMessage());

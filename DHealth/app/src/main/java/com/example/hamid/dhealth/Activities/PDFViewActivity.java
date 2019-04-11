@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 
 import com.example.hamid.dhealth.R;
 import com.github.barteksc.pdfviewer.PDFView;
@@ -24,14 +25,23 @@ public class PDFViewActivity extends AppCompatActivity implements OnPageChangeLi
     String TAG = "PdfActivity";
     int position = -1;
     Uri URI = null;
+    Button btn_attach;
+    Boolean show = false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pdfview);
+        btn_attach = (Button) findViewById(R.id.btn_attach);
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             URI = Uri.parse(bundle.getString("URI"));
+            pdfFileName = bundle.getString("filename");
+            show = bundle.getBoolean("showAttachButton");
+
+            if (show) {
+                btn_attach.setVisibility(View.VISIBLE);
+            }
         }
         init();
     }
@@ -43,10 +53,8 @@ public class PDFViewActivity extends AppCompatActivity implements OnPageChangeLi
     }
 
     private void displayFromSdcard() {
-        pdfFileName = "test";//MainActivity.fileList.get(position).getName();
 
         pdfView.fromUri(URI)
-//        pdfView.fromFile(MainActivity.fileList.get(position))
                 .defaultPage(pageNumber)
                 .enableSwipe(true)
                 .swipeHorizontal(false)

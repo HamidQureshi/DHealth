@@ -1,14 +1,18 @@
 package com.example.hamid.dhealth.Fragments;
 
+import android.Manifest;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Canvas;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -20,26 +24,42 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SearchView;
+import android.widget.Toast;
 
+import com.example.activeledgersdk.ActiveLedgerSDK;
+import com.example.hamid.dhealth.ActiveLedgerHelper;
 import com.example.hamid.dhealth.Activities.UploadFileActivity;
 import com.example.hamid.dhealth.Adapter.ReportsListAdapter;
+import com.example.hamid.dhealth.FileUtils;
 import com.example.hamid.dhealth.MedicalRepository.DB.Entity.Report;
+import com.example.hamid.dhealth.MedicalRepository.HTTP.HttpClient;
+import com.example.hamid.dhealth.Preference.PreferenceKeys;
 import com.example.hamid.dhealth.R;
 import com.example.hamid.dhealth.Utils.SwipeController;
 import com.example.hamid.dhealth.Utils.SwipeControllerActions;
+import com.example.hamid.dhealth.Utils.Utils;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+import retrofit2.Response;
 
 public class ReportsFragment extends Fragment implements View.OnClickListener {
 
 
+    private static final int WRITE_REQUEST_CODE = 43;
     public List<Report> reports;
     SearchView searchView;
+    String fileName;
+    String base64File;
     private FloatingActionButton fab_create_file;
     private ReportsViewModel mViewModel;
     private RecyclerView rv_report_list;
@@ -194,17 +214,116 @@ public class ReportsFragment extends Fragment implements View.OnClickListener {
 
 
     private void populateList() {
-        //TODO get reportlist from server
-
         //get reports from http
-        //delete all reports in db
-        //        mViewModel.deleteReportData();
+        getReports();
+    }
 
-        //insert into db
-        //        mViewModel.insert(report);
-// can be inserted in the form of list
 
-//        Report report = new Report("Diabetic Report", "abc", "john", "Jhonny Depp", "10/20/2012", "10/20/2012", "report diabetic etc", "Pending");
+    public void getReports() {
+
+
+        ActiveLedgerSDK.KEYNAME = ActiveLedgerHelper.getInstance().getKeyname();
+        ActiveLedgerSDK.keyType = ActiveLedgerHelper.getInstance().getKeyType();
+
+        Log.e("getReport token", com.example.hamid.dhealth.Preference.PreferenceManager.getINSTANCE().readFromPref(getActivity(), PreferenceKeys.SP_APP_TOKEN, "null"));
+
+        HttpClient.getInstance().getReport(com.example.hamid.dhealth.Preference.PreferenceManager.getINSTANCE().readFromPref(getActivity(), PreferenceKeys.SP_APP_TOKEN, "null"))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new io.reactivex.Observer<Response<String>>() {
+
+                    @Override
+                    public void onSubscribe(Disposable d) {
+//                        disposable = d;
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+
+                    @Override
+                    public void onNext(Response<String> response) {
+//                        progressBar.setVisibility(View.GONE);
+                        Log.e("getReport code--->", response.code() + "");
+                        if (response.code() == 200) {
+                            Utils.Log("getReport res--->", response.body() + "");
+
+                            //delete all reports in db
+                            mViewModel.deleteReportData();
+
+                            //add all reports to db
+
+                            try {
+                                JSONObject responseJSON = new JSONObject(response.body());
+
+                                JSONArray doctors = responseJSON.optJSONArray("streams").optJSONObject(0).optJSONArray("reports");
+
+                                if (doctors != null) {
+                                    JSONObject doctor = new JSONObject();
+                                    for (int i = 0; i < doctors.length(); i++) {
+                                        doctor = doctors.optJSONObject(i);
+
+                                        String patientName = doctor.optString("patientName");
+                                        String fileName = doctor.optString("fileName");
+                                        String description = doctor.optString("description");
+                                        String title = doctor.optString("title");
+                                        String content = doctor.optString("content");
+                                        String doctors_list = doctor.optString("doctors");
+
+                                        Log.e("------->", doctors_list);
+
+                                        Report report = new Report(title, description, patientName, "Jhonny Depp", "", "", content, "", "", doctors_list, fileName);
+                                        mViewModel.insert(report);
+                                    }
+                                }
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+
+                        } else {
+                            Toast.makeText(getActivity(), "Report Fetching  Failed!", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+    }
+
+
+    private void saveFiletoStrorage() {
+        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            // Permission is not granted
+
+            ActivityCompat.requestPermissions(getActivity(),
+                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    WRITE_REQUEST_CODE);
+        } else {
+            FileUtils.saveFile(fileName, base64File);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case WRITE_REQUEST_CODE: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    FileUtils.saveFile(fileName, base64File);
+
+                } else {
+                    Toast.makeText(getActivity(), "Writing permission denied", Toast.LENGTH_SHORT).show();
+                }
+                return;
+            }
+
+        }
     }
 
 

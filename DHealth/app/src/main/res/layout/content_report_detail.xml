@@ -22,15 +22,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/tv_name"
-        android:layout_width="187dp"
-        android:layout_height="21dp"
-        android:layout_marginStart="44dp"
+    <EditText
+        android:id="@+id/et_name"
+        android:layout_width="210dp"
+        android:layout_height="46dp"
+        android:layout_marginStart="20dp"
         android:layout_marginEnd="8dp"
+        android:background="@drawable/edittext_border"
+        android:paddingLeft="4dp"
         android:text="Dr Dan Brown"
         android:textColor="@color/black"
         android:textSize="15sp"
+        android:focusableInTouchMode="false"
+        android:focusable="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.134"
         app:layout_constraintStart_toEndOf="@+id/tv_lbl_name"
@@ -40,7 +44,7 @@
         android:id="@+id/tv_lbl_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="32dp"
         android:text="Report Title: "
         android:textColor="@color/black"
         android:textSize="15sp"
@@ -48,58 +52,71 @@
         app:layout_constraintStart_toStartOf="@+id/tv_lbl_name"
         app:layout_constraintTop_toBottomOf="@+id/tv_lbl_name" />
 
-    <TextView
-        android:id="@+id/tv_title"
-        android:layout_width="187dp"
-        android:layout_height="21dp"
+    <EditText
+        android:id="@+id/et_title"
+        android:layout_width="210dp"
+        android:layout_height="46dp"
+        android:background="@drawable/edittext_border"
         android:text="Diabetic Report"
         android:textColor="@color/black"
         android:textSize="15sp"
-        app:layout_constraintStart_toStartOf="@+id/tv_name"
+        android:paddingLeft="4dp"
+        android:focusableInTouchMode="false"
+        android:focusable="false"
+        app:layout_constraintStart_toStartOf="@+id/et_name"
         app:layout_constraintTop_toTopOf="@+id/tv_lbl_title" />
 
     <TextView
         android:id="@+id/tv_lbl_status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="32dp"
         android:text="Report Status: "
+        android:visibility="gone"
         android:textColor="@color/black"
         android:textSize="15sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/tv_lbl_title"
         app:layout_constraintTop_toBottomOf="@+id/tv_lbl_title" />
 
-    <TextView
-        android:id="@+id/tv_staus"
-        android:layout_width="187dp"
-        android:layout_height="21dp"
+    <EditText
+        android:id="@+id/et_staus"
+        android:layout_width="210dp"
+        android:layout_height="46dp"
+        android:visibility="gone"
+        android:background="@drawable/edittext_border"
         android:text="Pending"
+        android:paddingLeft="4dp"
         android:textColor="@color/btn_logut_bg"
         android:textSize="15sp"
-        app:layout_constraintStart_toStartOf="@+id/tv_name"
+        app:layout_constraintStart_toStartOf="@+id/et_name"
         app:layout_constraintTop_toTopOf="@+id/tv_lbl_status" />
 
     <TextView
         android:id="@+id/tv_lbl_uploaddate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="32dp"
         android:text="Upload Date: "
         android:textColor="@color/black"
+        android:visibility="gone"
         android:textSize="15sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/tv_lbl_status"
         app:layout_constraintTop_toBottomOf="@+id/tv_lbl_status" />
 
-    <TextView
-        android:id="@+id/tv_uploaddate"
-        android:layout_width="187dp"
-        android:layout_height="21dp"
+    <EditText
+        android:id="@+id/et_uploaddate"
+        android:layout_width="210dp"
+        android:layout_height="46dp"
+        android:background="@drawable/edittext_border"
         android:text="24/07/1994"
+        android:visibility="gone"
         android:textColor="@color/black"
         android:textSize="15sp"
-        app:layout_constraintStart_toStartOf="@+id/tv_staus"
+        android:paddingLeft="4dp"
+
+        app:layout_constraintStart_toStartOf="@+id/et_staus"
         app:layout_constraintTop_toTopOf="@+id/tv_lbl_uploaddate" />
 
 
@@ -107,7 +124,7 @@
         android:id="@+id/tv_lbl_assigned_to"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="32dp"
         android:text="Assigned To: "
         android:textColor="@color/black"
         android:textSize="15sp"
@@ -115,37 +132,56 @@
         app:layout_constraintStart_toStartOf="@+id/tv_lbl_uploaddate"
         app:layout_constraintTop_toBottomOf="@+id/tv_lbl_uploaddate" />
 
-    <TextView
-        android:id="@+id/tv_assigned_to"
-        android:layout_width="187dp"
-        android:layout_height="21dp"
-        android:text="DR AVC"
-        android:textColor="@color/black"
+    <!--<EditText-->
+        <!--android:id="@+id/et_assigned_to"-->
+        <!--android:layout_width="210dp"-->
+        <!--android:layout_height="46dp"-->
+        <!--android:background="@drawable/edittext_border"-->
+        <!--android:text="DR AVC"-->
+        <!--android:paddingLeft="4dp"-->
+        <!--android:textColor="@color/black"-->
+        <!--android:textSize="15sp"-->
+        <!--android:focusableInTouchMode="false"-->
+        <!--android:focusable="false"-->
+        <!--app:layout_constraintStart_toStartOf="@+id/et_uploaddate"-->
+        <!--app:layout_constraintTop_toTopOf="@+id/tv_lbl_assigned_to" />-->
+
+    <io.apptik.widget.multiselectspinner.MultiSelectSpinner
+        android:id="@+id/et_assigned_to"
+        android:layout_width="210dp"
+        android:layout_height="wrap_content"
         android:textSize="15sp"
-        app:layout_constraintStart_toStartOf="@+id/tv_uploaddate"
-        app:layout_constraintTop_toTopOf="@+id/tv_lbl_assigned_to" />
+        app:layout_constraintBottom_toBottomOf="@+id/tv_lbl_assigned_to"
+        app:layout_constraintStart_toStartOf="@+id/et_uploaddate"
+        app:layout_constraintTop_toTopOf="@+id/tv_lbl_assigned_to"
+        app:layout_constraintVertical_bias="0.0" />
 
 
     <TextView
         android:id="@+id/tv_lbl_signeddate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="32dp"
         android:text="Date Signed: "
+        android:visibility="gone"
         android:textColor="@color/black"
         android:textSize="15sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/tv_lbl_assigned_to"
         app:layout_constraintTop_toBottomOf="@+id/tv_lbl_assigned_to" />
 
-    <TextView
-        android:id="@+id/tv_signeddate"
-        android:layout_width="187dp"
-        android:layout_height="21dp"
+    <EditText
+        android:id="@+id/et_signeddate"
+        android:layout_width="210dp"
+        android:layout_height="46dp"
+        android:background="@drawable/edittext_border"
         android:text="24/07/1994"
+        android:visibility="gone"
+
         android:textColor="@color/black"
         android:textSize="15sp"
-        app:layout_constraintStart_toStartOf="@+id/tv_assigned_to"
+        android:paddingLeft="4dp"
+        app:layout_constraintStart_toStartOf="@+id/et_assigned_to"
         app:layout_constraintTop_toTopOf="@+id/tv_lbl_signeddate" />
 
 
@@ -153,7 +189,7 @@
         android:id="@+id/tv_lbl_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="32dp"
         android:text="Description: "
         android:textColor="@color/black"
         android:textSize="15sp"
@@ -161,38 +197,86 @@
         app:layout_constraintStart_toStartOf="@+id/tv_lbl_signeddate"
         app:layout_constraintTop_toBottomOf="@+id/tv_lbl_signeddate" />
 
-    <TextView
-        android:id="@+id/tv_description"
-        android:layout_width="187dp"
-        android:layout_height="21dp"
+    <EditText
+        android:id="@+id/et_description"
+        android:layout_width="210dp"
+        android:layout_height="46dp"
+        android:background="@drawable/edittext_border"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:paddingLeft="4dp"
         android:text="BLAH BLAH BLAH"
         android:textColor="@color/black"
         android:textSize="15sp"
-        app:layout_constraintStart_toStartOf="@+id/tv_signeddate"
+        app:layout_constraintStart_toStartOf="@+id/et_assigned_to"
         app:layout_constraintTop_toTopOf="@+id/tv_lbl_description" />
 
 
     <TextView
-        android:id="@+id/tv_lbl_content"
-        android:layout_width="wrap_content"
+        android:id="@+id/tv_lbl_document"
+        android:layout_width="99dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="Content: "
+        android:layout_marginTop="32dp"
+        android:text="Document Attached: "
         android:textColor="@color/black"
         android:textSize="15sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/tv_lbl_description"
         app:layout_constraintTop_toBottomOf="@+id/tv_lbl_description" />
 
-    <TextView
-        android:id="@+id/tv_content"
-        android:layout_width="187dp"
-        android:layout_height="21dp"
+    <EditText
+        android:id="@+id/et_document"
+        android:layout_width="210dp"
+        android:layout_height="46dp"
+        android:background="@drawable/edittext_border"
+        android:paddingLeft="4dp"
         android:text="BLAH BLAH BLAH"
         android:textColor="@color/black"
         android:textSize="15sp"
-        app:layout_constraintStart_toStartOf="@+id/tv_description"
-        app:layout_constraintTop_toTopOf="@+id/tv_lbl_content" />
+        android:focusableInTouchMode="false"
+        android:focusable="false"
+        app:layout_constraintStart_toStartOf="@+id/et_description"
+        app:layout_constraintTop_toTopOf="@+id/tv_lbl_document" />
+
+    <Button
+        android:id="@+id/btn_showpdf"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/button"
+        android:onClick="showPDF"
+        android:paddingLeft="7dp"
+        android:paddingRight="7dp"
+        android:text="showPDF"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btn_update"
+        app:layout_constraintHorizontal_bias="0.567"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_document"
+        app:layout_constraintVertical_bias="0.0" />
+
+
+    <Button
+        android:id="@+id/btn_update"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="52dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/button"
+        android:onClick="updateReport"
+        android:paddingLeft="7dp"
+        android:paddingRight="7dp"
+        android:text="update report"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_document"
+        app:layout_constraintVertical_bias="0.0" />
 
 
 

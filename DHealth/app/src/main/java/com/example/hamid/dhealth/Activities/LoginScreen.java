@@ -122,8 +122,8 @@ public class LoginScreen extends AppCompatActivity {
                                         message = res.optString("desc");
                                         Log.e("login description--->", message + "");
 
-                                        JSONObject stream = response.optJSONObject("stream");
-                                        Log.e("login stream--->", stream + "");
+                                        JSONObject stream = response.optJSONObject("streams");
+                                        Log.e("login streams--->", stream + "");
 
                                         if (stream != null) {
 

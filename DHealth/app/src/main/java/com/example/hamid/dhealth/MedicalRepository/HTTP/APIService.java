@@ -62,4 +62,9 @@ public interface APIService {
     @GET("/transaction/patients")
     Observable<Response<String>> getAssignedPatientList(@Header("Authorization") String token);
 
+    @Headers("Content-Type: application/json")
+    @GET("/transaction/reports")
+    Observable<Response<String>> getReport(@Header("Authorization") String token);
+
+
 }

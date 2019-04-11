@@ -15,16 +15,7 @@ import java.util.List;
 public class DoctorPatientViewModel extends AndroidViewModel {
 
     private DataRepository repository;
-
-    public LiveData<List<Doctor>> getDoctor_list() {
-        if (doctor_list.getValue() == null){
-            getDoctorListFromServer(PreferenceManager.getINSTANCE().readFromPref(getApplication(), PreferenceKeys.SP_APP_TOKEN, "null"));
-        }
-        return doctor_list;
-    }
-
     private LiveData<List<Doctor>> doctor_list;
-
     private LiveData<List<Patient>> patient_list;
 
     public DoctorPatientViewModel(Application application) {
@@ -35,12 +26,19 @@ public class DoctorPatientViewModel extends AndroidViewModel {
         patient_list = repository.getPatientList();
     }
 
-    public LiveData<List<Doctor>> getDoctorList() {
+    public LiveData<List<Doctor>> getDoctor_list() {
+        if (doctor_list.getValue() == null) {
+            getDoctorListFromServer(PreferenceManager.getINSTANCE().readFromPref(getApplication(), PreferenceKeys.SP_APP_TOKEN, "null"));
+        }
         return doctor_list;
     }
 
     public void setDoctor_list(LiveData<List<Doctor>> doctor_list) {
         this.doctor_list = doctor_list;
+    }
+
+    public LiveData<List<Doctor>> getDoctorList() {
+        return doctor_list;
     }
 
     LiveData<List<Patient>> getPatientList() {

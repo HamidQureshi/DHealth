@@ -36,8 +36,10 @@ public class ReportsListAdapter extends RecyclerView.Adapter<ReportsListAdapter.
             @Override
             public void onItemClick(View caller, int position) {
                 Report report = reportList.get(position);
+                //TODO remove this line
                 Intent intent = new Intent(mContext, ReportDetailActivity.class);
-                intent.putExtra(ReportDetailActivity.REPORT_DATA, report);
+                ReportDetailActivity.report = report;
+//                intent.putExtra(ReportDetailActivity.REPORT_DATA, report);
                 mContext.startActivity(intent);
             }
         });
@@ -71,7 +73,7 @@ public class ReportsListAdapter extends RecyclerView.Adapter<ReportsListAdapter.
 
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        public TextView tv_name,tv_title;
+        public TextView tv_name, tv_title;
         public ImageView iv_display;
 
         private ReportsListAdapter.ViewHolder.IItemClickListener itemClickListener;
@@ -82,7 +84,7 @@ public class ReportsListAdapter extends RecyclerView.Adapter<ReportsListAdapter.
 
             tv_name = (TextView) view.findViewById(R.id.tv_name);
             iv_display = (ImageView) view.findViewById(R.id.iv_dp);
-            tv_title = (TextView)  view.findViewById(R.id.tv_title);
+            tv_title = (TextView) view.findViewById(R.id.tv_title);
 
             this.itemClickListener = itemClickListener;
             view.setOnClickListener(this);
