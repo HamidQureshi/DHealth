@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.example.hamid.dhealth.Activities.DoctorPatientDescriptionActivity;
 import com.example.hamid.dhealth.MedicalRepository.DB.Entity.Doctor;
 import com.example.hamid.dhealth.MedicalRepository.DB.Entity.Patient;
+import com.example.hamid.dhealth.MedicalRepository.DB.Entity.Report;
 import com.example.hamid.dhealth.Preference.PreferenceKeys;
 import com.example.hamid.dhealth.R;
 import com.example.hamid.dhealth.Utils.Utils;
@@ -88,6 +89,7 @@ public class DoctorPatientListAdapter extends RecyclerView.Adapter<DoctorPatient
         }
 
     }
+
 
 
     public void setDoctorList(List<Doctor> doctorList) {

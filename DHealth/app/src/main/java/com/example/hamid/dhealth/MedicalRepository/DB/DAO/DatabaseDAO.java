@@ -64,4 +64,10 @@ public interface DatabaseDAO {
     @Query("SELECT * FROM report_table where title LIKE :query")
     List<Report> searchReports(String query);
 
+    @Query("SELECT * FROM doctor_table where first_name LIKE :query")
+    List<Doctor> searchDoctor(String query);
+
+    @Query("SELECT * FROM patient_table where first_name LIKE :query")
+    List<Patient> searchPatient(String query);
+
 }

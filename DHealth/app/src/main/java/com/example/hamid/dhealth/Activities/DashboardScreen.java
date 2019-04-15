@@ -130,11 +130,14 @@ public class DashboardScreen extends AppCompatActivity {
         iv_dp = (ImageView) header.findViewById(R.id.imageView);
         tv_first_name = (TextView) header.findViewById(R.id.first_name);
         tv_last_name = (TextView) header.findViewById(R.id.last_name);
-
-        iv_dp.setImageBitmap(Utils.decodeBase64(PreferenceManager.getINSTANCE().readFromPref(this, PreferenceKeys.SP_PROFILEPIC, "")));
         tv_first_name.setText(PreferenceManager.getINSTANCE().readFromPref(this, PreferenceKeys.SP_NAME, "John"));
         tv_last_name.setText(PreferenceManager.getINSTANCE().readFromPref(this, PreferenceKeys.SP_LAST_NAME, "Doe"));
 
+        refreshDP();
+    }
+
+    public void refreshDP() {
+        iv_dp.setImageBitmap(Utils.decodeBase64(PreferenceManager.getINSTANCE().readFromPref(this, PreferenceKeys.SP_PROFILEPIC, "")));
 
     }
 

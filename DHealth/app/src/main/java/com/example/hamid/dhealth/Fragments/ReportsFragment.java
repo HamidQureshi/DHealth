@@ -23,6 +23,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.SearchView;
 import android.widget.Toast;
 
@@ -64,6 +65,8 @@ public class ReportsFragment extends Fragment implements View.OnClickListener {
     private ReportsViewModel mViewModel;
     private RecyclerView rv_report_list;
     private ReportsListAdapter reportsListAdapter;
+    private ProgressBar progressBar;
+
 
     public static ReportsFragment newInstance() {
         return new ReportsFragment();
@@ -91,6 +94,8 @@ public class ReportsFragment extends Fragment implements View.OnClickListener {
         reports = new ArrayList<>();
         reportsListAdapter = new ReportsListAdapter(getContext(), reports);
         setupRecyclerView();
+
+        progressBar = (ProgressBar) getView().findViewById(R.id.progressBar);
 
 //        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
 //        itemTouchHelper.attachToRecyclerView(rv_report_list);
@@ -213,7 +218,9 @@ public class ReportsFragment extends Fragment implements View.OnClickListener {
     }
 
 
-    private void populateList() {
+    private void populateList()
+    {
+        progressBar.setVisibility(View.VISIBLE);
         //get reports from http
         getReports();
     }
@@ -247,7 +254,7 @@ public class ReportsFragment extends Fragment implements View.OnClickListener {
 
                     @Override
                     public void onNext(Response<String> response) {
-//                        progressBar.setVisibility(View.GONE);
+                        progressBar.setVisibility(View.GONE);
                         Log.e("getReport code--->", response.code() + "");
                         if (response.code() == 200) {
                             Utils.Log("getReport res--->", response.body() + "");
@@ -279,6 +286,9 @@ public class ReportsFragment extends Fragment implements View.OnClickListener {
                                         Report report = new Report(title, description, patientName, "Jhonny Depp", "", "", content, "", "", doctors_list, fileName);
                                         mViewModel.insert(report);
                                     }
+                                }
+                                else{
+                                    Toast.makeText(getActivity(), "NO Reports Found in Ledger",Toast.LENGTH_SHORT).show();
                                 }
 
                             } catch (JSONException e) {

@@ -98,8 +98,6 @@ public class DataRepository {
 
                         if (response.code() == 200) {
 
-                            deleteAllDoctor();
-
                             JSONObject responseObj = null;
                             try {
                                 responseObj = new JSONObject(response.body());
@@ -173,7 +171,6 @@ public class DataRepository {
                         Utils.Log("patientlist code--->", response.code() + "");
 
                         if (response.code() == 200) {
-
                             JSONObject responseObj = null;
                             try {
                                 responseObj = new JSONObject(response.body());
@@ -202,7 +199,6 @@ public class DataRepository {
                                     patientList.add(patient);
                                 }
 
-                                deleteAllPatient();
                                 insertPatientList(patientList);
 
                             } catch (JSONException e) {
@@ -217,8 +213,15 @@ public class DataRepository {
     }
 
     public List<Report> searchReportList(String title) {
-        //Todo contains identity and we are passing name
         return databaseDAO.searchReports(title + '%');
+    }
+
+    public List<Doctor> searchDoctorsList(String name) {
+        return databaseDAO.searchDoctor(name + '%');
+    }
+
+    public List<Patient> searchPatientsList(String name) {
+        return databaseDAO.searchPatient(name + '%');
     }
 
 
@@ -241,6 +244,7 @@ public class DataRepository {
     public void insertDoctorList(final List<Doctor> doctorList) {
 
         Observable.fromCallable(() -> {
+            databaseDAO.deleteAllDoctor();
             databaseDAO.insertDoctorList(doctorList);
 
             return true;
@@ -257,6 +261,7 @@ public class DataRepository {
     public void insertPatientList(final List<Patient> patientList) {
 
         Observable.fromCallable(() -> {
+            databaseDAO.deleteAllPatient();
             databaseDAO.insertPatientList(patientList);
 
             return true;

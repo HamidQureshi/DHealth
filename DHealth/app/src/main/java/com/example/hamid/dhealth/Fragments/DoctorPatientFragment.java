@@ -9,10 +9,14 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.SearchView;
 
 import com.example.hamid.dhealth.Adapter.DoctorPatientListAdapter;
 import com.example.hamid.dhealth.MedicalRepository.DB.Entity.Doctor;
@@ -24,6 +28,10 @@ import com.example.hamid.dhealth.R;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
+
 
 public class DoctorPatientFragment extends Fragment {
 
@@ -33,9 +41,17 @@ public class DoctorPatientFragment extends Fragment {
     private List<Doctor> doctorList;
     private List<Patient> patientList;
     private ProgressBar progressBar;
+    SearchView searchView;
+
 
     public static DoctorPatientFragment newInstance() {
         return new DoctorPatientFragment();
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -100,6 +116,59 @@ public class DoctorPatientFragment extends Fragment {
         } else {
             mViewModel.getDoctorListFromServer(PreferenceManager.getINSTANCE().readFromPref(getActivity(), PreferenceKeys.SP_APP_TOKEN, "null"));
         }
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        MenuInflater inflater = getActivity().getMenuInflater();
+        inflater.inflate(R.menu.options_menu, menu);
+
+        searchView =
+                (SearchView) menu.findItem(R.id.search).getActionView();
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Log.e("query text submit ==>", query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+
+
+                if (PreferenceManager.getINSTANCE().readFromPref(getActivity(), PreferenceKeys.SP_PROFILE_TYPE, PreferenceKeys.LBL_DOCTOR).equalsIgnoreCase(PreferenceKeys.LBL_DOCTOR)) {
+
+                    Observable.fromCallable(() -> {
+                        return mViewModel.searchPatientList(newText);
+                    })
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe((result) -> {
+                                doctorPatientListAdapter.setPatientList(result);
+                            });
+
+                }else{
+
+                    Observable.fromCallable(() -> {
+                        return mViewModel.searchDoctorsList(newText);
+                    })
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe((result) -> {
+                                doctorPatientListAdapter.setDoctorList(result);
+                            });
+
+                }
+
+
+
+                Log.e("query text change ==>", newText);
+                return false;
+            }
+        });
+
+
     }
 
 

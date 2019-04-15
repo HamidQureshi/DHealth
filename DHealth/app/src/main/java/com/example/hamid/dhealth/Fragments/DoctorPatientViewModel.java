@@ -6,6 +6,7 @@ import android.arch.lifecycle.LiveData;
 
 import com.example.hamid.dhealth.MedicalRepository.DB.Entity.Doctor;
 import com.example.hamid.dhealth.MedicalRepository.DB.Entity.Patient;
+import com.example.hamid.dhealth.MedicalRepository.DB.Entity.Report;
 import com.example.hamid.dhealth.MedicalRepository.DataRepository;
 import com.example.hamid.dhealth.Preference.PreferenceKeys;
 import com.example.hamid.dhealth.Preference.PreferenceManager;
@@ -75,6 +76,14 @@ public class DoctorPatientViewModel extends AndroidViewModel {
 
     public void getPatientListFromServer(String token) {
         repository.getPatientListFromServer(token);
+    }
+
+    public List<Doctor> searchDoctorsList(String title) {
+        return repository.searchDoctorsList(title);
+    }
+
+    public List<Patient> searchPatientList(String title) {
+        return repository.searchPatientsList(title);
     }
 
 }

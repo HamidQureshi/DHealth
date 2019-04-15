@@ -227,12 +227,12 @@ public class UploadFileActivity extends AppCompatActivity {
 
     public void AddReport(View view) {
 
-        progressBar.setVisibility(View.VISIBLE);
 
         if (uri == null) {
             Toast.makeText(this, "Select a File first", Toast.LENGTH_SHORT).show();
             return;
         }
+        progressBar.setVisibility(View.VISIBLE);
 
         String title = et_title.getText().toString();
         String name = et_name.getText().toString();

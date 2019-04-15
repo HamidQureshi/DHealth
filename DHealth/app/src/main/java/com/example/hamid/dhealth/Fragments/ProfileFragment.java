@@ -463,6 +463,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                             et_phone.setFocusable(false);
                             et_phone.setFocusableInTouchMode(false);
 
+                            ((DashboardScreen)getActivity()).refreshDP();
+
                             Toast.makeText(getActivity(), "User Updated Successfully!", Toast.LENGTH_SHORT).show();
                         } else {
                             Toast.makeText(getActivity(), "User Updated Failed!", Toast.LENGTH_SHORT).show();
