@@ -13,6 +13,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -97,14 +98,22 @@ public class ReportsFragment extends Fragment implements View.OnClickListener {
 
         progressBar = (ProgressBar) getView().findViewById(R.id.progressBar);
 
-//        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
-//        itemTouchHelper.attachToRecyclerView(rv_report_list);
+        SwipeRefreshLayout pullToRefresh = getView().findViewById(R.id.pullToRefresh);
+        pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                pullToRefresh.setRefreshing(true);
+                populateList();
+            }
+        });
+
 
         mViewModel.getReportList().observe(this, new Observer<List<Report>>() {
             @Override
             public void onChanged(@Nullable final List<Report> reports) {
                 reportsListAdapter.setReportList(reports);
                 //update reports list
+                pullToRefresh.setRefreshing(false);
             }
         });
         populateList();
@@ -218,8 +227,7 @@ public class ReportsFragment extends Fragment implements View.OnClickListener {
     }
 
 
-    private void populateList()
-    {
+    private void populateList() {
         progressBar.setVisibility(View.VISIBLE);
         //get reports from http
         getReports();
@@ -286,9 +294,8 @@ public class ReportsFragment extends Fragment implements View.OnClickListener {
                                         Report report = new Report(title, description, patientName, "Jhonny Depp", "", "", content, "", "", doctors_list, fileName);
                                         mViewModel.insert(report);
                                     }
-                                }
-                                else{
-                                    Toast.makeText(getActivity(), "NO Reports Found in Ledger",Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(getActivity(), "NO Reports Found in Ledger", Toast.LENGTH_SHORT).show();
                                 }
 
                             } catch (JSONException e) {

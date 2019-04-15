@@ -136,7 +136,7 @@ public class UploadFileActivity extends AppCompatActivity {
                 }
             });
 
-        }else {
+        } else {
 
             List<Doctor> doctorList = mViewModel.getDoctor_list().getValue();
             if (doctorList != null) {
@@ -247,14 +247,13 @@ public class UploadFileActivity extends AppCompatActivity {
 
         String fileName = FileUtils.getFileName(this, uri);
 
-        if (PreferenceManager.getINSTANCE().readFromPref(this, PreferenceKeys.SP_PROFILE_TYPE, PreferenceKeys.LBL_DOCTOR).equalsIgnoreCase(PreferenceKeys.LBL_DOCTOR))
-            {
-                report = new Report(title, description, name, "", uploaddate, signeddate, base64File, status, FileUtils.uriToString(uri), obj_patients_array.toString(), fileName);
-                //send the report to ledger
-                uploadReport(name, title, status, uploaddate, "", signeddate, description, base64File, fileName, patients_array, PreferenceManager.getINSTANCE().readFromPref(this, PreferenceKeys.SP_EMAIL, ""));
+        if (PreferenceManager.getINSTANCE().readFromPref(this, PreferenceKeys.SP_PROFILE_TYPE, PreferenceKeys.LBL_DOCTOR).equalsIgnoreCase(PreferenceKeys.LBL_DOCTOR)) {
+            report = new Report(title, description, name, "", uploaddate, signeddate, base64File, status, FileUtils.uriToString(uri), obj_patients_array.toString(), fileName);
+            //send the report to ledger
+            uploadReport(name, title, status, uploaddate, "", signeddate, description, base64File, fileName, patients_array, PreferenceManager.getINSTANCE().readFromPref(this, PreferenceKeys.SP_EMAIL, ""));
 
 
-            }else{
+        } else {
 
             report = new Report(title, description, name, "", uploaddate, signeddate, base64File, status, FileUtils.uriToString(uri), obj_doctors_array.toString(), fileName);
             //send the report to ledger
@@ -326,7 +325,7 @@ public class UploadFileActivity extends AppCompatActivity {
         ActiveLedgerSDK.keyType = ActiveLedgerHelper.getInstance().getKeyType();
 
         JSONObject uploadReportTransaction = ActiveLedgerHelper.getInstance().createUploadReportTransaction(null, ActiveLedgerSDK.getInstance().getKeyType(), name, title,
-                status, uploaddate, assignedto, signeddate, description, base64document, documentName, selected_array , email);
+                status, uploaddate, assignedto, signeddate, description, base64document, documentName, selected_array, email);
 
         String transactionString = Utility.getInstance().convertJSONObjectToString(uploadReportTransaction);
 

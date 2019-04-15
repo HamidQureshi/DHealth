@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -35,14 +36,13 @@ import io.reactivex.schedulers.Schedulers;
 
 public class DoctorPatientFragment extends Fragment {
 
+    SearchView searchView;
     private DoctorPatientViewModel mViewModel;
     private RecyclerView rv_dplist;
     private DoctorPatientListAdapter doctorPatientListAdapter;
     private List<Doctor> doctorList;
     private List<Patient> patientList;
     private ProgressBar progressBar;
-    SearchView searchView;
-
 
     public static DoctorPatientFragment newInstance() {
         return new DoctorPatientFragment();
@@ -52,6 +52,7 @@ public class DoctorPatientFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+
     }
 
     @Override
@@ -83,6 +84,15 @@ public class DoctorPatientFragment extends Fragment {
         rv_dplist.setAdapter(doctorPatientListAdapter);
         progressBar = (ProgressBar) getView().findViewById(R.id.progressBar);
 
+        SwipeRefreshLayout pullToRefresh = getView().findViewById(R.id.pullToRefresh);
+        pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                pullToRefresh.setRefreshing(true);
+                populateList();
+            }
+        });
+
 
         if (PreferenceManager.getINSTANCE().readFromPref(getActivity(), PreferenceKeys.SP_PROFILE_TYPE, PreferenceKeys.LBL_DOCTOR).equalsIgnoreCase(PreferenceKeys.LBL_DOCTOR)) {
 
@@ -92,6 +102,8 @@ public class DoctorPatientFragment extends Fragment {
                     progressBar.setVisibility(View.GONE);
                     // Update the cached copy of the words in the adapter.
                     doctorPatientListAdapter.setPatientList(patients);
+                    pullToRefresh.setRefreshing(false);
+
                 }
             });
         } else {
@@ -102,6 +114,8 @@ public class DoctorPatientFragment extends Fragment {
                     progressBar.setVisibility(View.GONE);
                     // Update the cached copy of the words in the adapter.
                     doctorPatientListAdapter.setDoctorList(doctors);
+                    pullToRefresh.setRefreshing(false);
+
                 }
             });
         }
@@ -148,7 +162,7 @@ public class DoctorPatientFragment extends Fragment {
                                 doctorPatientListAdapter.setPatientList(result);
                             });
 
-                }else{
+                } else {
 
                     Observable.fromCallable(() -> {
                         return mViewModel.searchDoctorsList(newText);
@@ -160,7 +174,6 @@ public class DoctorPatientFragment extends Fragment {
                             });
 
                 }
-
 
 
                 Log.e("query text change ==>", newText);

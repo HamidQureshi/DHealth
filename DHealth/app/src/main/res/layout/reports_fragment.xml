@@ -10,12 +10,19 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_report_list"
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/pullToRefresh"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clipToPadding="false"
-            android:scrollbars="horizontal" />
+            android:layout_height="wrap_content">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_report_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipToPadding="false"
+                android:scrollbars="horizontal" />
+
+        </android.support.v4.widget.SwipeRefreshLayout>
 
 
         <android.support.design.widget.FloatingActionButton
@@ -30,8 +37,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.899"
             app:layout_constraintStart_toStartOf="parent"
-            app:srcCompat="@drawable/ic_create_new_folder_black_24dp"
-             />
+            app:srcCompat="@drawable/ic_create_new_folder_black_24dp" />
 
         <ProgressBar
             android:id="@+id/progressBar"
