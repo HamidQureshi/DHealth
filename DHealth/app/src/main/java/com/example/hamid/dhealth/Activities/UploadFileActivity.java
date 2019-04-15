@@ -24,6 +24,7 @@ import com.example.hamid.dhealth.ActiveLedgerHelper;
 import com.example.hamid.dhealth.FileUtils;
 import com.example.hamid.dhealth.Fragments.DoctorPatientViewModel;
 import com.example.hamid.dhealth.MedicalRepository.DB.Entity.Doctor;
+import com.example.hamid.dhealth.MedicalRepository.DB.Entity.Patient;
 import com.example.hamid.dhealth.MedicalRepository.DB.Entity.Report;
 import com.example.hamid.dhealth.MedicalRepository.DataRepository;
 import com.example.hamid.dhealth.MedicalRepository.HTTP.HttpClient;
@@ -62,7 +63,9 @@ public class UploadFileActivity extends AppCompatActivity {
     private DoctorPatientViewModel mViewModel;
     private ArrayList<String> doctors_array = new ArrayList<>();
     private JSONArray obj_doctors_array = new JSONArray();
-//    private JSONObject obj_doctors = new JSONObject();
+
+    private ArrayList<String> patients_array = new ArrayList<>();
+    private JSONArray obj_patients_array = new JSONArray();
 
 
     @Override
@@ -87,59 +90,101 @@ public class UploadFileActivity extends AppCompatActivity {
 
         ArrayList<String> options = new ArrayList<>();
 
+        if (PreferenceManager.getINSTANCE().readFromPref(this, PreferenceKeys.SP_PROFILE_TYPE, PreferenceKeys.LBL_DOCTOR).equalsIgnoreCase(PreferenceKeys.LBL_DOCTOR)) {
 
-        List<Doctor> doctorList = mViewModel.getDoctor_list().getValue();
-        if (doctorList != null) {
-            for (int i = 0; i < doctorList.size(); i++) {
-                options.add(doctorList.get(i).getEmail());
-            }
-
-        }
-
-        mViewModel.getDoctorList().observe(this, new android.arch.lifecycle.Observer<List<Doctor>>() {
-            @Override
-            public void onChanged(@Nullable final List<Doctor> doctors) {
-                Log.e("--1->", "called");
-
-                options.clear();
-
-                for (int i = 0; i < doctors.size(); i++) {
-                    options.add(doctors.get(i).getFirst_name() + " " + doctors.get(i).getLast_name());
-                    Log.e("--->", doctors.get(i).getFirst_name());
+            List<Patient> patientList = mViewModel.getPatient_list().getValue();
+            if (patientList != null) {
+                for (int i = 0; i < patientList.size(); i++) {
+                    options.add(patientList.get(i).getEmail());
                 }
-
-
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(UploadFileActivity.this, android.R.layout.simple_list_item_multiple_choice, options);
-
-                et_assigned_to
-                        .setListAdapter(adapter)
-                        .setListener(new MultiSelectSpinner.MultiSpinnerListener() {
-                            @Override
-                            public void onItemsSelected(boolean[] selected) {
-
-                                doctors_array.clear();
-                                for (int i = 0; i < selected.length; i++) {
-                                    if (selected[i]) {
-                                        doctors_array.add("" + doctors.get(i).getIdentity());
-                                        obj_doctors_array.put("" + doctors.get(i).getIdentity());
-                                    }
-                                }
-//                                try {
-//                                    obj_doctors.put("doctors",obj_doctors_array);
-//                                } catch (JSONException e) {
-//                                    e.printStackTrace();
-//                                }
-                                Log.e("------->", doctors_array.toString());
-                            }
-                        })
-                        .setAllCheckedText("All")
-                        .setAllUncheckedText("none selected")
-                        .setSelectAll(false)
-                        .setMinSelectedItems(1);
-
-
             }
-        });
+
+            mViewModel.getPatientList().observe(this, new android.arch.lifecycle.Observer<List<Patient>>() {
+                @Override
+                public void onChanged(@Nullable final List<Patient> patients) {
+
+                    options.clear();
+
+                    for (int i = 0; i < patients.size(); i++) {
+                        options.add(patients.get(i).getFirst_name() + " " + patients.get(i).getLast_name());
+                        Log.e("--->", patients.get(i).getFirst_name());
+                    }
+
+
+                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(UploadFileActivity.this, android.R.layout.simple_list_item_multiple_choice, options);
+
+                    et_assigned_to
+                            .setListAdapter(adapter)
+                            .setListener(new MultiSelectSpinner.MultiSpinnerListener() {
+                                @Override
+                                public void onItemsSelected(boolean[] selected) {
+
+                                    patients_array.clear();
+                                    for (int i = 0; i < selected.length; i++) {
+                                        if (selected[i]) {
+                                            patients_array.add("" + patients.get(i).getIdentity());
+                                            obj_patients_array.put("" + patients.get(i).getIdentity());
+                                        }
+                                    }
+                                    Log.e("------->", patients_array.toString());
+                                }
+                            })
+                            .setAllCheckedText("All")
+                            .setAllUncheckedText("none selected")
+                            .setSelectAll(false)
+                            .setMinSelectedItems(1);
+                }
+            });
+
+        }else {
+
+            List<Doctor> doctorList = mViewModel.getDoctor_list().getValue();
+            if (doctorList != null) {
+                for (int i = 0; i < doctorList.size(); i++) {
+                    options.add(doctorList.get(i).getEmail());
+                }
+            }
+
+            mViewModel.getDoctorList().observe(this, new android.arch.lifecycle.Observer<List<Doctor>>() {
+                @Override
+                public void onChanged(@Nullable final List<Doctor> doctors) {
+
+                    options.clear();
+
+                    for (int i = 0; i < doctors.size(); i++) {
+                        options.add(doctors.get(i).getFirst_name() + " " + doctors.get(i).getLast_name());
+                        Log.e("--->", doctors.get(i).getFirst_name());
+                    }
+
+
+                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(UploadFileActivity.this, android.R.layout.simple_list_item_multiple_choice, options);
+
+                    et_assigned_to
+                            .setListAdapter(adapter)
+                            .setListener(new MultiSelectSpinner.MultiSpinnerListener() {
+                                @Override
+                                public void onItemsSelected(boolean[] selected) {
+
+                                    doctors_array.clear();
+                                    for (int i = 0; i < selected.length; i++) {
+                                        if (selected[i]) {
+                                            doctors_array.add("" + doctors.get(i).getIdentity());
+                                            obj_doctors_array.put("" + doctors.get(i).getIdentity());
+                                        }
+                                    }
+
+                                    Log.e("------->", doctors_array.toString());
+                                }
+                            })
+                            .setAllCheckedText("All")
+                            .setAllUncheckedText("none selected")
+                            .setSelectAll(false)
+                            .setMinSelectedItems(1);
+
+
+                }
+            });
+        }
 
     }
 
@@ -202,10 +247,20 @@ public class UploadFileActivity extends AppCompatActivity {
 
         String fileName = FileUtils.getFileName(this, uri);
 
-        report = new Report(title, description, name, "", uploaddate, signeddate, base64File, status, FileUtils.uriToString(uri), obj_doctors_array.toString(), fileName);
+        if (PreferenceManager.getINSTANCE().readFromPref(this, PreferenceKeys.SP_PROFILE_TYPE, PreferenceKeys.LBL_DOCTOR).equalsIgnoreCase(PreferenceKeys.LBL_DOCTOR))
+            {
+                report = new Report(title, description, name, "", uploaddate, signeddate, base64File, status, FileUtils.uriToString(uri), obj_patients_array.toString(), fileName);
+                //send the report to ledger
+                uploadReport(name, title, status, uploaddate, "", signeddate, description, base64File, fileName, patients_array, PreferenceManager.getINSTANCE().readFromPref(this, PreferenceKeys.SP_EMAIL, ""));
 
-        //send the report to ledger
-        uploadReport(name, title, status, uploaddate, "", signeddate, description, base64File, fileName, doctors_array, PreferenceManager.getINSTANCE().readFromPref(this, PreferenceKeys.SP_EMAIL, ""));
+
+            }else{
+
+            report = new Report(title, description, name, "", uploaddate, signeddate, base64File, status, FileUtils.uriToString(uri), obj_doctors_array.toString(), fileName);
+            //send the report to ledger
+            uploadReport(name, title, status, uploaddate, "", signeddate, description, base64File, fileName, doctors_array, PreferenceManager.getINSTANCE().readFromPref(this, PreferenceKeys.SP_EMAIL, ""));
+        }
+
 
     }
 
@@ -264,14 +319,14 @@ public class UploadFileActivity extends AppCompatActivity {
 
 
     public void uploadReport(String name, String title, String status, String uploaddate, String assignedto,
-                             String signeddate, String description, String base64document, String documentName, ArrayList<String> doctors_array, String email) {
+                             String signeddate, String description, String base64document, String documentName, ArrayList<String> selected_array, String email) {
 
 
         ActiveLedgerSDK.KEYNAME = ActiveLedgerHelper.getInstance().getKeyname();
         ActiveLedgerSDK.keyType = ActiveLedgerHelper.getInstance().getKeyType();
 
         JSONObject uploadReportTransaction = ActiveLedgerHelper.getInstance().createUploadReportTransaction(null, ActiveLedgerSDK.getInstance().getKeyType(), name, title,
-                status, uploaddate, assignedto, signeddate, description, base64document, documentName, doctors_array, email);
+                status, uploaddate, assignedto, signeddate, description, base64document, documentName, selected_array , email);
 
         String transactionString = Utility.getInstance().convertJSONObjectToString(uploadReportTransaction);
 

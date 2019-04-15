@@ -33,6 +33,13 @@ public class DoctorPatientViewModel extends AndroidViewModel {
         return doctor_list;
     }
 
+    public LiveData<List<Patient>> getPatient_list() {
+        if (patient_list.getValue() == null) {
+            getPatientListFromServer(PreferenceManager.getINSTANCE().readFromPref(getApplication(), PreferenceKeys.SP_APP_TOKEN, "null"));
+        }
+        return patient_list;
+    }
+
     public void setDoctor_list(LiveData<List<Doctor>> doctor_list) {
         this.doctor_list = doctor_list;
     }
@@ -41,7 +48,7 @@ public class DoctorPatientViewModel extends AndroidViewModel {
         return doctor_list;
     }
 
-    LiveData<List<Patient>> getPatientList() {
+    public LiveData<List<Patient>> getPatientList() {
         return patient_list;
     }
 

@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.activeledgersdk.ActiveLedgerSDK;
@@ -20,7 +21,9 @@ import com.example.hamid.dhealth.ActiveLedgerHelper;
 import com.example.hamid.dhealth.FileUtils;
 import com.example.hamid.dhealth.Fragments.DoctorPatientViewModel;
 import com.example.hamid.dhealth.MedicalRepository.DB.Entity.Doctor;
+import com.example.hamid.dhealth.MedicalRepository.DB.Entity.Patient;
 import com.example.hamid.dhealth.MedicalRepository.DB.Entity.Report;
+import com.example.hamid.dhealth.MedicalRepository.DataRepository;
 import com.example.hamid.dhealth.MedicalRepository.HTTP.HttpClient;
 import com.example.hamid.dhealth.Preference.PreferenceKeys;
 import com.example.hamid.dhealth.Preference.PreferenceManager;
@@ -49,7 +52,10 @@ public class ReportDetailActivity extends AppCompatActivity {
     MultiSelectSpinner et_assigned_to;
     private Disposable disposable;
     private ArrayList<String> doctors_array = new ArrayList<>();
+    private ArrayList<String> patients_array = new ArrayList<>();
     private DoctorPatientViewModel mViewModel;
+    private ProgressBar progressBar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,54 +77,117 @@ public class ReportDetailActivity extends AppCompatActivity {
 
         ArrayList<String> options = new ArrayList<>();
 
-        List<Doctor> doctorList = mViewModel.getDoctor_list().getValue();
-        if (doctorList != null) {
-            for (int i = 0; i < doctorList.size(); i++) {
-                options.add(doctorList.get(i).getEmail());
+
+        if (PreferenceManager.getINSTANCE().readFromPref(this, PreferenceKeys.SP_PROFILE_TYPE, PreferenceKeys.LBL_DOCTOR).equalsIgnoreCase(PreferenceKeys.LBL_DOCTOR)) {
+
+
+            List<Patient> patientList = mViewModel.getPatient_list().getValue();
+            if (patientList != null) {
+                for (int i = 0; i < patientList.size(); i++) {
+                    options.add(patientList.get(i).getEmail());
+                }
+
             }
+
+            mViewModel.getPatientList().observe(this, new android.arch.lifecycle.Observer<List<Patient>>() {
+                @Override
+                public void onChanged(@Nullable final List<Patient> patients) {
+
+                    options.clear();
+
+                    for (int i = 0; i < patients.size(); i++) {
+                        options.add(patients.get(i).getFirst_name() + " " + patients.get(i).getLast_name());
+                        Log.e("--->", patients.get(i).getFirst_name());
+                    }
+
+                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(ReportDetailActivity.this, android.R.layout.simple_list_item_multiple_choice, options);
+
+                    et_assigned_to
+                            .setListAdapter(adapter)
+                            .setListener(new MultiSelectSpinner.MultiSpinnerListener() {
+                                @Override
+                                public void onItemsSelected(boolean[] selected) {
+                                    patients_array.clear();
+                                    for (int i = 0; i < selected.length; i++) {
+                                        if (selected[i]) {
+                                            patients_array.add("" + patients.get(i).getIdentity());
+                                        }
+                                    }
+                                }
+                            })
+                            .setAllCheckedText("All")
+                            .setAllUncheckedText("none selected")
+                            .setSelectAll(false)
+                            .setMinSelectedItems(1);
+
+                    for (int i = 0; i < patients.size(); i++) {
+                        for (int j = 0; j < patients_array.size(); j++)
+                            if (patients.get(i).getIdentity().equalsIgnoreCase(patients_array.get(j))) {
+                                Log.e("patients selected", i + "= " + patients.get(i).getFirst_name());
+                                et_assigned_to.selectItem(i, true);
+                            }
+                    }
+                }
+            });
+
+
+
+        }
+        else{
+
+            List<Doctor> doctorList = mViewModel.getDoctor_list().getValue();
+            if (doctorList != null) {
+                for (int i = 0; i < doctorList.size(); i++) {
+                    options.add(doctorList.get(i).getEmail());
+                }
+
+            }
+
+            mViewModel.getDoctorList().observe(this, new android.arch.lifecycle.Observer<List<Doctor>>() {
+                @Override
+                public void onChanged(@Nullable final List<Doctor> doctors) {
+
+                    options.clear();
+
+                    for (int i = 0; i < doctors.size(); i++) {
+                        options.add(doctors.get(i).getFirst_name() + " " + doctors.get(i).getLast_name());
+                        Log.e("--->", doctors.get(i).getFirst_name());
+                    }
+
+                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(ReportDetailActivity.this, android.R.layout.simple_list_item_multiple_choice, options);
+
+                    et_assigned_to
+                            .setListAdapter(adapter)
+                            .setListener(new MultiSelectSpinner.MultiSpinnerListener() {
+                                @Override
+                                public void onItemsSelected(boolean[] selected) {
+                                    doctors_array.clear();
+                                    for (int i = 0; i < selected.length; i++) {
+                                        if (selected[i]) {
+                                            doctors_array.add("" + doctors.get(i).getIdentity());
+                                        }
+                                    }
+                                }
+                            })
+                            .setAllCheckedText("All")
+                            .setAllUncheckedText("none selected")
+                            .setSelectAll(false)
+                            .setMinSelectedItems(1);
+
+                    for (int i = 0; i < doctors.size(); i++) {
+                        for (int j = 0; j < doctors_array.size(); j++)
+                            if (doctors.get(i).getIdentity().equalsIgnoreCase(doctors_array.get(j))) {
+                                Log.e("doctors selected", i + "= " + doctors.get(i).getFirst_name());
+                                et_assigned_to.selectItem(i, true);
+                            }
+                    }
+                }
+            });
+
 
         }
 
-        mViewModel.getDoctorList().observe(this, new android.arch.lifecycle.Observer<List<Doctor>>() {
-            @Override
-            public void onChanged(@Nullable final List<Doctor> doctors) {
 
-                options.clear();
-
-                for (int i = 0; i < doctors.size(); i++) {
-                    options.add(doctors.get(i).getFirst_name() + " " + doctors.get(i).getLast_name());
-                    Log.e("--->", doctors.get(i).getFirst_name());
-                }
-
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(ReportDetailActivity.this, android.R.layout.simple_list_item_multiple_choice, options);
-
-                et_assigned_to
-                        .setListAdapter(adapter)
-                        .setListener(new MultiSelectSpinner.MultiSpinnerListener() {
-                            @Override
-                            public void onItemsSelected(boolean[] selected) {
-                                doctors_array.clear();
-                                for (int i = 0; i < selected.length; i++) {
-                                    if (selected[i]) {
-                                        doctors_array.add("" + doctors.get(i).getIdentity());
-                                    }
-                                }
-                            }
-                        })
-                        .setAllCheckedText("All")
-                        .setAllUncheckedText("none selected")
-                        .setSelectAll(false)
-                        .setMinSelectedItems(1);
-
-                for (int i = 0; i < doctors.size(); i++) {
-                    for (int j = 0; j < doctors_array.size(); j++)
-                        if (doctors.get(i).getIdentity().equalsIgnoreCase(doctors_array.get(j))) {
-                            Log.e("doctors selected", i + "= " + doctors.get(i).getFirst_name());
-                            et_assigned_to.selectItem(i, true);
-                        }
-                }
-            }
-        });
 
     }
 
@@ -131,7 +200,13 @@ public class ReportDetailActivity extends AppCompatActivity {
             et_description.setText(report.getDescription());
             et_document.setText(report.getFileName());
 
-            extractID(report.getDoctors());
+            if (PreferenceManager.getINSTANCE().readFromPref(this, PreferenceKeys.SP_PROFILE_TYPE, PreferenceKeys.LBL_DOCTOR).equalsIgnoreCase(PreferenceKeys.LBL_DOCTOR)) {
+                extractIDPatients(report.getDoctors());
+            }
+            else{
+                extractIDDoctors(report.getDoctors());
+
+            }
         }
 
     }
@@ -142,6 +217,8 @@ public class ReportDetailActivity extends AppCompatActivity {
         et_title = (EditText) findViewById(R.id.et_title);
         et_description = (EditText) findViewById(R.id.et_description);
         et_document = (EditText) findViewById(R.id.et_document);
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+
     }
 
 //    @Override
@@ -173,6 +250,8 @@ public class ReportDetailActivity extends AppCompatActivity {
     }
 
     public void updateReport(View view) {
+        progressBar.setVisibility(View.VISIBLE);
+
 
         ActiveLedgerSDK.KEYNAME = ActiveLedgerHelper.getInstance().getKeyname();
         ActiveLedgerSDK.keyType = ActiveLedgerHelper.getInstance().getKeyType();
@@ -187,9 +266,17 @@ public class ReportDetailActivity extends AppCompatActivity {
         String base64document = report.getContent();
         String documentName = report.getFileName();
         String email = PreferenceManager.getINSTANCE().readFromPref(this, PreferenceKeys.SP_EMAIL, "");
+        JSONObject updateReportTransaction;
 
-        JSONObject updateReportTransaction = ActiveLedgerHelper.getInstance().createUpdateReportTransaction(null, ActiveLedgerSDK.getInstance().getKeyType(), name, title,
-                status, uploaddate, assignedto, signeddate, description, base64document, documentName, doctors_array, email);
+        if (PreferenceManager.getINSTANCE().readFromPref(this, PreferenceKeys.SP_PROFILE_TYPE, PreferenceKeys.LBL_DOCTOR).equalsIgnoreCase(PreferenceKeys.LBL_DOCTOR)) {
+            updateReportTransaction = ActiveLedgerHelper.getInstance().createUpdateReportTransaction(null, ActiveLedgerSDK.getInstance().getKeyType(), name, title,
+                    status, uploaddate, assignedto, signeddate, description, base64document, documentName, patients_array, email);
+        }
+        else {
+            updateReportTransaction = ActiveLedgerHelper.getInstance().createUpdateReportTransaction(null, ActiveLedgerSDK.getInstance().getKeyType(), name, title,
+                    status, uploaddate, assignedto, signeddate, description, base64document, documentName, doctors_array, email);
+        }
+
 
         String transactionString = Utility.getInstance().convertJSONObjectToString(updateReportTransaction);
 
@@ -208,6 +295,7 @@ public class ReportDetailActivity extends AppCompatActivity {
 
                     @Override
                     public void onError(Throwable e) {
+                        e.printStackTrace();
                     }
 
                     @Override
@@ -216,18 +304,17 @@ public class ReportDetailActivity extends AppCompatActivity {
 
                     @Override
                     public void onNext(Response<String> response) {
-//                        progressBar.setVisibility(View.GONE);
+                        progressBar.setVisibility(View.GONE);
                         Log.e("UpdateReport code--->", response.code() + "");
                         if (response.code() == 200) {
                             Utils.Log("UpdateReport res--->", response.body() + "");
 
                             Toast.makeText(ReportDetailActivity.this, "Report Update Successfully!", Toast.LENGTH_SHORT).show();
 
-                            //update the report to db if response is 200
-//                            DataRepository dataRepository = DataRepository.getINSTANCE(getApplication());
-//                            if (report != null)
-//                                dataRepository.insertReport(report);
-//                            finish();
+                            DataRepository dataRepository = DataRepository.getINSTANCE(getApplication());
+                            if (report != null)
+                                dataRepository.updateReport(report);
+                            finish();
 
                         } else {
                             Toast.makeText(ReportDetailActivity.this, "Report Update  Failed!", Toast.LENGTH_SHORT).show();
@@ -245,11 +332,22 @@ public class ReportDetailActivity extends AppCompatActivity {
     }
 
 
-    public void extractID(String doctors) {
+    public void extractIDDoctors(String doctors) {
         try {
             JSONArray jsonArray = new JSONArray(doctors);
             for (int i = 0; i < jsonArray.length(); i++) {
                 doctors_array.add("" + jsonArray.get(i));
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void extractIDPatients(String patients) {
+        try {
+            JSONArray jsonArray = new JSONArray(patients);
+            for (int i = 0; i < jsonArray.length(); i++) {
+                patients_array.add("" + jsonArray.get(i));
             }
         } catch (JSONException e) {
             e.printStackTrace();

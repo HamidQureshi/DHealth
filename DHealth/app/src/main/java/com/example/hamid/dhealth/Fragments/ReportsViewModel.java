@@ -38,8 +38,8 @@ public class ReportsViewModel extends AndroidViewModel {
         repository.deleteAllReport();
     }
 
-    public List<Report> searchReportsList(String name) {
-        return repository.searchReportList(name);
+    public List<Report> searchReportsList(String title) {
+        return repository.searchReportList(title);
     }
 
 

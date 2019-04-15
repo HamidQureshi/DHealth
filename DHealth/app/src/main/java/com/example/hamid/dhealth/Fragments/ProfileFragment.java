@@ -119,7 +119,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                     profile_type = PreferenceKeys.LBL_DOCTOR;
                 else
                     profile_type = PreferenceKeys.LBL_PATIENT;
-
             }
         });
 
@@ -138,7 +137,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                     gender = PreferenceKeys.LBL_MALE;
                 else
                     gender = PreferenceKeys.LBL_FEMALE;
-
             }
         });
 
@@ -164,7 +162,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         et_email = (EditText) getView().findViewById(R.id.et_email);
         et_phone = (EditText) getView().findViewById(R.id.et_phone);
         et_address = (EditText) getView().findViewById(R.id.et_address);
-
 
         btn_submit = (Button) getView().findViewById(R.id.btn_submit);
         btn_submit.setOnClickListener(this);
@@ -265,9 +262,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
             et_address.setFocusable(true);
             et_address.setFocusableInTouchMode(true);
-
-//            et_email.setFocusable(true);
-//            et_email.setFocusableInTouchMode(true);
 
             et_dob.setFocusable(true);
             et_dob.setFocusableInTouchMode(true);
@@ -452,6 +446,23 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                             iv_camera.setVisibility(View.INVISIBLE);
                             btn_submit.setVisibility(View.INVISIBLE);
                             btn_logout.setVisibility(View.INVISIBLE);
+
+                            et_name.setFocusable(false);
+                            et_name.setClickable(false);
+                            et_name.setFocusableInTouchMode(false);
+
+                            et_last_name.setFocusable(false);
+                            et_last_name.setFocusableInTouchMode(false);
+
+                            et_address.setFocusable(false);
+                            et_address.setFocusableInTouchMode(false);
+
+                            et_dob.setFocusable(false);
+                            et_dob.setFocusableInTouchMode(false);
+
+                            et_phone.setFocusable(false);
+                            et_phone.setFocusableInTouchMode(false);
+
                             Toast.makeText(getActivity(), "User Updated Successfully!", Toast.LENGTH_SHORT).show();
                         } else {
                             Toast.makeText(getActivity(), "User Updated Failed!", Toast.LENGTH_SHORT).show();

@@ -216,8 +216,9 @@ public class DataRepository {
 
     }
 
-    public List<Report> searchReportList(String name) {
-        return databaseDAO.searchReports(name + '%');
+    public List<Report> searchReportList(String title) {
+        //Todo contains identity and we are passing name
+        return databaseDAO.searchReports(title + '%');
     }
 
 
@@ -293,8 +294,19 @@ public class DataRepository {
                 .subscribe((result) -> {
                     //Use result for something
                 });
+    }
 
+    public void updateReport(Report report) {
 
+        Observable.fromCallable(() -> {
+            databaseDAO.updateReport(report);
+            return true;
+        })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe((result) -> {
+                    //Use result for something
+                });
     }
 
 

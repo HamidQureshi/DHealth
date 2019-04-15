@@ -506,7 +506,7 @@ public class ActiveLedgerHelper {
     }
 
     public JSONObject createUploadReportTransaction(KeyPair keyPair, KeyType type, String name, String title, String status, String uploaddate, String assignedto,
-                                                    String signeddate, String description, String base64document, String fileName, ArrayList<String> doctors_array, String email) {
+                                                    String signeddate, String description, String base64document, String fileName, ArrayList<String> selected_array, String email) {
 
         JSONObject transaction = new JSONObject();
         JSONObject $sigs = new JSONObject();
@@ -529,7 +529,7 @@ public class ActiveLedgerHelper {
 
             report.put("patientName", name);
             report.put("title", title);
-            report.put("doctors", new JSONArray(doctors_array));
+            report.put("doctors", new JSONArray(selected_array));
             report.put("description", description);
             report.put("fileName", fileName);
             report.put("content", base64document);
@@ -548,7 +548,6 @@ public class ActiveLedgerHelper {
                 throw new IllegalArgumentException("Unable to sign object:" + e.getMessage());
             }
 
-
             transaction.put("$tx", $tx);
             transaction.put("$selfsign", false);
             transaction.put("$sigs", $sigs);
@@ -560,7 +559,7 @@ public class ActiveLedgerHelper {
     }
 
     public JSONObject createUpdateReportTransaction(KeyPair keyPair, KeyType type, String name, String title, String status, String uploaddate, String assignedto,
-                                                    String signeddate, String description, String base64document, String fileName, ArrayList<String> doctors_array, String email) {
+                                                    String signeddate, String description, String base64document, String fileName, ArrayList<String> selected_array, String email) {
 
         JSONObject transaction = new JSONObject();
         JSONObject $sigs = new JSONObject();
@@ -583,7 +582,7 @@ public class ActiveLedgerHelper {
 
 //            report.put("patientName", name);
 //            report.put("title", title);
-            report.put("doctors", new JSONArray(doctors_array));
+            report.put("doctors", new JSONArray(selected_array));
 //            report.put("description", description);
 //            report.put("fileName", fileName);
             report.put("content", base64document);

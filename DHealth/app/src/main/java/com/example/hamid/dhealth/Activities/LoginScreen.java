@@ -137,7 +137,7 @@ public class LoginScreen extends AppCompatActivity {
                                             String profile_type = stream.optString("profile_type");
                                             String gender = stream.optString("gender");
                                             String dp = stream.optString("dp");
-                                            String identity = stream.optString("identity");
+                                            String identity = stream.optString("_id");
 
                                             Log.e("login stream--->", first_name + "");
 
