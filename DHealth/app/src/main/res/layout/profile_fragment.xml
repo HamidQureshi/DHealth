@@ -163,6 +163,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/tv_dob"
                     android:focusableInTouchMode="false"
                     android:focusable="false"
+                    android:textIsSelectable="true"
                     android:background="@drawable/edittext_border"
                     android:paddingLeft="4dp"
                     />
@@ -311,7 +312,7 @@
                     android:background="@drawable/button"
                     android:text="Logout"
                     android:textColor="@color/white"
-                    android:visibility="invisible"
+                    android:visibility="visible"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/encryption_toggle"

@@ -13,6 +13,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
@@ -22,10 +23,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.activeledgersdk.ActiveLedgerSDK;
@@ -67,6 +70,7 @@ public class ReportsFragment extends Fragment implements View.OnClickListener {
     private RecyclerView rv_report_list;
     private ReportsListAdapter reportsListAdapter;
     private ProgressBar progressBar;
+    TextView txt_no_report;
 
 
     public static ReportsFragment newInstance() {
@@ -77,6 +81,7 @@ public class ReportsFragment extends Fragment implements View.OnClickListener {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+
     }
 
     @Override
@@ -88,9 +93,14 @@ public class ReportsFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
         mViewModel = ViewModelProviders.of(this).get(ReportsViewModel.class);
 
         initLayouts();
+
+        if(mViewModel.getReportList()==null) {
+            txt_no_report.setVisibility(View.VISIBLE);
+        }
 
         reports = new ArrayList<>();
         reportsListAdapter = new ReportsListAdapter(getContext(), reports);
@@ -153,31 +163,11 @@ public class ReportsFragment extends Fragment implements View.OnClickListener {
     }
 
 
-//    ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT ) {
-//
-//        @Override
-//        public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
-//            Toast.makeText(getActivity(), "on Move", Toast.LENGTH_SHORT).show();
-//            return false;
-//        }
-//
-//        @Override
-//        public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
-//            Toast.makeText(getActivity(), "on Swiped ", Toast.LENGTH_SHORT).show();
-//            //Remove swiped item from list and notify the RecyclerView
-//            int position = viewHolder.getAdapterPosition();
-//
-//
-//
-//            mViewModel.deleteReport(position);
-//
-//
-//        }
-//    };
-
     private void initLayouts() {
         fab_create_file = (FloatingActionButton) getView().findViewById(R.id.fab_create_file);
         fab_create_file.setOnClickListener(this);
+
+        txt_no_report = (TextView) getView().findViewById(R.id.txt_no_report);
     }
 
     @Override
@@ -185,8 +175,12 @@ public class ReportsFragment extends Fragment implements View.OnClickListener {
         MenuInflater inflater = getActivity().getMenuInflater();
         inflater.inflate(R.menu.options_menu, menu);
 
+
+
         searchView =
                 (SearchView) menu.findItem(R.id.search).getActionView();
+
+        searchView.setQueryHint("Search by title");
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -212,8 +206,26 @@ public class ReportsFragment extends Fragment implements View.OnClickListener {
             }
         });
 
+        MenuItemCompat.setOnActionExpandListener(menu.findItem(R.id.search), new MenuItemCompat.OnActionExpandListener() {
+            @Override
+            public boolean onMenuItemActionExpand(MenuItem item) {
+//                Utils.showKeyboard(getActivity());
+
+                return true;
+            }
+
+            @Override
+            public boolean onMenuItemActionCollapse(MenuItem item) {
+                searchView.setQuery("",true);
+                Utils.hideKeyboard(getActivity());
+                return true;
+            }
+        });
+
 
     }
+
+
 
 
     @Override
@@ -223,6 +235,7 @@ public class ReportsFragment extends Fragment implements View.OnClickListener {
                 Intent intent = new Intent(getActivity(), UploadFileActivity.class);
                 startActivity(intent);
                 break;
+
         }
     }
 
@@ -278,6 +291,8 @@ public class ReportsFragment extends Fragment implements View.OnClickListener {
                                 JSONArray doctors = responseJSON.optJSONArray("streams").optJSONObject(0).optJSONArray("reports");
 
                                 if (doctors != null) {
+                                    txt_no_report.setVisibility(View.GONE);
+
                                     JSONObject doctor = new JSONObject();
                                     for (int i = 0; i < doctors.length(); i++) {
                                         doctor = doctors.optJSONObject(i);
@@ -295,6 +310,7 @@ public class ReportsFragment extends Fragment implements View.OnClickListener {
                                         mViewModel.insert(report);
                                     }
                                 } else {
+                                    txt_no_report.setVisibility(View.VISIBLE);
                                     Toast.makeText(getActivity(), "NO Reports Found in Ledger", Toast.LENGTH_SHORT).show();
                                 }
 
@@ -304,6 +320,7 @@ public class ReportsFragment extends Fragment implements View.OnClickListener {
 
 
                         } else {
+                            txt_no_report.setVisibility(View.VISIBLE);
                             Toast.makeText(getActivity(), "Report Fetching  Failed!", Toast.LENGTH_SHORT).show();
                         }
                     }

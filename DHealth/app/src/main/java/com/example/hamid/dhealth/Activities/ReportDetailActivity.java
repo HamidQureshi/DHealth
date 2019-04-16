@@ -267,9 +267,13 @@ public class ReportDetailActivity extends AppCompatActivity {
         if (PreferenceManager.getINSTANCE().readFromPref(this, PreferenceKeys.SP_PROFILE_TYPE, PreferenceKeys.LBL_DOCTOR).equalsIgnoreCase(PreferenceKeys.LBL_DOCTOR)) {
             updateReportTransaction = ActiveLedgerHelper.getInstance().createUpdateReportTransaction(null, ActiveLedgerSDK.getInstance().getKeyType(), name, title,
                     status, uploaddate, assignedto, signeddate, description, base64document, documentName, patients_array, email);
+            report.setDoctors(patients_array.toString());
+
         } else {
             updateReportTransaction = ActiveLedgerHelper.getInstance().createUpdateReportTransaction(null, ActiveLedgerSDK.getInstance().getKeyType(), name, title,
                     status, uploaddate, assignedto, signeddate, description, base64document, documentName, doctors_array, email);
+            report.setDoctors(doctors_array.toString());
+
         }
 
 

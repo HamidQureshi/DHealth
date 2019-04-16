@@ -48,6 +48,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import belka.us.androidtoggleswitch.widgets.BaseToggleSwitch;
 import belka.us.androidtoggleswitch.widgets.ToggleSwitch;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -103,6 +104,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
         et_dob = (EditText) getView().findViewById(R.id.et_dob);
         et_dob.setOnClickListener(this);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            et_dob.setShowSoftInputOnFocus(false);
+        }
         prepareDatePickerDialog();
 
         ToggleSwitch dp_toggleSwitch = (ToggleSwitch) getView().findViewById(R.id.dp_toggle);
@@ -194,10 +198,14 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.et_dob:
-                datePickerDialog.show();
+                Utils.hideKeyboard(getActivity());
+                if(et_dob.isFocusable() && et_dob.isFocusableInTouchMode()) {
+                    datePickerDialog.show();
+                }
                 break;
 
             case R.id.btn_submit:
+                Utils.hideKeyboard(getActivity());
 
                 progressBar.setVisibility(View.VISIBLE);
                 updateUserTransaction(et_name.getText().toString(), et_last_name.getText().toString(), et_dob.getText().toString(), et_phone.getText().toString(),
@@ -206,10 +214,12 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 break;
 
             case R.id.btn_logout:
+                Utils.hideKeyboard(getActivity());
                 showAlertDialog();
                 break;
 
             case R.id.iv_camera:
+                Utils.hideKeyboard(getActivity());
                 takePhoto(v);
                 break;
         }
@@ -445,7 +455,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                             Utils.Log("UpdateUser response--->", response.body() + "");
                             iv_camera.setVisibility(View.INVISIBLE);
                             btn_submit.setVisibility(View.INVISIBLE);
-                            btn_logout.setVisibility(View.INVISIBLE);
+//                            btn_logout.setVisibility(View.INVISIBLE);
 
                             et_name.setFocusable(false);
                             et_name.setClickable(false);

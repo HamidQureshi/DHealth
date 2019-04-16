@@ -52,7 +52,7 @@ public class UploadFileActivity extends AppCompatActivity {
     private static final String TAG = "UploadFileActivity";
     private static final int READ_REQUEST_CODE = 42;
     private static final int WRITE_REQUEST_CODE = 43;
-    static Uri uri = null;
+    Uri uri = null;
     EditText et_title, et_uploaddate, et_signeddate, et_description, et_content;
     MultiSelectSpinner et_assigned_to;
     TextView tv_staus, tv_document, et_name;
@@ -74,7 +74,7 @@ public class UploadFileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_upload_file);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        setTitle("File Upload Activity");
+        setTitle("File Upload");
         mViewModel = ViewModelProviders.of(this).get(DoctorPatientViewModel.class);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -243,6 +243,8 @@ public class UploadFileActivity extends AppCompatActivity {
 
         //convert the contents to base 64
         base64File = FileUtils.getBase64FromURI(this, uri);
+//        TODO remove 123
+        base64File = "123";
         Log.e(TAG, "file--> " + base64File);
 
         String fileName = FileUtils.getFileName(this, uri);

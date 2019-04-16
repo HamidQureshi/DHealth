@@ -58,6 +58,8 @@ public class DoctorPatientDescriptionActivity extends AppCompatActivity {
             }
         }
 
+        setTitle(et_name.getText() + " "+et_last_name.getText());
+
     }
 
     private void initLayouts() {

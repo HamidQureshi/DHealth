@@ -75,6 +75,9 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
 
         et_dob = (EditText) findViewById(R.id.et_dob);
         et_dob.setOnClickListener(this);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            et_dob.setShowSoftInputOnFocus(false);
+        }
         prepareDatePickerDialog();
 
         et_name = (EditText) findViewById(R.id.et_name);
@@ -176,10 +179,14 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.et_dob:
-                datePickerDialog.show();
+                Utils.hideKeyboard(this);
+                if(et_dob.isFocusable() && et_dob.isFocusableInTouchMode()) {
+                    datePickerDialog.show();
+                }
                 break;
 
             case R.id.btn_submit:
+                Utils.hideKeyboard(this);
                 ActiveLedgerHelper.getInstance().setupALSDK(getApplicationContext());
 
                 progressBar.setVisibility(View.VISIBLE);
