@@ -12,6 +12,10 @@ import com.example.hamid.dhealth.Preference.PreferenceManager;
 
 import java.util.List;
 
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
+
 public class DoctorPatientViewModel extends AndroidViewModel {
 
     private DataRepository repository;
@@ -70,11 +74,11 @@ public class DoctorPatientViewModel extends AndroidViewModel {
 
 
     public void getDoctorListFromServer(String token) {
-        repository.getDoctorListFromServer(token);
+            repository.getDoctorListFromServer(token);
     }
 
     public void getPatientListFromServer(String token) {
-        repository.getPatientListFromServer(token);
+            repository.getPatientListFromServer(token);
     }
 
     public List<Doctor> searchDoctorsList(String title) {

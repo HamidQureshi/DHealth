@@ -4,8 +4,14 @@ package com.example.hamid.dhealth.MedicalRepository;
 import android.annotation.SuppressLint;
 import android.app.Application;
 import android.arch.lifecycle.LiveData;
+import android.os.Message;
 import android.util.Log;
+import android.view.View;
+import android.widget.Toast;
 
+import com.example.activeledgersdk.ActiveLedgerSDK;
+import com.example.hamid.dhealth.ActiveLedgerHelper;
+import com.example.hamid.dhealth.Fragments.ReportsFragment;
 import com.example.hamid.dhealth.MedicalRepository.DB.DAO.DatabaseDAO;
 import com.example.hamid.dhealth.MedicalRepository.DB.DAO.MedicalRoomDatabase;
 import com.example.hamid.dhealth.MedicalRepository.DB.Entity.Doctor;
@@ -75,7 +81,7 @@ public class DataRepository {
         //fetch data from server
         HttpClient.getInstance().getDoctorListFromServer(token)
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+                .observeOn(Schedulers.io())
                 .subscribe(new Observer<Response<String>>() {
 
                     @Override
@@ -148,7 +154,7 @@ public class DataRepository {
         HttpClient.getInstance().getPatientListFromServer(token)
 //        HttpClient.getInstance().getAssignedPatientListFromServer(token)
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+                .observeOn(Schedulers.io())
                 .subscribe(new Observer<Response<String>>() {
 
                     @Override
@@ -212,6 +218,109 @@ public class DataRepository {
 
     }
 
+    public void getReportsListFromServer(String token) {
+
+        ActiveLedgerSDK.KEYNAME = ActiveLedgerHelper.getInstance().getKeyname();
+        ActiveLedgerSDK.keyType = ActiveLedgerHelper.getInstance().getKeyType();
+
+        Log.e("getReport token", token);
+
+        HttpClient.getInstance().getReport(token)
+                .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.io())
+                .subscribe(new io.reactivex.Observer<Response<String>>() {
+
+                    @Override
+                    public void onSubscribe(Disposable d) {
+//                        disposable = d;
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+
+                    @Override
+                    public void onNext(Response<String> response) {
+
+                        if (null != ReportsFragment.handler) {
+                            Message message = new Message();
+                            message.what = ReportsFragment.HIDE_PROGRESS;
+                            ReportsFragment.handler.sendMessage(message);
+                        }
+
+                        Log.e("getReport code--->", response.code() + "");
+                        if (response.code() == 200) {
+
+                            Utils.Log("getReport res--->", response.body() + "");
+
+                            try {
+                                JSONObject responseJSON = new JSONObject(response.body());
+
+                                JSONArray doctors = responseJSON.optJSONArray("streams").optJSONObject(0).optJSONArray("reports");
+
+                                if (doctors != null) {
+                                    List<Report> reportList = new ArrayList<>();
+
+                                    JSONObject doctor = new JSONObject();
+                                    for (int i = 0; i < doctors.length(); i++) {
+                                        doctor = doctors.optJSONObject(i);
+
+                                        String patientName = doctor.optString("patientName");
+                                        String fileName = doctor.optString("fileName");
+                                        String description = doctor.optString("description");
+                                        String title = doctor.optString("title");
+                                        String content = doctor.optString("content");
+                                        String doctors_list = doctor.optString("doctors");
+
+                                        Log.e("------->", doctors_list);
+
+                                        Report report = new Report(title, description, patientName, "Jhonny Depp", "", "", content, "", "", doctors_list, fileName);
+                                        reportList.add(report);
+                                        }
+
+                                    if (null != ReportsFragment.handler) {
+                                        Message message = new Message();
+                                        message.what = ReportsFragment.HIDE_NO_REPORTLABEL;
+                                        ReportsFragment.handler.sendMessage(message);
+                                    }
+                                    insertReportList(reportList);
+
+                                } else {
+                                    if (null != ReportsFragment.handler) {
+                                        Message message = new Message();
+                                        message.what = ReportsFragment.SHOW_NO_REPORTLABEL;
+                                        ReportsFragment.handler.sendMessage(message);
+                                        Message message2 = new Message();
+                                        message2.what = ReportsFragment.SHOW_TOAST;
+                                        message2.arg1 = ReportsFragment.TXT_NO_REPORTFOUND;
+                                        ReportsFragment.handler.sendMessage(message2);
+                                    }
+                                }
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+
+                        } else {
+                            if (null != ReportsFragment.handler) {
+                                Message message = new Message();
+                                message.what = ReportsFragment.SHOW_NO_REPORTLABEL;
+                                ReportsFragment.handler.sendMessage(message);
+                                Message message2 = new Message();
+                                message2.what = ReportsFragment.SHOW_TOAST;
+                                message2.arg1 = ReportsFragment.TXT_REPORT_FETCHING_FAILED;
+                                ReportsFragment.handler.sendMessage(message2);
+                            }
+                        }
+                    }
+                });
+    }
+
     public List<Report> searchReportList(String title) {
         return databaseDAO.searchReports(title + '%');
     }
@@ -223,7 +332,6 @@ public class DataRepository {
     public List<Patient> searchPatientsList(String name) {
         return databaseDAO.searchPatient(name + '%');
     }
-
 
     @SuppressLint("CheckResult")
     public void insertDoctor(final Doctor doctor) {
@@ -301,6 +409,22 @@ public class DataRepository {
                 });
     }
 
+    @SuppressLint("CheckResult")
+    public void insertReportList(final List<Report> reportList) {
+
+        Observable.fromCallable(() -> {
+            databaseDAO.deleteAllReport();
+            databaseDAO.insertReportList(reportList);
+
+            return true;
+        })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe((result) -> {
+                    mAllReports = databaseDAO.getReportList();
+                });
+    }
+
     public void updateReport(Report report) {
 
         Observable.fromCallable(() -> {
@@ -314,7 +438,6 @@ public class DataRepository {
                 });
     }
 
-
     public void deleteReport(Report report) {
         Observable.fromCallable(() -> {
             databaseDAO.deleteReport(report);
@@ -326,7 +449,6 @@ public class DataRepository {
                     //Use result for something
                 });
     }
-
 
     public void deleteAllDoctor() {
 

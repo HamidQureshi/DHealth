@@ -291,7 +291,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
                     android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="16dp"
                     android:layout_marginEnd="8dp"
                     android:background="@drawable/button"
                     android:text="Update"
@@ -300,24 +300,24 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/encryption_toggle"
-                    custom:layout_constraintHorizontal_bias="0.207" />
+                    custom:layout_constraintEnd_toStartOf="@+id/btn_logout"
+                    custom:layout_constraintHorizontal_bias="0.806" />
 
 
                 <Button
                     android:id="@+id/btn_logout"
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
-                    android:layout_marginStart="8dp"
                     android:layout_marginEnd="8dp"
-                    android:background="@drawable/button"
+                    android:background="@drawable/button_trans"
                     android:text="Logout"
-                    android:textColor="@color/white"
-                    android:visibility="visible"
+                    android:textColor="@color/colorPrimary"
+                    android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/encryption_toggle"
-                    custom:layout_constraintHorizontal_bias="0.76"
-                    custom:layout_constraintTop_toTopOf="@+id/btn_submit" />
+                    custom:layout_constraintHorizontal_bias="1.0"
+                    custom:layout_constraintTop_toTopOf="parent" />
 
                 <ProgressBar
                     android:id="@+id/progressBar"

@@ -43,4 +43,12 @@ public class ReportsViewModel extends AndroidViewModel {
     }
 
 
+    public void getReportsListFromServer(String token) {
+        repository.getReportsListFromServer(token);
+    }
+
+    public void insertReportList(final List<Report> reportList) {
+        repository.insertReportList(reportList);
+    }
+
 }

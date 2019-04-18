@@ -1,12 +1,15 @@
 package com.example.hamid.dhealth.Fragments;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Canvas;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -59,19 +62,26 @@ import retrofit2.Response;
 
 public class ReportsFragment extends Fragment implements View.OnClickListener {
 
-
     private static final int WRITE_REQUEST_CODE = 43;
     public List<Report> reports;
     SearchView searchView;
     String fileName;
     String base64File;
+    TextView txt_no_report;
     private FloatingActionButton fab_create_file;
     private ReportsViewModel mViewModel;
     private RecyclerView rv_report_list;
     private ReportsListAdapter reportsListAdapter;
     private ProgressBar progressBar;
-    TextView txt_no_report;
+    public static Handler handler= null;
 
+    public static int HIDE_PROGRESS = 0;
+    public static int HIDE_NO_REPORTLABEL = 1;
+    public static int SHOW_NO_REPORTLABEL = 2;
+    public static int SHOW_TOAST = 3;
+
+    public static int TXT_NO_REPORTFOUND = 0;
+    public static int TXT_REPORT_FETCHING_FAILED = 1;
 
     public static ReportsFragment newInstance() {
         return new ReportsFragment();
@@ -82,6 +92,42 @@ public class ReportsFragment extends Fragment implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
 
+    }
+
+    @SuppressLint("HandlerLeak")
+    @Override
+    public void onResume() {
+        super.onResume();
+       handler = new Handler(){
+           @Override
+           public void handleMessage(Message msg) {
+               super.handleMessage(msg);
+               Log.e("Message Received",""+msg.what);
+               if (msg.what == HIDE_PROGRESS){
+                   hideProgressbar();
+               }
+               else if(msg.what == HIDE_NO_REPORTLABEL){
+                   hideNoReportLabel();
+               }
+               else if(msg.what == SHOW_NO_REPORTLABEL){
+                   showNoReportLabel();
+               }
+
+               if (msg.what == SHOW_TOAST){
+
+                   if (msg.arg1 == TXT_NO_REPORTFOUND){
+                       showToast("NO Reports Found in Ledger");
+                   }
+                   else if (msg.arg1 == TXT_NO_REPORTFOUND){
+                       showToast("Report Fetching  Failed!");
+                   }
+
+
+               }
+
+           }
+       };
+       
     }
 
     @Override
@@ -98,7 +144,7 @@ public class ReportsFragment extends Fragment implements View.OnClickListener {
 
         initLayouts();
 
-        if(mViewModel.getReportList()==null) {
+        if (mViewModel.getReportList() == null) {
             txt_no_report.setVisibility(View.VISIBLE);
         }
 
@@ -176,7 +222,6 @@ public class ReportsFragment extends Fragment implements View.OnClickListener {
         inflater.inflate(R.menu.options_menu, menu);
 
 
-
         searchView =
                 (SearchView) menu.findItem(R.id.search).getActionView();
 
@@ -216,7 +261,7 @@ public class ReportsFragment extends Fragment implements View.OnClickListener {
 
             @Override
             public boolean onMenuItemActionCollapse(MenuItem item) {
-                searchView.setQuery("",true);
+                searchView.setQuery("", true);
                 Utils.hideKeyboard(getActivity());
                 return true;
             }
@@ -224,8 +269,6 @@ public class ReportsFragment extends Fragment implements View.OnClickListener {
 
 
     }
-
-
 
 
     @Override
@@ -242,91 +285,25 @@ public class ReportsFragment extends Fragment implements View.OnClickListener {
 
     private void populateList() {
         progressBar.setVisibility(View.VISIBLE);
-        //get reports from http
-        getReports();
+        mViewModel.getReportsListFromServer(com.example.hamid.dhealth.Preference.PreferenceManager.getINSTANCE().readFromPref(getActivity(), PreferenceKeys.SP_APP_TOKEN, "null"));
     }
 
 
-    public void getReports() {
-
-
-        ActiveLedgerSDK.KEYNAME = ActiveLedgerHelper.getInstance().getKeyname();
-        ActiveLedgerSDK.keyType = ActiveLedgerHelper.getInstance().getKeyType();
-
-        Log.e("getReport token", com.example.hamid.dhealth.Preference.PreferenceManager.getINSTANCE().readFromPref(getActivity(), PreferenceKeys.SP_APP_TOKEN, "null"));
-
-        HttpClient.getInstance().getReport(com.example.hamid.dhealth.Preference.PreferenceManager.getINSTANCE().readFromPref(getActivity(), PreferenceKeys.SP_APP_TOKEN, "null"))
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new io.reactivex.Observer<Response<String>>() {
-
-                    @Override
-                    public void onSubscribe(Disposable d) {
-//                        disposable = d;
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                    }
-
-                    @Override
-                    public void onComplete() {
-                    }
-
-                    @Override
-                    public void onNext(Response<String> response) {
-                        progressBar.setVisibility(View.GONE);
-                        Log.e("getReport code--->", response.code() + "");
-                        if (response.code() == 200) {
-                            Utils.Log("getReport res--->", response.body() + "");
-
-                            //delete all reports in db
-                            mViewModel.deleteReportData();
-
-                            //add all reports to db
-
-                            try {
-                                JSONObject responseJSON = new JSONObject(response.body());
-
-                                JSONArray doctors = responseJSON.optJSONArray("streams").optJSONObject(0).optJSONArray("reports");
-
-                                if (doctors != null) {
-                                    txt_no_report.setVisibility(View.GONE);
-
-                                    JSONObject doctor = new JSONObject();
-                                    for (int i = 0; i < doctors.length(); i++) {
-                                        doctor = doctors.optJSONObject(i);
-
-                                        String patientName = doctor.optString("patientName");
-                                        String fileName = doctor.optString("fileName");
-                                        String description = doctor.optString("description");
-                                        String title = doctor.optString("title");
-                                        String content = doctor.optString("content");
-                                        String doctors_list = doctor.optString("doctors");
-
-                                        Log.e("------->", doctors_list);
-
-                                        Report report = new Report(title, description, patientName, "Jhonny Depp", "", "", content, "", "", doctors_list, fileName);
-                                        mViewModel.insert(report);
-                                    }
-                                } else {
-                                    txt_no_report.setVisibility(View.VISIBLE);
-                                    Toast.makeText(getActivity(), "NO Reports Found in Ledger", Toast.LENGTH_SHORT).show();
-                                }
-
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-
-
-                        } else {
-                            txt_no_report.setVisibility(View.VISIBLE);
-                            Toast.makeText(getActivity(), "Report Fetching  Failed!", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
+    public void hideProgressbar(){
+        progressBar.setVisibility(View.GONE);
     }
 
+    public void hideNoReportLabel(){
+        txt_no_report.setVisibility(View.GONE);
+    }
+
+    public void showNoReportLabel(){
+        txt_no_report.setVisibility(View.VISIBLE);
+    }
+
+    public void showToast(String message){
+        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+    }
 
     private void saveFiletoStrorage() {
         if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE)

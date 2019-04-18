@@ -196,7 +196,7 @@ public class DoctorPatientFragment extends Fragment {
 
             @Override
             public boolean onMenuItemActionCollapse(MenuItem item) {
-                searchView.setQuery("",true);
+                searchView.setQuery("", true);
                 Utils.hideKeyboard(getActivity());
                 return true;
             }

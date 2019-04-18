@@ -48,7 +48,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-import belka.us.androidtoggleswitch.widgets.BaseToggleSwitch;
 import belka.us.androidtoggleswitch.widgets.ToggleSwitch;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -199,7 +198,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.et_dob:
                 Utils.hideKeyboard(getActivity());
-                if(et_dob.isFocusable() && et_dob.isFocusableInTouchMode()) {
+                if (et_dob.isFocusable() && et_dob.isFocusableInTouchMode()) {
                     datePickerDialog.show();
                 }
                 break;
@@ -262,7 +261,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
             Toast.makeText(getActivity(), "Profile Editing Enabled", Toast.LENGTH_SHORT).show();
 
             btn_submit.setVisibility(View.VISIBLE);
-            btn_logout.setVisibility(View.VISIBLE);
+//            btn_logout.setVisibility(View.VISIBLE);
 
             et_name.setFocusable(true);
             et_name.setFocusableInTouchMode(true);
@@ -282,6 +281,10 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
             iv_camera.setVisibility(View.VISIBLE);
 
             return true;
+        }
+        else if (id == R.id.logout){
+            Utils.hideKeyboard(getActivity());
+            showAlertDialog();
         }
 
         return super.onOptionsItemSelected(item);

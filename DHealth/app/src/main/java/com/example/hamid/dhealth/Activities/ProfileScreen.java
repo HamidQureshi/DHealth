@@ -180,7 +180,7 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
         switch (v.getId()) {
             case R.id.et_dob:
                 Utils.hideKeyboard(this);
-                if(et_dob.isFocusable() && et_dob.isFocusableInTouchMode()) {
+                if (et_dob.isFocusable() && et_dob.isFocusableInTouchMode()) {
                     datePickerDialog.show();
                 }
                 break;

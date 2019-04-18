@@ -99,6 +99,7 @@ public class DashboardScreen extends AppCompatActivity {
                         fragment = ReportsFragment.newInstance();
                         break;
 
+
 //                    case R.id.settings:
 ////                        Toast.makeText(DashboardScreen.this, "Settings", Toast.LENGTH_SHORT).show();
 //                        title = "Settings";

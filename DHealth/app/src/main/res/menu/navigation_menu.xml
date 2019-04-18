@@ -12,6 +12,7 @@
     <item android:id="@+id/reports"
         android:icon="@drawable/ic_folder_black_24dp"
         android:title="Reports"/>
+
     <!--<item android:id="@+id/settings"-->
         <!--android:icon="@drawable/ic_settings_black_24dp"-->
         <!--android:title="Settings"/>-->

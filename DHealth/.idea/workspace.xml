@@ -43,62 +43,25 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="UploadFileActivity.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/hamid/dhealth/Activities/UploadFileActivity.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="303">
-              <caret line="245" column="25" selection-start-line="245" selection-start-column="25" selection-end-line="245" selection-end-column="25" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="DoctorPatientFragment.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/hamid/dhealth/Fragments/DoctorPatientFragment.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="695">
-              <caret line="196" column="21" selection-start-line="196" selection-start-column="21" selection-end-line="196" selection-end-column="21" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Utils.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/hamid/dhealth/Utils/Utils.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="355">
-              <caret line="65" column="63" selection-start-line="65" selection-start-column="63" selection-end-line="65" selection-end-column="63" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ReportsFragment.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="ReportsFragment.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/hamid/dhealth/Fragments/ReportsFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="126">
-              <caret line="212" selection-start-line="212" selection-end-line="212" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ProfileFragment.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/hamid/dhealth/Fragments/ProfileFragment.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="430">
-              <caret line="200" column="48" selection-start-line="200" selection-start-column="48" selection-end-line="200" selection-end-column="48" />
+            <state relative-caret-position="646">
+              <caret line="129" column="7" selection-start-line="129" selection-start-column="7" selection-end-line="129" selection-end-column="7" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="method#onCreate#0;class#ReportsFragment#0" />
+                <element signature="e#3392#4257#0" expanded="true" />
+                <element signature="e#4256#4257#0" expanded="true" />
+                <element signature="method#onCreateView#0;class#ReportsFragment#0" />
+                <element signature="method#onActivityCreated#0;class#ReportsFragment#0" />
+                <element signature="method#setupRecyclerView#0;class#ReportsFragment#0" />
+                <element signature="method#initLayouts#0;class#ReportsFragment#0" />
+                <element signature="method#onPrepareOptionsMenu#0;class#ReportsFragment#0" />
+                <element signature="method#onClick#0;class#ReportsFragment#0" />
+                <element signature="method#showToast#0;class#ReportsFragment#0" />
+                <element signature="method#onRequestPermissionsResult#0;class#ReportsFragment#0" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ProfileScreen.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/hamid/dhealth/Activities/ProfileScreen.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="515">
-              <caret line="181" column="41" selection-start-line="181" selection-start-column="41" selection-end-line="181" selection-end-column="41" />
             </state>
           </provider>
         </entry>
@@ -115,9 +78,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>btn_login_bg</find>
-      <find>onPrepareOptionsMenu</find>
-      <find>edit</find>
       <find>et_assigned_to</find>
       <find>disposable</find>
       <find>tv</find>
@@ -134,17 +94,20 @@
       <find>btn_submit.setVisibility(</find>
       <find>doctor</find>
       <find>doctors_array</find>
-      <find>progressBar</find>
       <find>androidTestApi</find>
       <find>om.android.support.test.espresso:espr</find>
       <find>com.android.support:support-annotation</find>
       <find>ndroidx.test.espresso:esp</find>
-      <find>btn_logout</find>
       <find>file</find>
       <find>uri</find>
       <find>search</find>
-      <find>et_dob</find>
       <find>btn_submit</find>
+      <find>et_dob</find>
+      <find>btn_logout</find>
+      <find>progressBar</find>
+      <find>doctorlis</find>
+      <find>doctorlist resp</find>
+      <find>Message</find>
     </findStrings>
     <replaceStrings>
       <replace>android:paddingLeft=&quot;4dp&quot;</replace>
@@ -2696,9 +2659,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/app/src/main/res/values/styles.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/drawable/ic_face_black_24dp.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/drawable/ic_folder_black_24dp.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/drawable/ic_settings_black_24dp.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/drawable/ic_notifications_black_24dp.xml" />
@@ -2721,36 +2681,39 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/hamid/dhealth/Activities/PDFViewActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/hamid/dhealth/ActiveLedgerHelper.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/hamid/dhealth/Activities/LoginScreen.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/example/hamid/dhealth/Fragments/ReportsViewModel.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/content_report_detail.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/example/hamid/dhealth/Activities/DashboardScreen.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/hamid/dhealth/Adapter/DoctorPatientListAdapter.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/example/hamid/dhealth/MedicalRepository/DataRepository.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/example/hamid/dhealth/MedicalRepository/DB/DAO/DatabaseDAO.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/example/hamid/dhealth/Fragments/DoctorPatientViewModel.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/doctor_patient_card.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/doctor_patient_fragment.xml" />
         <option value="$PROJECT_DIR$/app/src/test/java/com/example/hamid/dhealth/LoginTest.java" />
         <option value="$PROJECT_DIR$/app/build.gradle" />
-        <option value="$PROJECT_DIR$/app/src/androidTest/java/com/example/hamid/dhealth/LoginTest.java" />
         <option value="$PROJECT_DIR$/app/src/androidTest/java/com/example/hamid/dhealth/ExampleInstrumentedTest.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/hamid/dhealth/Activities/SignUpScreen.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/example/hamid/dhealth/Activities/ReportDetailActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/reports_fragment.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/hamid/dhealth/Activities/DoctorPatientDescriptionActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/hamid/dhealth/Utils/Utils.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/example/hamid/dhealth/Activities/UploadFileActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/example/hamid/dhealth/Fragments/ReportsFragment.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/example/hamid/dhealth/Fragments/DoctorPatientFragment.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/profile_fragment.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_profile_screen.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/hamid/dhealth/Activities/ProfileScreen.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/drawable/button_trans.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/hamid/dhealth/Activities/DashboardScreen.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/menu/navigation_menu.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/menu/edit_options_menu.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/profile_fragment.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/hamid/dhealth/Fragments/ProfileFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/hamid/dhealth/Activities/UploadFileActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/androidTest/java/com/example/hamid/dhealth/LoginTest.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/hamid/dhealth/Activities/ReportDetailActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/hamid/dhealth/Fragments/DoctorPatientFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/hamid/dhealth/Fragments/DoctorPatientViewModel.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/hamid/dhealth/Fragments/ReportsViewModel.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/hamid/dhealth/MedicalRepository/DataRepository.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/hamid/dhealth/MedicalRepository/DB/DAO/DatabaseDAO.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/hamid/dhealth/Fragments/ReportsFragment.java" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="1912" />
     <option name="y" value="-170" />
     <option name="width" value="1936" />
@@ -2787,10 +2750,6 @@
               <item name="java" type="edd41e36:AndroidSourceTypeNode" />
               <item name="dhealth" type="cbb59c9e:AndroidPsiDirectoryNode" />
             </path>
-            <path>
-              <item name="DHealth" type="1abcf292:AndroidViewProjectNode" />
-              <item name="Gradle Scripts" type="ae0cef3a:AndroidBuildScriptsGroupNode" />
-            </path>
           </expand>
           <select />
         </subPane>
@@ -2799,17 +2758,20 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="DEBUGGABLE_DEVICE" value="d8b5b420" />
+    <property name="DEBUGGABLE_DEVICE" value="samsung-sm_g935t-d8b5b420" />
     <property name="DEBUGGABLE_PROCESS" value="com.example.hamid.activedapp" />
     <property name="DEBUGGER_ID" value="Auto" />
     <property name="SHOW_ALL_PROCESSES" value="false" />
-    <property name="SearchEverywhereHistoryKey" value="profile&#9;FILE&#9;file://C:/Users/Hamid/Desktop/ALSDK/DHealth/health/DHealth/app/src/main/java/com/example/hamid/dhealth/Activities/ProfileScreen.java&#10;file&#9;FILE&#9;file://C:/Users/Hamid/Desktop/ALSDK/DHealth/health/DHealth/app/src/main/java/com/example/hamid/dhealth/Activities/UploadFileActivity.java&#10;Patientd&#9;PSI&#9;JAVA://com.example.hamid.dhealth.Activities.DoctorPatientDescriptionActivity&#10;uti&#9;PSI&#9;JAVA://com.example.hamid.dhealth.Utils.Utils&#10;doctor&#9;FILE&#9;file://C:/Users/Hamid/Desktop/ALSDK/DHealth/health/DHealth/app/src/main/java/com/example/hamid/dhealth/Fragments/DoctorPatientFragment.java&#10;doctorpa&#9;FILE&#9;file://C:/Users/Hamid/Desktop/ALSDK/DHealth/health/DHealth/app/src/main/java/com/example/hamid/dhealth/Fragments/DoctorPatientFragment.java&#10;report&#9;FILE&#9;file://C:/Users/Hamid/Desktop/ALSDK/DHealth/health/DHealth/app/src/main/java/com/example/hamid/dhealth/Fragments/ReportsFragment.java&#10;androidm&#9;FILE&#9;file://C:/Users/Hamid/Desktop/ALSDK/DHealth/health/DHealth/app/src/main/AndroidManifest.xml&#10;upload&#9;FILE&#9;file://C:/Users/Hamid/Desktop/ALSDK/DHealth/health/DHealth/app/src/main/java/com/example/hamid/dhealth/Activities/UploadFileActivity.java&#10;reportdeta&#9;FILE&#9;file://C:/Users/Hamid/Desktop/ALSDK/DHealth/health/DHealth/app/src/main/java/com/example/hamid/dhealth/Activities/ReportDetailActivity.java&#10;REPORTF&#9;FILE&#9;file://C:/Users/Hamid/Desktop/ALSDK/DHealth/health/DHealth/app/src/main/java/com/example/hamid/dhealth/Fragments/ReportsFragment.java&#10;reports&#9;FILE&#9;file://C:/Users/Hamid/Desktop/ALSDK/DHealth/health/DHealth/app/src/main/java/com/example/hamid/dhealth/Fragments/ReportsFragment.java&#10;profilefr&#9;FILE&#9;file://C:/Users/Hamid/Desktop/ALSDK/DHealth/health/DHealth/app/src/main/java/com/example/hamid/dhealth/Fragments/ProfileFragment.java&#10;signup&#9;PSI&#9;JAVA://com.example.hamid.dhealth.Activities.SignUpScreen&#10;loginscre&#9;FILE&#9;file://C:/Users/Hamid/Desktop/ALSDK/DHealth/health/DHealth/app/src/main/java/com/example/hamid/dhealth/Activities/LoginScreen.java&#10;reportsf&#9;FILE&#9;file://C:/Users/Hamid/Desktop/ALSDK/DHealth/health/DHealth/app/src/main/java/com/example/hamid/dhealth/Fragments/ReportsFragment.java&#10;dashb&#9;PSI&#9;JAVA://com.example.hamid.dhealth.Activities.DashboardScreen&#10;do&#9;FILE&#9;file://C:/Users/Hamid/Desktop/ALSDK/DHealth/health/DHealth/app/src/main/java/com/example/hamid/dhealth/Fragments/DoctorPatientFragment.java&#10;docto&#9;FILE&#9;file://C:/Users/Hamid/Desktop/ALSDK/DHealth/health/DHealth/app/src/main/java/com/example/hamid/dhealth/Fragments/DoctorPatientFragment.java&#10;reportde&#9;FILE&#9;file://C:/Users/Hamid/Desktop/ALSDK/DHealth/health/DHealth/app/src/main/java/com/example/hamid/dhealth/Activities/ReportDetailActivity.java&#10;report fr&#9;FILE&#9;file://C:/Users/Hamid/Desktop/ALSDK/DHealth/health/DHealth/app/src/main/java/com/example/hamid/dhealth/Fragments/ReportsFragment.java&#10;profilef&#9;FILE&#9;file://C:/Users/Hamid/Desktop/ALSDK/DHealth/health/DHealth/app/src/main/java/com/example/hamid/dhealth/Fragments/ProfileFragment.java&#10;logins&#9;PSI&#9;JAVA://com.example.hamid.dhealth.Activities.LoginScreen&#10;rep&#9;FILE&#9;file://C:/Users/Hamid/Desktop/ALSDK/DHealth/health/DHealth/app/src/main/java/com/example/hamid/dhealth/Activities/ReportDetailActivity.java&#10;repor&#9;PSI&#9;JAVA://com.example.hamid.dhealth.MedicalRepository.DB.Entity.Report&#10;re&#9;FILE&#9;file://C:/Users/Hamid/Desktop/ALSDK/DHealth/health/DHealth/app/src/main/java/com/example/hamid/dhealth/MedicalRepository/DB/Entity/Report.java&#10;profil&#9;FILE&#9;file://C:/Users/Hamid/Desktop/ALSDK/DHealth/health/DHealth/app/src/main/res/layout/profile_fragment.xml&#10;uploadfile&#9;FILE&#9;file://C:/Users/Hamid/Desktop/ALSDK/DHealth/health/DHealth/app/src/main/java/com/example/hamid/dhealth/Activities/UploadFileActivity.java&#10;styles&#9;FILE&#9;file://C:/Users/Hamid/Desktop/ALSDK/DHealth/health/DHealth/app/src/main/res/values/styles.xml&#10;loginsc&#9;PSI&#9;JAVA://com.example.hamid.dhealth.Activities.LoginScreen&#10;splash&#9;PSI&#9;JAVA://com.example.hamid.dhealth.SplashActivity&#10;profilsc&#9;FILE&#9;file://C:/Users/Hamid/Desktop/ALSDK/DHealth/health/DHealth/app/src/main/java/com/example/hamid/dhealth/Activities/ProfileScreen.java&#10;colors&#9;FILE&#9;file://C:/Users/Hamid/Desktop/ALSDK/DHealth/health/DHealth/app/src/main/res/values/colors.xml&#10;doct&#9;FILE&#9;file://C:/Users/Hamid/Desktop/ALSDK/DHealth/health/DHealth/app/src/main/java/com/example/hamid/dhealth/Fragments/DoctorPatientFragment.java&#10;uploadfilea&#9;PSI&#9;JAVA://com.example.hamid.dhealth.Activities.UploadFileActivity&#10;pref&#9;FILE&#9;file://C:/Users/Hamid/Desktop/ALSDK/DHealth/health/DHealth/app/src/main/java/com/example/hamid/dhealth/Preference/PreferenceKeys.java&#10;activel&#9;FILE&#9;jar://C:/Users/Hamid/.gradle/caches/modules-2/files-2.1/com.github.activeledger/SDK-Android/v0.1.4/8b9663fe262e3e8a7073d913bc8efa8518b18878/SDK-Android-v0.1.4-sources.jar!/com/example/activeledgersdk/ActiveLedgerSDK.java&#10;patient&#9;FILE&#9;file://C:/Users/Hamid/Desktop/ALSDK/DHealth/health/DHealth/app/src/main/java/com/example/hamid/dhealth/Fragments/DoctorPatientFragment.java&#10;profile f&#9;FILE&#9;file://C:/Users/Hamid/Desktop/ALSDK/DHealth/health/DHealth/app/src/main/res/layout/profile_fragment.xml&#10;dashbo&#9;FILE&#9;file://C:/Users/Hamid/Desktop/ALSDK/DHealth/health/DHealth/app/src/main/java/com/example/hamid/dhealth/Activities/DashboardScreen.java&#10;prof&#9;FILE&#9;file://C:/Users/Hamid/Desktop/ALSDK/DHealth/health/DHealth/app/src/main/res/layout/profile_fragment.xml&#10;profilesc&#9;FILE&#9;file://C:/Users/Hamid/Desktop/ALSDK/DHealth/health/DHealth/app/src/main/java/com/example/hamid/dhealth/Activities/ProfileScreen.java&#10;profilf&#9;FILE&#9;file://C:/Users/Hamid/Desktop/ALSDK/DHealth/health/DHealth/app/src/main/java/com/example/hamid/dhealth/Fragments/ProfileFragment.java&#10;fileutils&#9;FILE&#9;file://C:/Users/Hamid/Desktop/ALSDK/DHealth/health/DHealth/app/src/main/java/com/example/hamid/dhealth/FileUtils.java&#10;doctorfra&#9;FILE&#9;file://C:/Users/Hamid/Desktop/ALSDK/DHealth/health/DHealth/app/src/main/java/com/example/hamid/dhealth/Fragments/DoctorPatientFragment.java&#10;activity_pdfview&#9;FILE&#9;file://C:/Users/Hamid/Desktop/ALSDK/DHealth/health/DHealth/app/src/main/res/layout/activity_pdfview.xml&#10;signu&#9;FILE&#9;file://C:/Users/Hamid/Desktop/ALSDK/DHealth/health/DHealth/app/src/main/java/com/example/hamid/dhealth/Activities/SignUpScreen.java&#10;prefe&#9;FILE&#9;file://C:/Users/Hamid/Desktop/ALSDK/DHealth/health/DHealth/app/src/main/java/com/example/hamid/dhealth/Preference/PreferenceKeys.java&#10;sign&#9;FILE&#9;file://C:/Users/Hamid/Desktop/ALSDK/DHealth/health/DHealth/app/src/main/java/com/example/hamid/dhealth/Activities/SignUpScreen.java" />
+    <property name="SearchEverywhereHistoryKey" value="docto&#9;FILE&#9;file://C:/Users/Hamid/Desktop/ALSDK/DHealth/health/DHealth/app/src/main/java/com/example/hamid/dhealth/Fragments/DoctorPatientFragment.java&#10;report&#9;FILE&#9;file://C:/Users/Hamid/Desktop/ALSDK/DHealth/health/DHealth/app/src/main/java/com/example/hamid/dhealth/Fragments/ReportsFragment.java&#10;databas&#9;FILE&#9;file://C:/Users/Hamid/Desktop/ALSDK/DHealth/health/DHealth/app/src/main/java/com/example/hamid/dhealth/MedicalRepository/DB/DAO/DatabaseDAO.java&#10;doctopa&#9;FILE&#9;file://C:/Users/Hamid/Desktop/ALSDK/DHealth/health/DHealth/app/src/main/java/com/example/hamid/dhealth/Fragments/DoctorPatientFragment.java&#10;reportde&#9;FILE&#9;file://C:/Users/Hamid/Desktop/ALSDK/DHealth/health/DHealth/app/src/main/java/com/example/hamid/dhealth/Activities/ReportDetailActivity.java&#10;login&#9;FILE&#9;file://C:/Users/Hamid/Desktop/ALSDK/DHealth/health/DHealth/app/src/main/java/com/example/hamid/dhealth/Activities/LoginScreen.java&#10;upload&#9;FILE&#9;file://C:/Users/Hamid/Desktop/ALSDK/DHealth/health/DHealth/app/src/main/java/com/example/hamid/dhealth/Activities/UploadFileActivity.java&#10;profile&#9;FILE&#9;file://C:/Users/Hamid/Desktop/ALSDK/DHealth/health/DHealth/app/src/main/res/layout/profile_fragment.xml&#10;string&#9;FILE&#9;file://C:/Users/Hamid/Desktop/ALSDK/DHealth/health/DHealth/app/src/main/res/values/strings.xml&#10;nav&#9;FILE&#9;file://C:/Users/Hamid/Desktop/ALSDK/DHealth/health/DHealth/app/src/main/res/menu/navigation_menu.xml&#10;dashboa&#9;FILE&#9;file://C:/Users/Hamid/Desktop/ALSDK/DHealth/health/DHealth/app/src/main/java/com/example/hamid/dhealth/Activities/DashboardScreen.java&#10;loginsc&#9;FILE&#9;file://C:/Users/Hamid/Desktop/ALSDK/DHealth/health/DHealth/app/src/main/java/com/example/hamid/dhealth/Activities/LoginScreen.java&#10;file&#9;FILE&#9;file://C:/Users/Hamid/Desktop/ALSDK/DHealth/health/DHealth/app/src/main/java/com/example/hamid/dhealth/Activities/UploadFileActivity.java&#10;Patientd&#9;PSI&#9;JAVA://com.example.hamid.dhealth.Activities.DoctorPatientDescriptionActivity&#10;uti&#9;PSI&#9;JAVA://com.example.hamid.dhealth.Utils.Utils&#10;doctor&#9;FILE&#9;file://C:/Users/Hamid/Desktop/ALSDK/DHealth/health/DHealth/app/src/main/java/com/example/hamid/dhealth/Fragments/DoctorPatientFragment.java&#10;doctorpa&#9;FILE&#9;file://C:/Users/Hamid/Desktop/ALSDK/DHealth/health/DHealth/app/src/main/java/com/example/hamid/dhealth/Fragments/DoctorPatientFragment.java&#10;androidm&#9;FILE&#9;file://C:/Users/Hamid/Desktop/ALSDK/DHealth/health/DHealth/app/src/main/AndroidManifest.xml&#10;reportdeta&#9;FILE&#9;file://C:/Users/Hamid/Desktop/ALSDK/DHealth/health/DHealth/app/src/main/java/com/example/hamid/dhealth/Activities/ReportDetailActivity.java&#10;REPORTF&#9;FILE&#9;file://C:/Users/Hamid/Desktop/ALSDK/DHealth/health/DHealth/app/src/main/java/com/example/hamid/dhealth/Fragments/ReportsFragment.java&#10;reports&#9;FILE&#9;file://C:/Users/Hamid/Desktop/ALSDK/DHealth/health/DHealth/app/src/main/java/com/example/hamid/dhealth/Fragments/ReportsFragment.java&#10;profilefr&#9;FILE&#9;file://C:/Users/Hamid/Desktop/ALSDK/DHealth/health/DHealth/app/src/main/java/com/example/hamid/dhealth/Fragments/ProfileFragment.java&#10;signup&#9;PSI&#9;JAVA://com.example.hamid.dhealth.Activities.SignUpScreen&#10;loginscre&#9;FILE&#9;file://C:/Users/Hamid/Desktop/ALSDK/DHealth/health/DHealth/app/src/main/java/com/example/hamid/dhealth/Activities/LoginScreen.java&#10;reportsf&#9;FILE&#9;file://C:/Users/Hamid/Desktop/ALSDK/DHealth/health/DHealth/app/src/main/java/com/example/hamid/dhealth/Fragments/ReportsFragment.java&#10;dashb&#9;PSI&#9;JAVA://com.example.hamid.dhealth.Activities.DashboardScreen&#10;do&#9;FILE&#9;file://C:/Users/Hamid/Desktop/ALSDK/DHealth/health/DHealth/app/src/main/java/com/example/hamid/dhealth/Fragments/DoctorPatientFragment.java&#10;report fr&#9;FILE&#9;file://C:/Users/Hamid/Desktop/ALSDK/DHealth/health/DHealth/app/src/main/java/com/example/hamid/dhealth/Fragments/ReportsFragment.java&#10;profilef&#9;FILE&#9;file://C:/Users/Hamid/Desktop/ALSDK/DHealth/health/DHealth/app/src/main/java/com/example/hamid/dhealth/Fragments/ProfileFragment.java&#10;logins&#9;PSI&#9;JAVA://com.example.hamid.dhealth.Activities.LoginScreen&#10;rep&#9;FILE&#9;file://C:/Users/Hamid/Desktop/ALSDK/DHealth/health/DHealth/app/src/main/java/com/example/hamid/dhealth/Activities/ReportDetailActivity.java&#10;repor&#9;PSI&#9;JAVA://com.example.hamid.dhealth.MedicalRepository.DB.Entity.Report&#10;re&#9;FILE&#9;file://C:/Users/Hamid/Desktop/ALSDK/DHealth/health/DHealth/app/src/main/java/com/example/hamid/dhealth/MedicalRepository/DB/Entity/Report.java&#10;profil&#9;FILE&#9;file://C:/Users/Hamid/Desktop/ALSDK/DHealth/health/DHealth/app/src/main/res/layout/profile_fragment.xml&#10;uploadfile&#9;FILE&#9;file://C:/Users/Hamid/Desktop/ALSDK/DHealth/health/DHealth/app/src/main/java/com/example/hamid/dhealth/Activities/UploadFileActivity.java&#10;styles&#9;FILE&#9;file://C:/Users/Hamid/Desktop/ALSDK/DHealth/health/DHealth/app/src/main/res/values/styles.xml&#10;splash&#9;PSI&#9;JAVA://com.example.hamid.dhealth.SplashActivity&#10;profilsc&#9;FILE&#9;file://C:/Users/Hamid/Desktop/ALSDK/DHealth/health/DHealth/app/src/main/java/com/example/hamid/dhealth/Activities/ProfileScreen.java&#10;colors&#9;FILE&#9;file://C:/Users/Hamid/Desktop/ALSDK/DHealth/health/DHealth/app/src/main/res/values/colors.xml&#10;doct&#9;FILE&#9;file://C:/Users/Hamid/Desktop/ALSDK/DHealth/health/DHealth/app/src/main/java/com/example/hamid/dhealth/Fragments/DoctorPatientFragment.java&#10;uploadfilea&#9;PSI&#9;JAVA://com.example.hamid.dhealth.Activities.UploadFileActivity&#10;pref&#9;FILE&#9;file://C:/Users/Hamid/Desktop/ALSDK/DHealth/health/DHealth/app/src/main/java/com/example/hamid/dhealth/Preference/PreferenceKeys.java&#10;activel&#9;FILE&#9;jar://C:/Users/Hamid/.gradle/caches/modules-2/files-2.1/com.github.activeledger/SDK-Android/v0.1.4/8b9663fe262e3e8a7073d913bc8efa8518b18878/SDK-Android-v0.1.4-sources.jar!/com/example/activeledgersdk/ActiveLedgerSDK.java&#10;patient&#9;FILE&#9;file://C:/Users/Hamid/Desktop/ALSDK/DHealth/health/DHealth/app/src/main/java/com/example/hamid/dhealth/Fragments/DoctorPatientFragment.java&#10;profile f&#9;FILE&#9;file://C:/Users/Hamid/Desktop/ALSDK/DHealth/health/DHealth/app/src/main/res/layout/profile_fragment.xml&#10;dashbo&#9;FILE&#9;file://C:/Users/Hamid/Desktop/ALSDK/DHealth/health/DHealth/app/src/main/java/com/example/hamid/dhealth/Activities/DashboardScreen.java&#10;prof&#9;FILE&#9;file://C:/Users/Hamid/Desktop/ALSDK/DHealth/health/DHealth/app/src/main/res/layout/profile_fragment.xml&#10;profilesc&#9;FILE&#9;file://C:/Users/Hamid/Desktop/ALSDK/DHealth/health/DHealth/app/src/main/java/com/example/hamid/dhealth/Activities/ProfileScreen.java&#10;profilf&#9;FILE&#9;file://C:/Users/Hamid/Desktop/ALSDK/DHealth/health/DHealth/app/src/main/java/com/example/hamid/dhealth/Fragments/ProfileFragment.java&#10;fileutils&#9;FILE&#9;file://C:/Users/Hamid/Desktop/ALSDK/DHealth/health/DHealth/app/src/main/java/com/example/hamid/dhealth/FileUtils.java" />
     <property name="android.sdk.path" value="$USER_HOME$/AppData/Local/Android/Sdk" />
     <property name="device.picker.selection" value="d8b5b420" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../test to delete/android testing samples/android-testing/unit/BasicSample" />
     <property name="settings.editor.selected.configurable" value="AndroidSdkUpdater" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Hamid\Desktop\ALSDK\DHealth\health\DHealth\app\src\main\res\drawable" />
+    </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="com.example.hamid.dhealth" />
     </key>
@@ -2979,6 +2941,52 @@
         <option name="STARTUP_CPU_PROFILING_CONFIGURATION_NAME" value="Sampled (Java)" />
       </Profilers>
     </configuration>
+    <configuration name="login_invalid()" type="AndroidTestRunConfigurationType" factoryName="Android Instrumented Tests" temporary="true" nameIsGenerated="true">
+      <module name="app" />
+      <option name="TESTING_TYPE" value="3" />
+      <option name="INSTRUMENTATION_RUNNER_CLASS" value="" />
+      <option name="METHOD_NAME" value="login_invalid" />
+      <option name="CLASS_NAME" value="com.example.hamid.dhealth.LoginTest" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="EXTRA_OPTIONS" value="" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="false" />
+      <option name="SKIP_NOOP_APK_INSTALLATIONS" value="true" />
+      <option name="FORCE_STOP_RUNNING_APP" value="true" />
+      <option name="TARGET_SELECTION_MODE" value="SHOW_DIALOG" />
+      <option name="USE_LAST_SELECTED_DEVICE" value="false" />
+      <option name="PREFERRED_AVD" value="" />
+      <option name="SELECTED_CLOUD_MATRIX_CONFIGURATION_ID" value="-1" />
+      <option name="SELECTED_CLOUD_MATRIX_PROJECT_ID" value="" />
+      <option name="DEBUGGER_TYPE" value="Auto" />
+      <Auto>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Auto>
+      <Hybrid>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Hybrid>
+      <Java />
+      <Native>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Native>
+      <Profilers>
+        <option name="ADVANCED_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_CONFIGURATION_NAME" value="Sampled (Java)" />
+      </Profilers>
+    </configuration>
     <configuration default="true" type="Application" factoryName="Application">
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
     </configuration>
@@ -3012,9 +3020,11 @@
       <item itemvalue="Android App.app" />
       <item itemvalue="Android JUnit.MainActivityTest" />
       <item itemvalue="Android Instrumented Tests.login()" />
+      <item itemvalue="Android Instrumented Tests.login_invalid()" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Android Instrumented Tests.login_invalid()" />
         <item itemvalue="Android Instrumented Tests.login()" />
         <item itemvalue="Android JUnit.MainActivityTest" />
       </list>
@@ -3036,6 +3046,23 @@
     </task>
     <servers />
   </component>
+  <component name="TestHistory">
+    <history-entry file="login() - 2019.04.17 at 11h 25m 03s.xml">
+      <configuration name="login()" configurationId="AndroidTestRunConfigurationType" />
+    </history-entry>
+    <history-entry file="login() - 2019.04.17 at 11h 25m 28s.xml">
+      <configuration name="login()" configurationId="AndroidTestRunConfigurationType" />
+    </history-entry>
+    <history-entry file="login() - 2019.04.17 at 11h 53m 10s.xml">
+      <configuration name="login()" configurationId="AndroidTestRunConfigurationType" />
+    </history-entry>
+    <history-entry file="login_invalid() - 2019.04.17 at 12h 58m 35s.xml">
+      <configuration name="login_invalid()" configurationId="AndroidTestRunConfigurationType" />
+    </history-entry>
+    <history-entry file="login_invalid() - 2019.04.17 at 12h 59m 27s.xml">
+      <configuration name="login_invalid()" configurationId="AndroidTestRunConfigurationType" />
+    </history-entry>
+  </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
       <is-autoscroll-to-source value="true" />
@@ -3046,13 +3073,13 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="1912" y="-170" width="1936" height="1096" extended-state="0" />
+    <frame x="1912" y="-170" width="1936" height="1096" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info anchor="bottom" id="Android Profiler" order="7" />
       <window_info id="Build Variants" order="2" sideWeight="0.50161815" side_tool="true" weight="0.17803837" />
       <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.50053304" side_tool="true" weight="0.35870698" />
-      <window_info anchor="bottom" id="Logcat" order="7" sideWeight="0.49946696" weight="0.4734098" />
+      <window_info anchor="bottom" id="Logcat" order="7" sideWeight="0.49946696" weight="0.49322212" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Designer" order="2" />
       <window_info anchor="bottom" id="Build" order="7" weight="0.35557872" />
@@ -3064,11 +3091,11 @@
       <window_info id="Image Layers" order="2" />
       <window_info anchor="right" id="Capture Analysis" order="3" />
       <window_info anchor="right" id="Preview" order="3" weight="0.32995737" />
-      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.3295099" />
       <window_info anchor="bottom" id="Version Control" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Terminal" order="7" weight="0.3297062" />
       <window_info id="Captures" order="2" weight="0.25" />
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49838188" weight="0.17803837" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49838188" visible="true" weight="0.17803837" />
       <window_info anchor="right" id="Android WiFi ADB" order="3" sideWeight="0.499187" weight="0.32995737" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3297062" />
       <window_info anchor="right" id="Gradle" order="3" />
@@ -3123,13 +3150,13 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/example/hamid/dhealth/Fragments/ProfileFragment.java</url>
-          <line>422</line>
+          <line>425</line>
           <properties />
           <option name="timeStamp" value="70" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/example/hamid/dhealth/MedicalRepository/DataRepository.java</url>
-          <line>160</line>
+          <line>166</line>
           <properties />
           <option name="timeStamp" value="99" />
         </line-breakpoint>
@@ -3229,8 +3256,20 @@
           <properties />
           <option name="timeStamp" value="155" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/example/hamid/dhealth/MedicalRepository/DataRepository.java</url>
+          <line>264</line>
+          <properties />
+          <option name="timeStamp" value="167" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/example/hamid/dhealth/MedicalRepository/DataRepository.java</url>
+          <line>257</line>
+          <properties />
+          <option name="timeStamp" value="168" />
+        </line-breakpoint>
       </breakpoints>
-      <option name="time" value="164" />
+      <option name="time" value="169" />
     </breakpoint-manager>
   </component>
   <component name="debuggerHistoryManager">
@@ -3284,58 +3323,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/hamid/dhealth/MedicalRepository/HTTP/APIService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="191">
-          <caret line="60" column="46" lean-forward="true" selection-start-line="60" selection-start-column="46" selection-end-line="60" selection-end-column="46" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/hamid/dhealth/MedicalRepository/HTTP/HttpClient.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="287">
-          <caret line="86" column="29" selection-start-line="86" selection-start-column="29" selection-end-line="86" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.reactivex.rxjava2/rxjava/2.1.9/890fc9ef77d78ac270f322b024c0e660a8f57ea0/rxjava-2.1.9-sources.jar!/io/reactivex/Observer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="281">
-          <caret line="67" column="9" selection-start-line="67" selection-start-column="9" selection-end-line="67" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/hamid/dhealth/FileUtils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="316">
-          <caret line="747" selection-start-line="747" selection-end-line="747" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_pdfview.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="24" column="35" selection-start-line="24" selection-start-column="25" selection-end-line="24" selection-end-column="35" />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/hamid/dhealth/Activities/PDFViewActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="19" column="18" selection-start-line="19" selection-start-column="18" selection-end-line="19" selection-end-column="18" />
-          <folding>
-            <element signature="e#2843#2844#0" expanded="true" />
-            <element signature="e#2867#2868#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/hamid/dhealth/MedicalRepository/DB/Entity/Doctor.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="272">
@@ -3381,48 +3368,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="221">
           <caret line="13" column="18" selection-start-line="13" selection-start-column="18" selection-end-line="13" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" column="35" selection-start-line="1" selection-start-column="35" selection-end-line="1" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/hamid/dhealth/Activities/DashboardScreen.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="442">
-          <caret line="138" column="10" selection-start-line="138" selection-start-column="10" selection-end-line="138" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/hamid/dhealth/MedicalRepository/DB/DAO/DatabaseDAO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="758">
-          <caret line="70" column="16" selection-start-line="70" selection-start-column="16" selection-end-line="70" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/hamid/dhealth/MedicalRepository/DataRepository.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="456">
-          <caret line="223" column="32" selection-start-line="223" selection-start-column="27" selection-end-line="223" selection-end-column="40" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/hamid/dhealth/Fragments/DoctorPatientViewModel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="741">
-          <caret line="85" column="37" lean-forward="true" selection-start-line="85" selection-start-column="37" selection-end-line="85" selection-end-column="37" />
-          <folding>
-            <element signature="e#1719#1720#0" expanded="true" />
-            <element signature="e#1753#1754#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -3489,26 +3434,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/hamid/dhealth/Activities/LoginScreen.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="527">
-          <caret line="40" column="38" selection-start-line="40" selection-start-column="38" selection-end-line="40" selection-end-column="38" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_login.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="311">
-          <caret line="68" column="38" selection-start-line="68" selection-start-column="29" selection-end-line="68" selection-end-column="38" />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/androidTest/java/com/example/hamid/dhealth/ExampleInstrumentedTest.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="238">
@@ -3526,16 +3451,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/androidTest/java/com/example/hamid/dhealth/LoginTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="486">
-          <caret line="47" column="28" selection-start-line="47" selection-start-column="28" selection-end-line="47" selection-end-column="28" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/Documents/AndroidStudio/DeviceExplorer/samsung-sm_g935t-d8b5b420/data/data/com.example.hamid.activedapp/files/test111@gmailcom-pub-key.pem">
       <provider selected="true" editor-type-id="text-editor">
         <state />
@@ -3544,27 +3459,6 @@
     <entry file="file://$USER_HOME$/Documents/AndroidStudio/DeviceExplorer/samsung-sm_g935t-d8b5b420/data/data/com.example.hamid.activedapp/files/test111@gmailcom-priv-key.pem">
       <provider selected="true" editor-type-id="text-editor">
         <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/hamid/dhealth/Fragments/ReportsViewModel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="14" column="41" lean-forward="true" selection-start-line="14" selection-start-column="41" selection-end-line="14" selection-end-column="41" />
-          <folding>
-            <element signature="e#1035#1036#0" expanded="true" />
-            <element signature="e#1079#1080#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/hamid/dhealth/Activities/ReportDetailActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="237">
-          <caret line="249" selection-start-line="249" selection-end-line="249" />
-          <folding>
-            <element signature="method#onDestroy#0;class#ReportDetailActivity#0" />
-          </folding>
-        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/reports_fragment.xml">
@@ -3656,45 +3550,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/hamid/dhealth/Activities/UploadFileActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="303">
-          <caret line="245" column="25" selection-start-line="245" selection-start-column="25" selection-end-line="245" selection-end-column="25" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/hamid/dhealth/Utils/Utils.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="355">
           <caret line="65" column="63" selection-start-line="65" selection-start-column="63" selection-end-line="65" selection-end-column="63" />
         </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/hamid/dhealth/Fragments/DoctorPatientFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="695">
-          <caret line="196" column="21" selection-start-line="196" selection-start-column="21" selection-end-line="196" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/hamid/dhealth/Fragments/ReportsFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="126">
-          <caret line="212" selection-start-line="212" selection-end-line="212" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/profile_fragment.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="311">
-          <caret line="156" column="19" selection-start-line="156" selection-start-column="19" selection-end-line="167" selection-end-column="45" />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer2">
-        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_profile_screen.xml">
@@ -3714,12 +3574,223 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_login.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="311">
+          <caret line="68" column="38" selection-start-line="68" selection-start-column="29" selection-end-line="68" selection-end-column="38" />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/button.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="3" column="53" selection-start-line="3" selection-start-column="41" selection-end-line="3" selection-end-column="53" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/button_trans.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="3" column="37" selection-start-line="3" selection-start-column="37" selection-end-line="3" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/menu/navigation_menu.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="14" lean-forward="true" selection-start-line="14" selection-end-line="14" />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/hamid/dhealth/Activities/DashboardScreen.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="595">
+          <caret line="113" column="28" selection-start-line="113" selection-start-column="20" selection-end-line="113" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="782">
+          <caret line="127" column="38" selection-start-line="127" selection-start-column="38" selection-end-line="127" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/menu/edit_options_menu.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" column="44" selection-start-line="4" selection-start-column="44" selection-end-line="4" selection-end-column="44" />
+          <folding>
+            <element signature="e#180#202#0" expanded="true" />
+            <element signature="e#177#197#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/profile_fragment.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="311">
+          <caret line="307" column="47" selection-start-line="307" selection-start-column="37" selection-end-line="307" selection-end-column="47" />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/hamid/dhealth/Fragments/ProfileFragment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="430">
-          <caret line="200" column="48" selection-start-line="200" selection-start-column="48" selection-end-line="200" selection-end-column="48" />
+        <state relative-caret-position="124">
+          <caret line="450" selection-start-line="450" selection-end-line="450" />
           <folding>
             <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/hamid/dhealth/Activities/UploadFileActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="524">
+          <caret line="246" column="29" lean-forward="true" selection-start-line="246" selection-start-column="29" selection-end-line="246" selection-end-column="29" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/androidx.test.espresso/espresso-core/3.1.0/e70a553facebdb90cec729ab6653ef91a2a2bc14/espresso-core-3.1.0-sources.jar!/androidx/test/espresso/matcher/ViewMatchers.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="206">
+          <caret line="89" column="30" selection-start-line="89" selection-start-column="30" selection-end-line="89" selection-end-column="30" />
+          <folding>
+            <element signature="e#3519#3520#0" expanded="true" />
+            <element signature="e#3560#3561#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/androidTest/java/com/example/hamid/dhealth/LoginTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="117">
+          <caret line="72" column="36" selection-start-line="72" selection-start-column="36" selection-end-line="72" selection-end-column="36" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/hamid/dhealth/Activities/LoginScreen.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="257">
+          <caret line="52" column="41" lean-forward="true" selection-start-line="52" selection-start-column="41" selection-end-line="52" selection-end-column="41" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/hamid/dhealth/Fragments/DoctorPatientViewModel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="628">
+          <caret line="80" column="30" selection-start-line="80" selection-start-column="30" selection-end-line="80" selection-end-column="30" />
+          <folding>
+            <element signature="e#2393#2394#0" expanded="true" />
+            <element signature="e#2454#2455#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/hamid/dhealth/Fragments/DoctorPatientFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="344">
+          <caret line="131" column="44" lean-forward="true" selection-start-line="131" selection-start-column="44" selection-end-line="131" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/hamid/dhealth/Activities/ReportDetailActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2874">
+          <caret line="60" column="53" selection-start-line="60" selection-start-column="35" selection-end-line="60" selection-end-column="53" />
+          <folding>
+            <element signature="method#onDestroy#0;class#ReportDetailActivity#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Android/Sdk/sources/android-27/android/os/Message.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-493">
+          <caret line="47" column="15" selection-start-line="47" selection-start-column="15" selection-end-line="47" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/hamid/dhealth/MedicalRepository/DB/DAO/DatabaseDAO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="248">
+          <caret line="28" column="14" selection-start-line="28" selection-start-column="14" selection-end-line="28" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/hamid/dhealth/MedicalRepository/DataRepository.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="523">
+          <caret line="423" column="44" lean-forward="true" selection-start-line="423" selection-start-column="44" selection-end-line="423" selection-end-column="44" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#getDoctorListFromServer#0;class#DataRepository#0" />
+            <element signature="method#getPatientListFromServer#0;class#DataRepository#0" />
+            <element signature="method#insertDoctor#0;class#DataRepository#0" />
+            <element signature="method#insertDoctorList#0;class#DataRepository#0" />
+            <element signature="method#insertPatientList#0;class#DataRepository#0" />
+            <element signature="method#insertPatient#0;class#DataRepository#0" />
+            <element signature="method#insertReport#0;class#DataRepository#0" />
+            <element signature="method#updateReport#0;class#DataRepository#0" />
+            <element signature="method#deleteReport#0;class#DataRepository#0" />
+            <element signature="method#deleteAllDoctor#0;class#DataRepository#0" />
+            <element signature="method#deleteAllPatient#0;class#DataRepository#0" />
+            <element signature="method#deleteAllReport#0;class#DataRepository#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/hamid/dhealth/Fragments/ReportsViewModel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="697">
+          <caret line="50" column="35" selection-start-line="50" selection-start-column="19" selection-end-line="50" selection-end-column="35" />
+          <folding>
+            <element signature="e#801#802#0" expanded="true" />
+            <element signature="e#848#849#0" expanded="true" />
+            <element signature="e#1035#1036#0" expanded="true" />
+            <element signature="e#1079#1080#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/hamid/dhealth/Fragments/ReportsFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="646">
+          <caret line="129" column="7" selection-start-line="129" selection-start-column="7" selection-end-line="129" selection-end-column="7" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#onCreate#0;class#ReportsFragment#0" />
+            <element signature="e#3392#4257#0" expanded="true" />
+            <element signature="e#4256#4257#0" expanded="true" />
+            <element signature="method#onCreateView#0;class#ReportsFragment#0" />
+            <element signature="method#onActivityCreated#0;class#ReportsFragment#0" />
+            <element signature="method#setupRecyclerView#0;class#ReportsFragment#0" />
+            <element signature="method#initLayouts#0;class#ReportsFragment#0" />
+            <element signature="method#onPrepareOptionsMenu#0;class#ReportsFragment#0" />
+            <element signature="method#onClick#0;class#ReportsFragment#0" />
+            <element signature="method#showToast#0;class#ReportsFragment#0" />
+            <element signature="method#onRequestPermissionsResult#0;class#ReportsFragment#0" />
           </folding>
         </state>
       </provider>

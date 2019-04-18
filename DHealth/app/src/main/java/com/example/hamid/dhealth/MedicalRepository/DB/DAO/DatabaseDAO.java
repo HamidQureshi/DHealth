@@ -25,6 +25,9 @@ public interface DatabaseDAO {
     @Insert
     void insertPatientList(List<Patient> patientList);
 
+    @Insert
+    void insertReportList(List<Report> reportList);
+
     @Delete
     void deleteDoctor(Doctor doctor);
 

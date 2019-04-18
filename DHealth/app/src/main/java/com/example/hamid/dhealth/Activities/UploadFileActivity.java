@@ -244,7 +244,7 @@ public class UploadFileActivity extends AppCompatActivity {
         //convert the contents to base 64
         base64File = FileUtils.getBase64FromURI(this, uri);
 //        TODO remove 123
-        base64File = "123";
+//        base64File = "123";
         Log.e(TAG, "file--> " + base64File);
 
         String fileName = FileUtils.getFileName(this, uri);

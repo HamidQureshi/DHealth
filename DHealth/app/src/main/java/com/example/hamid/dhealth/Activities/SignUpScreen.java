@@ -148,10 +148,10 @@ public class SignUpScreen extends AppCompatActivity {
                                     startActivity(new Intent(SignUpScreen.this, ProfileScreen.class));
                                     finish();
                                 } else if (status_code == 400) {
-                                    Toast.makeText(SignUpScreen.this, "User already exist." ,
+                                    Toast.makeText(SignUpScreen.this, "User already exist.",
                                             Toast.LENGTH_SHORT).show();
                                 } else {
-                                    Toast.makeText(SignUpScreen.this, "Authentication failed." ,
+                                    Toast.makeText(SignUpScreen.this, "Authentication failed.",
                                             Toast.LENGTH_SHORT).show();
                                 }
 
