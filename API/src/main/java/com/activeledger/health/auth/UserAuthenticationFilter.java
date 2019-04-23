@@ -36,41 +36,39 @@ public class UserAuthenticationFilter extends UsernamePasswordAuthenticationFilt
 	ObjectMapper mapper;
 	private String secret;
 
-	public UserAuthenticationFilter(AuthenticationManager authenticationManager, ActiveService activeService, String secret) {
+	public UserAuthenticationFilter(AuthenticationManager authenticationManager, ActiveService activeService,
+			String secret) {
 		// TODO Auto-generated constructor stub
 		this.authManager = authenticationManager;
 		this.activeService = activeService;
 		mapper = new ObjectMapper();
-		this.secret=secret;
+		this.secret = secret;
 
 	}
 
 	@Override
 	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
-			throws AuthenticationException{
+			throws AuthenticationException {
 
-		
-		String username=null;
-		String password=null;
-			final String authorization = request.getHeader("Authorization");
-			 if (authorization != null && authorization.toLowerCase().startsWith("basic ")) {
-			//Authorization: Basic base64credentials
-				 String base64Credentials = authorization.substring("Basic".length()).trim();
-				 byte[] credDecoded = Base64.getDecoder().decode(base64Credentials);
-				 String credentials = new String(credDecoded, StandardCharsets.UTF_8);
-			
-				 final String[] values = credentials.split(":", 2);
-				 
-				  username = values[0];
-				  password = values[1];
-			 }
-			UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(username, password,
-					Collections.emptyList());
+		String username = null;
+		String password = null;
+		final String authorization = request.getHeader("Authorization");
+		if (authorization != null && authorization.toLowerCase().startsWith("basic ")) {
+			// Authorization: Basic base64credentials
+			String base64Credentials = authorization.substring("Basic".length()).trim();
+			byte[] credDecoded = Base64.getDecoder().decode(base64Credentials);
+			String credentials = new String(credDecoded, StandardCharsets.UTF_8);
 
-			return authManager.authenticate(authToken);
-			 
+			final String[] values = credentials.split(":", 2);
 
-		
+			username = values[0];
+			password = values[1];
+		}
+		UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(username, password,
+				Collections.emptyList());
+
+		return authManager.authenticate(authToken);
+
 	}
 
 	// Upon successful authentication, generate a token.
@@ -80,8 +78,6 @@ public class UserAuthenticationFilter extends UsernamePasswordAuthenticationFilt
 	protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response,
 			FilterChain chain, Authentication auth) throws IOException, ServletException {
 
-		Long now = System.currentTimeMillis();
-
 		Claims claims = Jwts.claims().setSubject(auth.getName());
 		String token = Jwts.builder().setClaims(claims).signWith(SignatureAlgorithm.HS512, secret).compact();
 		// Add token to header
@@ -89,38 +85,35 @@ public class UserAuthenticationFilter extends UsernamePasswordAuthenticationFilt
 		Resp resp = new Resp();
 		resp.setCode(200);
 		resp.setDesc("Successfully logged in");
-		ActiveResponse activeResp=new ActiveResponse();
+		ActiveResponse activeResp = new ActiveResponse();
 		activeResp.setResp(resp);
-		Map<String,String> mapResp;
-			if (user.getIdentity() != null) {
-				try {
-				
+		JSONObject mapResp = new JSONObject();
+		
+		if (user.getIdentity() != null) {
+			try {
+
 				mapResp = activeService.retrieveUser(user.getIdentity());
-				mapResp.put("identity", user.getIdentity());
-				activeResp.setStream(mapResp);
-				
+				activeResp.setStreams(mapResp.getJSONObject("stream").toMap());
+
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			
+
 		}
-			System.out.println("---------activeResp------\n"+mapper.writeValueAsString(activeResp));
-			response.setContentType("application/json");
-			response.addHeader("Token", "Token " + token);
+		response.setContentType("application/json");
+		response.addHeader("Token", "Token " + token);
 		response.getWriter().write(mapper.writeValueAsString(activeResp));
-		
 
 	}
-	
+
 	@Override
-	protected void unsuccessfulAuthentication(HttpServletRequest request,
-			HttpServletResponse response, AuthenticationException failed)
-			throws IOException, ServletException {
-		Resp resp=new Resp();
-    	resp.setCode(401);
-    	response.setContentType("application/json");
-    	resp.setDesc("Invalid username or password");
-    	response.setStatus(response.SC_UNAUTHORIZED);
-    	response.getWriter().write(mapper.writeValueAsString(resp));
+	protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response,
+			AuthenticationException failed) throws IOException, ServletException {
+		Resp resp = new Resp();
+		resp.setCode(401);
+		response.setContentType("application/json");
+		resp.setDesc("Invalid username or password");
+		response.setStatus(response.SC_UNAUTHORIZED);
+		response.getWriter().write(mapper.writeValueAsString(resp));
 	}
 }
