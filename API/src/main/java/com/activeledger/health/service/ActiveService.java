@@ -109,7 +109,7 @@ public class ActiveService {
 		token = token.replace("Token ", "");
 		Claims body = Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
 		User user = userDao.findByUsername(body.getSubject());
-		JSONObject patients = activeledgerAdapter.getAssignedpatients("192cafd76c5e150818f43cdebc2b3fa5f1c3d70af7650b021cb48f9ecdf82e11");
+		JSONObject patients = activeledgerAdapter.getAssignedpatients(user.getIdentity());
 		return patients;
 	}
 
