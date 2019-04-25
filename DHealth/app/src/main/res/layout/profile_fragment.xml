@@ -5,14 +5,7 @@
     android:layout_height="match_parent"
     xmlns:custom="http://schemas.android.com/apk/res-auto"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".Fragments.ProfileFragment">
-
-    <!--<data>-->
-        <!--<variable-->
-            <!--name="viewModel"-->
-            <!--type="com.example.hamid.dhealth.Fragments.ProfileViewModel"-->
-            <!--/>-->
-    <!--</data>-->
+    tools:context=".ui.Fragments.ProfileFragment">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"

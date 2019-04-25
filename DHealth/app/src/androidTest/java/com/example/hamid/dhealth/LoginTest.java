@@ -2,7 +2,7 @@ package com.example.hamid.dhealth;
 
 import android.test.suitebuilder.annotation.LargeTest;
 
-import com.example.hamid.dhealth.Activities.LoginScreen;
+import com.example.hamid.dhealth.ui.Activities.LoginScreen;
 
 import org.junit.Before;
 import org.junit.Rule;

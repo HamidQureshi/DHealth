@@ -8,10 +8,9 @@ import com.example.activeledgersdk.ActiveLedgerSDK;
 import com.example.activeledgersdk.model.Territoriality;
 import com.example.activeledgersdk.utility.KeyType;
 import com.example.activeledgersdk.utility.Utility;
-import com.example.hamid.dhealth.Activities.ProfileScreen;
-import com.example.hamid.dhealth.Preference.PreferenceKeys;
-import com.example.hamid.dhealth.Preference.PreferenceManager;
-import com.example.hamid.dhealth.Utils.Configurations;
+import com.example.hamid.dhealth.data.Preference.PreferenceKeys;
+import com.example.hamid.dhealth.data.Preference.PreferenceManager;
+import com.example.hamid.dhealth.utils.Configurations;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -20,6 +19,8 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.security.KeyPair;
 import java.util.ArrayList;
+
+import javax.inject.Inject;
 
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
@@ -30,7 +31,6 @@ public class ActiveLedgerHelper {
 
 
     static ActiveLedgerHelper instance = null;
-    ProfileScreen profileScreen = null;
     private Disposable disposable;
     private KeyPair key_Pair = null;
     private KeyType keyType = KeyType.RSA;
@@ -42,6 +42,9 @@ public class ActiveLedgerHelper {
     private MutableLiveData<String> showToast = new MutableLiveData<>();
     private MutableLiveData<Boolean> loginApp = new MutableLiveData<>();
     private Context context = null;
+
+    @Inject
+    PreferenceManager preferenceManager;
 
     public static ActiveLedgerHelper getInstance() {
 
@@ -60,170 +63,6 @@ public class ActiveLedgerHelper {
     }
 
 
-//    public void generatekeys(ProfileScreen activity, String first_name, String last_name, String email,
-//                             String date_of_birth, String phone_number, String address, String security, String profile_type, String gender, String dp, boolean onboard, boolean updateUser) {
-//
-//        if (onboard)
-//            profileScreen = activity;
-//
-//        ActiveLedgerSDK.getInstance().generateAndSetKeyPair(keyType, true)
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(new Observer<KeyPair>() {
-//
-//                    @Override
-//                    public void onSubscribe(Disposable d) {
-//                        disposable = d;
-//                    }
-//
-//                    @Override
-//                    public void onError(Throwable e) {
-//                    }
-//
-//                    @Override
-//                    public void onComplete() {
-//                        Log.d("MainActivity", "onComplete");
-//
-//                        try {
-//                            setPublickey(ActiveLedgerSDK.readFileAsString((Utility.PUBLICKEY_FILE)));
-//                            setPrivatekey(ActiveLedgerSDK.readFileAsString((Utility.PRIVATEKEY_FILE)));
-//
-//
-//                            if (key_Pair != null && onboard) {
-//
-//                                onboardkeysTransaction(first_name, last_name, email,
-//                                        date_of_birth, phone_number, address, security, profile_type, gender, dp);
-//
-//
-//                            } else if (key_Pair != null && updateUser) {
-//                                updateUserTransaction(first_name, last_name, date_of_birth, phone_number, address, dp);
-//                            } else {
-//                                setShowToast("Generate Keys First");
-//                            }
-//
-//
-//                        } catch (IOException e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onNext(KeyPair keyPair) {
-//                        setKey_Pair(keyPair);
-//                    }
-//                });
-//    }
-
-
-//    public void onboardkeysTransaction(String first_name, String last_name, String email,
-//                                       String date_of_birth, String phone_number, String address, String security, String profile_type, String gender, String dp) {
-//
-//        ActiveLedgerSDK.KEYNAME = keyname;
-//
-//        JSONObject onboardTransaction = onboardTransaction(key_Pair, ActiveLedgerSDK.getInstance().getKeyType(), first_name, last_name, email,
-//                date_of_birth, phone_number, address, security, profile_type, gender, dp);
-//
-//        String transactionString = Utility.getInstance().convertJSONObjectToString(onboardTransaction);
-//
-//        Utils.Log("Onboard Transaction", transactionString);
-//        Log.e("Onboard token", com.example.hamid.dhealth.Preference.PreferenceManager.getINSTANCE().readFromPref(context, PreferenceKeys.SP_APP_TOKEN, "null"));
-//
-//        HttpClient.getInstance().createProfile(com.example.hamid.dhealth.Preference.PreferenceManager.getINSTANCE().readFromPref(context, PreferenceKeys.SP_APP_TOKEN, "null"), transactionString)
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(new Observer<Response<String>>() {
-//
-//                    @Override
-//                    public void onSubscribe(Disposable d) {
-//                        disposable = d;
-//                    }
-//
-//                    @Override
-//                    public void onError(Throwable e) {
-//                    }
-//
-//                    @Override
-//                    public void onComplete() {
-//                    }
-//
-//                    @Override
-//                    public void onNext(Response<String> response) {
-//                        Log.e("onboard response--->", response.code() + "");
-//                        if (response.code() == 200) {
-//
-//                            try {
-//                                Utils.Log("onboard response--->", response.body() + "");
-//
-//                                if (profileScreen != null) {
-//                                    profileScreen.submitProfile();
-//                                }
-//
-//                                JSONObject responseJSON = new JSONObject(response.body());
-//
-//                                JSONObject stream = responseJSON.optJSONObject("stream");
-//                                if (stream != null) {
-//
-//                                    String identity = stream.optString("identity");
-//                                    PreferenceManager.getINSTANCE().writeToPref(context, PreferenceKeys.SP_IDENTITY, identity);
-//                                }
-//
-//
-//                            } catch (JSONException e) {
-//                                e.printStackTrace();
-//                            }
-//
-//
-//                        }
-//                    }
-//                });
-//
-//
-//    }
-
-//    public void updateUserTransaction(String first_name, String last_name,
-//                                      String date_of_birth, String phone_number, String address, String dp) {
-//
-//
-//        ActiveLedgerSDK.KEYNAME = keyname;
-//
-//        JSONObject updateUserTransaction = createUpdateUserTransaction(key_Pair, ActiveLedgerSDK.getInstance().getKeyType(), first_name, last_name,
-//                date_of_birth, phone_number, address, dp);
-//
-//        String transactionString = Utility.getInstance().convertJSONObjectToString(updateUserTransaction);
-//
-//        Utils.Log("UpdateUser Transaction", transactionString);
-//        Log.e("UpdateUser token", com.example.hamid.dhealth.Preference.PreferenceManager.getINSTANCE().readFromPref(context, PreferenceKeys.SP_APP_TOKEN, "null"));
-//
-//        HttpClient.getInstance().sendTransaction(com.example.hamid.dhealth.Preference.PreferenceManager.getINSTANCE().readFromPref(context, PreferenceKeys.SP_APP_TOKEN, "null"), transactionString)
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(new Observer<Response<String>>() {
-//
-//                    @Override
-//                    public void onSubscribe(Disposable d) {
-//                        disposable = d;
-//                    }
-//
-//                    @Override
-//                    public void onError(Throwable e) {
-//                    }
-//
-//                    @Override
-//                    public void onComplete() {
-//                    }
-//
-//                    @Override
-//                    public void onNext(Response<String> response) {
-//                        Log.e("UpdateUser response--->", response.code() + "");
-//                        if (response.code() == 200) {
-//                            Utils.Log("UpdateUser response--->", response.body() + "");
-//
-//                        }
-//                    }
-//                });
-//
-//
-//    }
 
     public KeyType getKeyType() {
         return keyType;
@@ -444,7 +283,7 @@ public class ActiveLedgerHelper {
         JSONObject $i = new JSONObject();
         JSONObject $o = new JSONObject();
         JSONObject $tx = new JSONObject();
-        String onboard_id = PreferenceManager.getINSTANCE().readFromPref(context, PreferenceKeys.SP_IDENTITY, "null");
+        String onboard_id = preferenceManager.readFromPref(context, PreferenceKeys.SP_IDENTITY, "null");
 
         try {
 
@@ -514,7 +353,7 @@ public class ActiveLedgerHelper {
         JSONObject $i = new JSONObject();
         JSONObject $o = new JSONObject();
         JSONObject $tx = new JSONObject();
-        String onboard_id = PreferenceManager.getINSTANCE().readFromPref(context, PreferenceKeys.SP_IDENTITY, "null");
+        String onboard_id = preferenceManager.readFromPref(context, PreferenceKeys.SP_IDENTITY, "null");
 
         try {
 
@@ -567,7 +406,7 @@ public class ActiveLedgerHelper {
         JSONObject $i = new JSONObject();
         JSONObject $o = new JSONObject();
         JSONObject $tx = new JSONObject();
-        String onboard_id = PreferenceManager.getINSTANCE().readFromPref(context, PreferenceKeys.SP_IDENTITY, "null");
+        String onboard_id = preferenceManager.readFromPref(context, PreferenceKeys.SP_IDENTITY, "null");
 
         try {
 

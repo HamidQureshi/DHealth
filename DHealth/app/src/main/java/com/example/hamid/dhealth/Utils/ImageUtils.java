@@ -1,4 +1,4 @@
-package com.example.hamid.dhealth.Utils;
+package com.example.hamid.dhealth.utils;
 
 import android.content.Context;
 import android.graphics.Bitmap;

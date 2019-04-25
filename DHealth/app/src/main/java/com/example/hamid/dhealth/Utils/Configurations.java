@@ -1,4 +1,4 @@
-package com.example.hamid.dhealth.Utils;
+package com.example.hamid.dhealth.utils;
 
 public class Configurations {
     public static String namespace = "healthtestnet";
