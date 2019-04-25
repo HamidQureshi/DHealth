@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.activeledger.java.sdk.activeledgerjavasdk.ActiveledgerJavaSdkApplication;
 import org.activeledger.java.sdk.generic.transaction.GenericTransaction;
@@ -25,7 +26,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.stereotype.Component;
 
-import com.mongodb.BasicDBObject;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 @Component
 public class ActiveAdapter {
@@ -34,37 +38,45 @@ public class ActiveAdapter {
 	private AbstractApplicationContext ctx;
 	GenericTransaction genericTransaction;
 	HttpClient httpclient;
-	@Value("${active.ledger.sdk.url}")
-	private String sdkLedgerUrl;
-	@Value("${active.ledger.retrieve.user.url}")
-	private String retrieveUserUrl;
+	@Value("${activeledger.sdk.protocol}")
+	private String protocol;
+	@Value("${activeledger.sdk.ip}")
+	private String ip;
+	@Value("${activeledger.sdk.port}")
+	private String port;
+	@Value("${activeledger.api.retrieve.url}")
+	private String retrieveUrl;
+	@Value("${activeledger.api.search.url}")
+	private String searchUrl;
+	@Value("${app.doctor}")
+	private String doctor;
+	@Value("${app.patient}")
+	private String patient;
+
+	ObjectMapper mapper;
 
 	public ActiveAdapter() {
 		ctx = ActiveledgerJavaSdkApplication.getContext();
-		//String []url=sdkLedgerUrl.split(":");//protocol:url:port
-		System.out.println("url---"+sdkLedgerUrl);
-		ActiveledgerJavaSdkApplication.setConnection("http","testnet-uk.activeledger.io","5260");
 
+		mapper = new ObjectMapper();
+		ActiveledgerJavaSdkApplication.setConnection("http", "testnet-uk.activeledger.io", "5260");
 		genericTransaction = (GenericTransaction) ctx.getBean("GenericTransaction");
 		httpclient = HttpClients.createDefault();
-
 	}
 
 	public JSONObject sendTransaction(Map<String, Object> reqTransaction) throws Exception {
 		logger.info("--------Sending transaction to sdk--------");
-	
+
 		Transaction transaction = createTransaction(reqTransaction);
 		JSONObject inJson = genericTransaction.transaction(transaction);
-
 
 		return inJson;
 
 	}
 
-	private Transaction createTransaction(Map<String, Object> reqTransaction) {
+	private Transaction createTransaction(Map<String, Object> reqTransaction) throws JsonProcessingException {
 		Transaction transaction = new Transaction();
 		TxObject txObject = new TxObject();
-		System.out.println("in contract:::" + reqTransaction);
 		if (reqTransaction.get("$tx") != null) {
 			Map<String, Object> txMap = (Map) reqTransaction.get("$tx");
 
@@ -93,114 +105,123 @@ public class ActiveAdapter {
 	}
 
 	public JSONObject retrieveUser(String identity) throws Exception {
-		
-		HttpGet httpGet = new HttpGet(retrieveUserUrl + identity);
 
+		HttpGet httpGet = new HttpGet(retrieveUrl + "/" + identity);
 		HttpResponse response = httpclient.execute(httpGet);
-		
+
 		String responseAsString = EntityUtils.toString(response.getEntity());
-		JSONObject obj=new JSONObject(responseAsString);
+		JSONObject obj = new JSONObject(responseAsString);
 
-		Map<String,String> userDetails=new HashMap<>();
-		
 		return obj;
-
 	}
 
-	public JSONObject getUsers(String type) throws Exception{
-		
-		String doctorSql="SELECT * FROM X WHERE type='healthtestnet.Doctor'";
-		String patientSql="SELECT * FROM X WHERE type='healthtestnet.Patient'";
-		URIBuilder builder=builder = new URIBuilder("http://testnet-uk.activeledger.io:5261/api/stream/search");
-		
-		if(type.equalsIgnoreCase("patients"))
-			builder.setParameter("sql", patientSql);
-		else if(type.equalsIgnoreCase("doctors"))
-			builder.setParameter("sql", doctorSql);
-		
-			
-		
-		HttpGet httpGet = new HttpGet(builder.build());
-		//String mongo="db.x.find( { type: \"dhealth.activeledger.identity.Doctor\" } ) LIMIT 5";
-		HttpResponse response = httpclient.execute(httpGet);
-		//StringEntity entity = new StringEntity(mongo);
-		//entity.setContentType("application/json");
-		//httpPost.setEntity(entity);
-		
-		//HttpResponse response = httpclient.execute(httpPost);
-		
-		
-		String responseAsString = EntityUtils.toString(response.getEntity());
- 
+	public JSONObject getUsers(String type) throws Exception {
 
-		JSONObject obj=new JSONObject(responseAsString);
+		String doctorSql = "SELECT * FROM X WHERE type=" + doctor;
+		String patientSql = "SELECT * FROM X WHERE type=" + patient;
+		URIBuilder builder = new URIBuilder(searchUrl);
+
+		if (type.equalsIgnoreCase("patients"))
+			builder.setParameter("sql", patientSql);
+		else if (type.equalsIgnoreCase("doctors"))
+			builder.setParameter("sql", doctorSql);
+
+		HttpGet httpGet = new HttpGet(builder.build());
+		HttpResponse response = httpclient.execute(httpGet);
+		String responseAsString = EntityUtils.toString(response.getEntity());
+		JSONObject obj = new JSONObject(responseAsString);
 
 		return obj;
 	}
 
 	public JSONObject getAssignedpatients(String identity) throws Exception {
-		System.out.print("----------hello1");
-		JSONObject sql=new  JSONObject();
-		BasicDBObject inQuery3 = new BasicDBObject();
-		BasicDBObject inQuery2 = new BasicDBObject();
-		BasicDBObject inQuery1 = new BasicDBObject();
-		BasicDBObject inQuery = new BasicDBObject();
-		List<String> list = new ArrayList<>();
-		List<String> list2 = new ArrayList<>();
-		list2.add("_id");
-		list2.add("first_name");
-		list2.add("profile_type");
-		list2.add("reports");
-		list.add("402afc3bcf4a43384bcaf14ba0cafd3812af94aba71a4e62b9bf60f2b704be49");
-		inQuery.put("doctors", new BasicDBObject("$in", list));
-		inQuery1.put("$elemMatch", inQuery);
-		inQuery2.put("reports", inQuery1);
-		inQuery3.put("selector", inQuery2);
-		inQuery3.put("fields", list2);
-		sql.put("sql","string");
-		sql.put("mango",inQuery3);
-		System.out.println("Query:"+sql.toString());
 
-		URIBuilder builder=builder = new URIBuilder("http://testnet-uk.activeledger.io:5261/api/stream/search");
-		
-	
-			
-		
+		Map<String, Object> sql = getPatientsQuery(identity);
+		GsonBuilder gsonBuilder = new GsonBuilder();
+		gsonBuilder.serializeNulls();
+		Gson gson = gsonBuilder.create();
+		String json = gson.toJson(sql);
+		// searchUrl
+		URIBuilder builder = new URIBuilder(searchUrl);
+
 		HttpClient httpclient = HttpClients.createDefault();
 		HttpPost httppost = new HttpPost(builder.build());
-		
-		StringEntity entity = new StringEntity(sql.toString());
+
+		StringEntity entity = new StringEntity(json);
 		entity.setContentType("application/json");
 		httppost.setEntity(entity);
 		HttpResponse response = httpclient.execute(httppost);
-
 		String responseAsString = EntityUtils.toString(response.getEntity());
 
-		JSONObject obj=new JSONObject(responseAsString);
-		JSONArray reps=obj.getJSONArray("streams").getJSONObject(0).getJSONArray("reports");
-		boolean assigned=false;
-			//JSONObject rr=(JSONObject)r;
-			Iterator itr = reps.iterator();
-	        while (itr.hasNext()) {
-	            JSONObject obj1 = (JSONObject) itr.next();
-	            Iterator itr1 = obj1.getJSONArray("doctors").iterator();
-	            while (itr1.hasNext()) 
-	            { String id=(String) itr1.next();
-	            	if(id.equals("402afc3bcf4a43384bcaf14ba0cafd3812af94aba71a4e62b9bf60f2b704be49"))
-	            	{
-	            		assigned=true;
-	            		break;
-	            	}
-	            }
-	            if(!assigned)
-	            {
-	            	itr.remove();
-	            }
-	            
-	        }
-	
-		obj.remove("warning");
+		// TODO: Should be done in a better way with better checks.
 
+		JSONObject obj = new JSONObject(responseAsString);
+
+		JSONArray reps = obj.getJSONArray("streams");
+		List<String> patients = new ArrayList<>();
+
+		Iterator itr = reps.iterator();
+		while (itr.hasNext()) {
+			JSONObject id = (JSONObject) itr.next();
+			patients.add(id.getString("patientId"));
+		}
+
+
+		builder = new URIBuilder(retrieveUrl);
+
+		httppost = new HttpPost(builder.build());
+		List<String> patientsList = patients.stream().distinct().collect(Collectors.toList());
+
+		String pId = gson.toJson(patientsList);
+		entity = new StringEntity(pId);
+		entity.setContentType("application/json");
+		httppost.setEntity(entity);
+		response = httpclient.execute(httppost);
+		responseAsString = EntityUtils.toString(response.getEntity());
+
+		JSONObject jlist = new JSONObject(responseAsString);
+
+		return jlist;
+	}
+
+	private Map<String, Object> getPatientsQuery(String identity) {
+		Map<String, Object> sql = new HashMap<>();
+		Map<String, Object> selector = new HashMap<>();
+		// JSONObject _id = new JSONObject();
+
+		List<String> fieldsList = new ArrayList<>();
+		List<String> doctorList = new ArrayList<>();
+
+		Map<String, Object> _id = new HashMap<>();
+		_id.put("$gt", null);
+		selector.put("_id", _id);
+
+		doctorList.add(identity);
+		Map<String, Object> reportDoctors = new HashMap<>();
+		reportDoctors.put("$in", doctorList);
+		selector.put("report.doctors", reportDoctors);
+
+		Map<String, Object> mango = new HashMap<>();
+		mango.put("selector", selector);
+		fieldsList.add("patientId");
+		mango.put("fields", fieldsList);
+
+		sql.put("sql", "string");
+		sql.put("mango", mango);
+		return sql;
+	}
+
+	public JSONObject getReports(String identity) throws Exception {
+
+		String sql = "SELECT reports FROM X WHERE _id=" + identity;
+		URIBuilder builder = new URIBuilder(searchUrl);
+		builder.setParameter("sql", sql);
+
+		HttpGet httpGet = new HttpGet(builder.build());
+		HttpResponse response = httpclient.execute(httpGet);
+
+		String responseAsString = EntityUtils.toString(response.getEntity());
+		JSONObject obj = new JSONObject(responseAsString);
 		return obj;
 	}
 
