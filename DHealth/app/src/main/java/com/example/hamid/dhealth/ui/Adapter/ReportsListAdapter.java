@@ -9,9 +9,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.hamid.dhealth.ui.Activities.ReportDetailActivity;
-import com.example.hamid.dhealth.data.localdb.Entity.Report;
 import com.example.hamid.dhealth.R;
+import com.example.hamid.dhealth.data.localdb.Entity.Report;
+import com.example.hamid.dhealth.ui.Activities.ReportDetailActivity;
 
 import java.util.List;
 
@@ -53,7 +53,6 @@ public class ReportsListAdapter extends RecyclerView.Adapter<ReportsListAdapter.
         Report report = reportList.get(position);
         holder.tv_name.setText(report.getOwnership());
         holder.tv_title.setText(report.getTitle());
-
     }
 
 

@@ -14,11 +14,11 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.activeledgersdk.utility.Utility;
-import com.example.hamid.dhealth.ui.viewmodel.AppViewModel;
+import com.example.hamid.dhealth.R;
 import com.example.hamid.dhealth.data.Preference.PreferenceKeys;
 import com.example.hamid.dhealth.data.Preference.PreferenceManager;
-import com.example.hamid.dhealth.R;
 import com.example.hamid.dhealth.factory.ViewModelFactory;
+import com.example.hamid.dhealth.ui.viewmodel.AppViewModel;
 
 import org.json.JSONException;
 import org.json.JSONObject;

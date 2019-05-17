@@ -4,7 +4,6 @@ import android.app.Application;
 import android.arch.persistence.db.SupportSQLiteDatabase;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.migration.Migration;
-import android.support.annotation.NonNull;
 
 import com.example.hamid.dhealth.data.localdb.DAO.DatabaseDAO;
 import com.example.hamid.dhealth.data.localdb.DAO.MedicalRoomDatabase;
@@ -13,24 +12,12 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import io.reactivex.annotations.NonNull;
 
 @Module
 public class DBModule {
 
-    /*
-     * The method returns the Database object
-     * */
-    @Provides
-    @Singleton
-    MedicalRoomDatabase provideDatabase(@NonNull Application application) {
-        return Room.databaseBuilder(application,
-                MedicalRoomDatabase.class, "medical_database.db")
-                //                            .addMigrations(MIGRATION_3_4)
-                .allowMainThreadQueries().build();
-    }
-
-
-        static final Migration MIGRATION_3_4 = new Migration(3, 4) {
+    static final Migration MIGRATION_3_4 = new Migration(3, 4) {
         @Override
         public void migrate(SupportSQLiteDatabase database) {
 //            database.execSQL("ALTER TABLE doctor_table "
@@ -50,6 +37,18 @@ public class DBModule {
 
         }
     };
+
+    /*
+     * The method returns the Database object
+     * */
+    @Provides
+    @Singleton
+    MedicalRoomDatabase provideDatabase(@NonNull Application application) {
+        return Room.databaseBuilder(application,
+                MedicalRoomDatabase.class, "medical_database.db")
+                //                            .addMigrations(MIGRATION_3_4)
+                .allowMainThreadQueries().build();
+    }
 
     /*
      * We need the MovieDao module.

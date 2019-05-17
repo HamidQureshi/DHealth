@@ -68,7 +68,6 @@
         <activity
             android:name=".ui.Activities.DoctorPatientDescriptionActivity"
             android:label="@string/title_activity_doctor_patient_description"
-            android:launchMode="singleInstance"
             android:theme="@style/AppTheme" />
 
         <activity

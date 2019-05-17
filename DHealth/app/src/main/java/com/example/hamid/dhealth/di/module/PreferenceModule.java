@@ -12,7 +12,7 @@ public class PreferenceModule {
 
     @Provides
     @Singleton
-    PreferenceManager providePreferenceManager(){
+    PreferenceManager providePreferenceManager() {
         return new PreferenceManager();
     }
 }

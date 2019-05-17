@@ -9,11 +9,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.hamid.dhealth.ui.Activities.DoctorPatientDescriptionActivity;
+import com.example.hamid.dhealth.R;
+import com.example.hamid.dhealth.data.Preference.PreferenceKeys;
 import com.example.hamid.dhealth.data.localdb.Entity.Doctor;
 import com.example.hamid.dhealth.data.localdb.Entity.Patient;
-import com.example.hamid.dhealth.data.Preference.PreferenceKeys;
-import com.example.hamid.dhealth.R;
+import com.example.hamid.dhealth.ui.Activities.DoctorPatientDescriptionActivity;
 import com.example.hamid.dhealth.utils.Utils;
 
 import java.util.List;

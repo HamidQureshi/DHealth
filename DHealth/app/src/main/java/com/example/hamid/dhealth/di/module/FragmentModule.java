@@ -18,4 +18,6 @@ public abstract class FragmentModule {
 
     @ContributesAndroidInjector
     abstract ProfileFragment contributeProfileFragment();
+
+
 }

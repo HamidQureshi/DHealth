@@ -1,7 +1,10 @@
 package com.example.hamid.dhealth.ui.Activities;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
+
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.graphics.Palette;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.ImageView;
@@ -20,7 +23,7 @@ public class DoctorPatientDescriptionActivity extends AppCompatActivity {
 
     public static final String DATA = "data";
 
-    ImageView iv_dp;
+    ImageView iv_dp,iv_dp_bg;
     TextView et_name;
     TextView et_last_name, et_email, et_dob, et_phone, et_address;
 
@@ -39,6 +42,9 @@ public class DoctorPatientDescriptionActivity extends AppCompatActivity {
 
         initLayouts();
 
+        if(preferenceManager == null){
+            preferenceManager = new PreferenceManager();
+        }
         if (preferenceManager.readFromPref(this, PreferenceKeys.SP_PROFILE_TYPE, PreferenceKeys.LBL_DOCTOR).equalsIgnoreCase(PreferenceKeys.LBL_DOCTOR)) {
             Patient patient = (Patient) getIntent().getSerializableExtra(DATA);
             if (patient != null) {
@@ -49,6 +55,7 @@ public class DoctorPatientDescriptionActivity extends AppCompatActivity {
                 et_address.setText(patient.getAddress());
                 et_dob.setText(patient.getDate_of_birth());
                 iv_dp.setImageBitmap(Utils.decodeBase64(patient.getDp()));
+//                createPaletteAsync(Utils.decodeBase64(patient.getDp()));
             }
         } else {
             Doctor doctor = (Doctor) getIntent().getSerializableExtra(DATA);
@@ -60,6 +67,7 @@ public class DoctorPatientDescriptionActivity extends AppCompatActivity {
                 et_address.setText(doctor.getAddress());
                 et_dob.setText(doctor.getDate_of_birth());
                 iv_dp.setImageBitmap(Utils.decodeBase64(doctor.getDp()));
+//                createPaletteAsync(Utils.decodeBase64(doctor.getDp()));
             }
         }
 
@@ -69,6 +77,7 @@ public class DoctorPatientDescriptionActivity extends AppCompatActivity {
 
     private void initLayouts() {
         iv_dp = (ImageView) findViewById(R.id.iv_dp);
+        iv_dp_bg = (ImageView) findViewById(R.id.iv_dp_bg);
         et_name = (TextView) findViewById(R.id.et_name);
         et_last_name = (TextView) findViewById(R.id.et_last_name);
         et_email = (TextView) findViewById(R.id.et_email);
@@ -88,6 +97,17 @@ public class DoctorPatientDescriptionActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    // Generate palette asynchronously and use it on a different
+//    public void createPaletteAsync(Bitmap bitmap) {
+//        if(bitmap ==null)
+//            return;
+//        Palette.from(bitmap).generate(new Palette.PaletteAsyncListener() {
+//            public void onGenerated(Palette p) {
+//                iv_dp_bg.setBackgroundColor( p.getDarkVibrantColor(getResources().getColor(R.color.colorPrimary)));
+//            }
+//        });
+//    }
 
 
 }

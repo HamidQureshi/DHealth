@@ -1,6 +1,7 @@
 package com.example.hamid.dhealth.di.module;
 
 import com.example.hamid.dhealth.ui.Activities.DashboardScreen;
+import com.example.hamid.dhealth.ui.Activities.DoctorPatientDescriptionActivity;
 import com.example.hamid.dhealth.ui.Activities.LoginScreen;
 import com.example.hamid.dhealth.ui.Activities.ProfileScreen;
 import com.example.hamid.dhealth.ui.Activities.ReportDetailActivity;
@@ -34,4 +35,7 @@ public abstract class ActivityModule {
 
     @ContributesAndroidInjector(modules = FragmentModule.class)
     abstract SplashActivity contributeSplashActivity();
+
+    @ContributesAndroidInjector(modules = FragmentModule.class)
+    abstract DoctorPatientDescriptionActivity contributeDoctorPatientDescriptionActivity();
 }

@@ -1,5 +1,6 @@
 package com.example.hamid.dhealth.ui.Activities;
 
+import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -17,21 +18,27 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.hamid.dhealth.ActiveLedgerHelper;
+import com.example.hamid.dhealth.R;
 import com.example.hamid.dhealth.data.Preference.PreferenceKeys;
 import com.example.hamid.dhealth.data.Preference.PreferenceManager;
+import com.example.hamid.dhealth.data.localdb.Entity.Doctor;
+import com.example.hamid.dhealth.data.localdb.Entity.Patient;
+import com.example.hamid.dhealth.data.localdb.Entity.Report;
+import com.example.hamid.dhealth.factory.ViewModelFactory;
 import com.example.hamid.dhealth.ui.Fragments.DoctorPatientFragment;
 import com.example.hamid.dhealth.ui.Fragments.ProfileFragment;
 import com.example.hamid.dhealth.ui.Fragments.ReportsFragment;
 import com.example.hamid.dhealth.ui.viewmodel.AppViewModel;
-import com.example.hamid.dhealth.R;
 import com.example.hamid.dhealth.utils.Utils;
-import com.example.hamid.dhealth.factory.ViewModelFactory;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
 import dagger.android.AndroidInjection;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.support.HasSupportFragmentInjector;
+import io.reactivex.annotations.Nullable;
 
 public class DashboardScreen extends AppCompatActivity implements HasSupportFragmentInjector {
 
@@ -158,6 +165,54 @@ public class DashboardScreen extends AppCompatActivity implements HasSupportFrag
         tv_last_name.setText(preferenceManager.readFromPref(this, PreferenceKeys.SP_LAST_NAME, "Doe"));
 
         refreshDP();
+
+        getDataFromServer();
+
+
+        if (preferenceManager.readFromPref(this, PreferenceKeys.SP_PROFILE_TYPE, PreferenceKeys.LBL_DOCTOR).equalsIgnoreCase(PreferenceKeys.LBL_DOCTOR)) {
+
+            appViewModel.getPatientList().observe(this, new Observer<List<Patient>>() {
+                @Override
+                public void onChanged(@Nullable final List<Patient> patients) {
+
+                    appViewModel.setFetchingDoctorPatientData(false);
+
+                }
+            });
+        } else {
+
+            appViewModel.getDoctorList().observe(this, new Observer<List<Doctor>>() {
+                @Override
+                public void onChanged(@Nullable final List<Doctor> doctors) {
+                    appViewModel.setFetchingDoctorPatientData(false);
+                }
+            });
+        }
+
+        appViewModel.getReportList().observe(this, new Observer<List<Report>>() {
+            @Override
+            public void onChanged(@android.support.annotation.Nullable final List<Report> reports) {
+                appViewModel.setFetchingReportData(false);
+            }
+        });
+
+
+    }
+
+    private void getDataFromServer() {
+
+        appViewModel.setFetchingDoctorPatientData(true);
+        appViewModel.setFetchingReportData(true);
+        if (preferenceManager.readFromPref(this, PreferenceKeys.SP_PROFILE_TYPE, PreferenceKeys.LBL_DOCTOR).equalsIgnoreCase(PreferenceKeys.LBL_DOCTOR)) {
+            appViewModel.getAssignedPatientListFromServer(preferenceManager.readFromPref(this, PreferenceKeys.SP_APP_TOKEN, "null"));
+
+        } else {
+            appViewModel.getDoctorListFromServer(preferenceManager.readFromPref(this, PreferenceKeys.SP_APP_TOKEN, "null"));
+            appViewModel.getReportsListFromServer(preferenceManager.readFromPref(this, PreferenceKeys.SP_APP_TOKEN, "null"));
+
+        }
+
+
     }
 
 

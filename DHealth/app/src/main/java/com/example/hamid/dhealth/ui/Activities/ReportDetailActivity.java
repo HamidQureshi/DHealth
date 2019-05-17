@@ -20,16 +20,16 @@ import android.widget.Toast;
 import com.example.activeledgersdk.ActiveLedgerSDK;
 import com.example.activeledgersdk.utility.Utility;
 import com.example.hamid.dhealth.ActiveLedgerHelper;
-import com.example.hamid.dhealth.utils.FileUtils;
-import com.example.hamid.dhealth.ui.viewmodel.AppViewModel;
+import com.example.hamid.dhealth.R;
+import com.example.hamid.dhealth.data.Preference.PreferenceKeys;
+import com.example.hamid.dhealth.data.Preference.PreferenceManager;
 import com.example.hamid.dhealth.data.localdb.Entity.Doctor;
 import com.example.hamid.dhealth.data.localdb.Entity.Patient;
 import com.example.hamid.dhealth.data.localdb.Entity.Report;
-import com.example.hamid.dhealth.data.Preference.PreferenceKeys;
-import com.example.hamid.dhealth.data.Preference.PreferenceManager;
-import com.example.hamid.dhealth.R;
-import com.example.hamid.dhealth.utils.Utils;
 import com.example.hamid.dhealth.factory.ViewModelFactory;
+import com.example.hamid.dhealth.ui.viewmodel.AppViewModel;
+import com.example.hamid.dhealth.utils.FileUtils;
+import com.example.hamid.dhealth.utils.Utils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -243,12 +243,6 @@ public class ReportDetailActivity extends AppCompatActivity {
 
     }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        MenuInflater inflater = getMenuInflater();
-//        inflater.inflate(R.menu.edit_options_menu, menu);
-//        return true;
-//    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -258,11 +252,7 @@ public class ReportDetailActivity extends AppCompatActivity {
             finish();
             return true;
         }
-//        else if (id == R.id.edit) {
-//
-//            Toast.makeText(this, "Profile Editing Enabled", Toast.LENGTH_SHORT).show();
-//            return true;
-//        }
+
 
         return super.onOptionsItemSelected(item);
     }

@@ -12,6 +12,7 @@ import com.example.hamid.dhealth.data.localdb.DAO.DatabaseDAO;
 import com.example.hamid.dhealth.data.localdb.Entity.Doctor;
 import com.example.hamid.dhealth.data.localdb.Entity.Patient;
 import com.example.hamid.dhealth.data.localdb.Entity.Report;
+import com.example.hamid.dhealth.data.remote.APIService;
 import com.example.hamid.dhealth.ui.Fragments.ReportsFragment;
 import com.example.hamid.dhealth.utils.Utils;
 
@@ -30,7 +31,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Response;
-import com.example.hamid.dhealth.data.remote.APIService;
 
 @Singleton
 public class DataRepository {

@@ -11,6 +11,7 @@ import com.example.hamid.dhealth.di.module.PreferenceModule;
 import com.example.hamid.dhealth.di.module.ViewModelModule;
 
 import javax.inject.Singleton;
+
 import dagger.BindsInstance;
 import dagger.Component;
 import dagger.android.support.AndroidSupportInjectionModule;

@@ -48,15 +48,15 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'com.android.support:appcompat-v7:27.1.1'
-    implementation 'com.android.support:design:27.1.1'
+    implementation 'com.android.support:appcompat-v7:27.1.0'
+    implementation 'com.android.support:design:27.1.0'
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
-    implementation 'com.android.support:support-v4:27.1.1'
+    implementation 'com.android.support:support-v4:27.1.0'
     implementation 'android.arch.lifecycle:extensions:1.1.1'
-    implementation 'com.android.support:support-vector-drawable:27.1.1'
+    implementation 'com.android.support:support-vector-drawable:27.1.0'
     testImplementation 'junit:junit:4.12'
 
-    implementation 'com.android.support:support-annotations:28.0.0'
+    implementation 'com.android.support:support-annotations:27.1.0'
 
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
     androidTestImplementation 'androidx.test:runner:1.1.0'
@@ -79,20 +79,18 @@ dependencies {
 // RxAndroid
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
 
-    implementation 'com.android.support:appcompat-v7:27.1.1'
-    implementation 'com.android.support:design:27.1.1'
 
     //motion layout
     implementation 'com.android.support.constraint:constraint-layout:2.0.0-alpha2'
 
     //cardview
-    implementation 'com.android.support:cardview-v7:27.1.1'
+    implementation 'com.android.support:cardview-v7:27.1.0'
 
     // Glide
     implementation 'com.github.bumptech.glide:glide:4.8.0'
 
     // RecyclerView
-    implementation 'com.android.support:recyclerview-v7:27.1.1'
+    implementation 'com.android.support:recyclerview-v7:27.1.0'
 
     // Room components
     implementation "android.arch.persistence.room:runtime:$rootProject.roomVersion"
@@ -120,10 +118,10 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
     /* Android Support Library: RecyclerView, CardView  */
-    implementation 'com.android.support:appcompat-v7:27.0.0'
-    implementation 'com.android.support:recyclerview-v7:27.0.0'
-    implementation 'com.android.support:design:27.0.0'
-    implementation 'com.android.support:cardview-v7:27.0.0'
+    implementation 'com.android.support:appcompat-v7:27.1.0'
+    implementation 'com.android.support:recyclerview-v7:27.1.0'
+    implementation 'com.android.support:design:27.1.0'
+    implementation 'com.android.support:cardview-v7:27.1.0'
 
     /* Retrofit using RxJava2, Okhttp, Okhttp logging interceptor, Gson  */
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'
@@ -155,5 +153,8 @@ dependencies {
 
     /* Dagger2 - default dependency */
     annotationProcessor 'com.google.dagger:dagger-compiler:2.17'
+
+    implementation 'com.android.support:palette-v7:27.1.0'
+
 
 }

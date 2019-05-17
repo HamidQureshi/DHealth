@@ -34,18 +34,18 @@ import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.hamid.dhealth.R;
+import com.example.hamid.dhealth.data.Preference.PreferenceKeys;
+import com.example.hamid.dhealth.data.Preference.PreferenceManager;
+import com.example.hamid.dhealth.data.localdb.Entity.Report;
+import com.example.hamid.dhealth.factory.ViewModelFactory;
 import com.example.hamid.dhealth.ui.Activities.UploadFileActivity;
 import com.example.hamid.dhealth.ui.Adapter.ReportsListAdapter;
 import com.example.hamid.dhealth.ui.viewmodel.AppViewModel;
 import com.example.hamid.dhealth.utils.FileUtils;
-import com.example.hamid.dhealth.data.localdb.Entity.Report;
-import com.example.hamid.dhealth.data.Preference.PreferenceKeys;
-import com.example.hamid.dhealth.data.Preference.PreferenceManager;
-import com.example.hamid.dhealth.R;
 import com.example.hamid.dhealth.utils.SwipeController;
 import com.example.hamid.dhealth.utils.SwipeControllerActions;
 import com.example.hamid.dhealth.utils.Utils;
-import com.example.hamid.dhealth.factory.ViewModelFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -169,7 +169,18 @@ public class ReportsFragment extends Fragment implements View.OnClickListener {
                 pullToRefresh.setRefreshing(false);
             }
         });
-        populateList();
+
+        if (mViewModel.isFetchingReportData()){
+            pullToRefresh.setRefreshing(true);
+        }
+        else{
+            pullToRefresh.setRefreshing(false);
+
+        }
+
+
+
+//        populateList();
     }
 
 

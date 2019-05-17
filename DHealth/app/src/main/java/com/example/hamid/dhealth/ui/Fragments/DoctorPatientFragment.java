@@ -3,8 +3,6 @@ package com.example.hamid.dhealth.ui.Fragments;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -21,15 +19,15 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.SearchView;
 
-import com.example.hamid.dhealth.ui.Adapter.DoctorPatientListAdapter;
-import com.example.hamid.dhealth.data.localdb.Entity.Doctor;
-import com.example.hamid.dhealth.data.localdb.Entity.Patient;
+import com.example.hamid.dhealth.R;
 import com.example.hamid.dhealth.data.Preference.PreferenceKeys;
 import com.example.hamid.dhealth.data.Preference.PreferenceManager;
-import com.example.hamid.dhealth.R;
+import com.example.hamid.dhealth.data.localdb.Entity.Doctor;
+import com.example.hamid.dhealth.data.localdb.Entity.Patient;
+import com.example.hamid.dhealth.factory.ViewModelFactory;
+import com.example.hamid.dhealth.ui.Adapter.DoctorPatientListAdapter;
 import com.example.hamid.dhealth.ui.viewmodel.AppViewModel;
 import com.example.hamid.dhealth.utils.Utils;
-import com.example.hamid.dhealth.factory.ViewModelFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +37,8 @@ import javax.inject.Inject;
 import dagger.android.support.AndroidSupportInjection;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.annotations.Nullable;
 import io.reactivex.schedulers.Schedulers;
 
 
@@ -135,7 +135,15 @@ public class DoctorPatientFragment extends Fragment {
             });
         }
 
-        populateList();
+        if (mViewModel.isFetchingDoctorPatientData()){
+            pullToRefresh.setRefreshing(true);
+        }
+        else{
+            pullToRefresh.setRefreshing(false);
+
+        }
+
+//        populateList();
     }
 
     private void populateList() {

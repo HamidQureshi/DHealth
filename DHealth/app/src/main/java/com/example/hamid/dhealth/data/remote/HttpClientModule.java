@@ -24,11 +24,15 @@ package com.example.hamid.dhealth.data.remote;
 
 
 import android.app.Application;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
 import java.io.File;
 import java.util.concurrent.TimeUnit;
+
 import javax.inject.Singleton;
+
 import dagger.Module;
 import dagger.Provides;
 import okhttp3.Cache;

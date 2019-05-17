@@ -31,6 +31,8 @@ public class ActiveLedgerHelper {
 
 
     static ActiveLedgerHelper instance = null;
+    @Inject
+    PreferenceManager preferenceManager;
     private Disposable disposable;
     private KeyPair key_Pair = null;
     private KeyType keyType = KeyType.RSA;
@@ -42,9 +44,6 @@ public class ActiveLedgerHelper {
     private MutableLiveData<String> showToast = new MutableLiveData<>();
     private MutableLiveData<Boolean> loginApp = new MutableLiveData<>();
     private Context context = null;
-
-    @Inject
-    PreferenceManager preferenceManager;
 
     public static ActiveLedgerHelper getInstance() {
 
@@ -61,7 +60,6 @@ public class ActiveLedgerHelper {
         ActiveLedgerSDK.getInstance().initSDK(context, "http", "testnet-uk.activeledger.io", "5260");
         this.context = context;
     }
-
 
 
     public KeyType getKeyType() {

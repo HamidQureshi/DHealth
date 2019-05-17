@@ -3,15 +3,14 @@ package com.example.hamid.dhealth.ui.viewmodel;
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
-import android.support.annotation.NonNull;
 
+import com.example.hamid.dhealth.data.DataRepository;
 import com.example.hamid.dhealth.data.Preference.PreferenceKeys;
 import com.example.hamid.dhealth.data.Preference.PreferenceManager;
 import com.example.hamid.dhealth.data.localdb.DAO.DatabaseDAO;
 import com.example.hamid.dhealth.data.localdb.Entity.Doctor;
 import com.example.hamid.dhealth.data.localdb.Entity.Patient;
 import com.example.hamid.dhealth.data.localdb.Entity.Report;
-import com.example.hamid.dhealth.data.DataRepository;
 import com.example.hamid.dhealth.data.remote.APIService;
 
 import java.util.List;
@@ -19,17 +18,20 @@ import java.util.List;
 import javax.inject.Inject;
 
 import io.reactivex.Observable;
+import io.reactivex.annotations.NonNull;
 import retrofit2.Response;
 
 public class AppViewModel extends AndroidViewModel {
 
+    @Inject
+    PreferenceManager preferenceManager;
     private DataRepository repository;
     private LiveData<List<Doctor>> doctor_list;
     private LiveData<List<Patient>> patient_list;
     private LiveData<List<Report>> report_list;
+    private boolean fetchingDoctorPatientData = false;
+    private boolean fetchingReportData = false;
 
-    @Inject
-    PreferenceManager preferenceManager;
 
     @Inject
     public AppViewModel(@NonNull Application application, APIService apiService, DatabaseDAO databaseDAO) {
@@ -42,9 +44,9 @@ public class AppViewModel extends AndroidViewModel {
     }
 
     public LiveData<List<Doctor>> getDoctor_list() {
-        if (doctor_list.getValue() == null) {
-            getDoctorListFromServer(preferenceManager.readFromPref(getApplication(), PreferenceKeys.SP_APP_TOKEN, "null"));
-        }
+//        if (doctor_list.getValue() == null) {
+//            getDoctorListFromServer(preferenceManager.readFromPref(getApplication(), PreferenceKeys.SP_APP_TOKEN, "null"));
+//        }
         return doctor_list;
     }
 
@@ -53,10 +55,10 @@ public class AppViewModel extends AndroidViewModel {
     }
 
     public LiveData<List<Patient>> getPatient_list() {
-        if (patient_list.getValue() == null) {
-//            getPatientListFromServer(preferenceManager.readFromPref(getApplication(), PreferenceKeys.SP_APP_TOKEN, "null"));
-            getAssignedPatientListFromServer(preferenceManager.readFromPref(getApplication(), PreferenceKeys.SP_APP_TOKEN, "null"));
-        }
+//        if (patient_list.getValue() == null) {
+////            getPatientListFromServer(preferenceManager.readFromPref(getApplication(), PreferenceKeys.SP_APP_TOKEN, "null"));
+//            getAssignedPatientListFromServer(preferenceManager.readFromPref(getApplication(), PreferenceKeys.SP_APP_TOKEN, "null"));
+//        }
         return patient_list;
     }
 
@@ -169,5 +171,22 @@ public class AppViewModel extends AndroidViewModel {
         repository.deleteAllPatient();
         repository.deleteAllReport();
     }
+
+    public boolean isFetchingDoctorPatientData() {
+        return fetchingDoctorPatientData;
+    }
+
+    public void setFetchingDoctorPatientData(boolean fetchingDoctorPatientData) {
+        this.fetchingDoctorPatientData = fetchingDoctorPatientData;
+    }
+
+    public boolean isFetchingReportData() {
+        return fetchingReportData;
+    }
+
+    public void setFetchingReportData(boolean fetchingReportData) {
+        this.fetchingReportData = fetchingReportData;
+    }
+
 
 }
