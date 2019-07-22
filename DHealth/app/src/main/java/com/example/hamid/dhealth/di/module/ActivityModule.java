@@ -1,5 +1,6 @@
 package com.example.hamid.dhealth.di.module;
 
+import com.example.hamid.dhealth.ActiveLedgerHelper;
 import com.example.hamid.dhealth.ui.Activities.DashboardScreen;
 import com.example.hamid.dhealth.ui.Activities.DoctorPatientDescriptionActivity;
 import com.example.hamid.dhealth.ui.Activities.LoginScreen;
@@ -38,4 +39,7 @@ public abstract class ActivityModule {
 
     @ContributesAndroidInjector(modules = FragmentModule.class)
     abstract DoctorPatientDescriptionActivity contributeDoctorPatientDescriptionActivity();
+
+//    @ContributesAndroidInjector(modules = FragmentModule.class)
+//    abstract ActiveLedgerHelper contributeActiveLedgerHelper();
 }

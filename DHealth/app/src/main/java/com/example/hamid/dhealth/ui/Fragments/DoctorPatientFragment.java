@@ -56,6 +56,7 @@ public class DoctorPatientFragment extends Fragment {
     private List<Doctor> doctorList;
     private List<Patient> patientList;
     private ProgressBar progressBar;
+    SwipeRefreshLayout pullToRefresh;
 
     public static DoctorPatientFragment newInstance() {
         return new DoctorPatientFragment();
@@ -99,7 +100,7 @@ public class DoctorPatientFragment extends Fragment {
         rv_dplist.setAdapter(doctorPatientListAdapter);
         progressBar = (ProgressBar) getView().findViewById(R.id.progressBar);
 
-        SwipeRefreshLayout pullToRefresh = getView().findViewById(R.id.pullToRefresh);
+        pullToRefresh = getView().findViewById(R.id.pullToRefresh);
         pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -135,13 +136,13 @@ public class DoctorPatientFragment extends Fragment {
             });
         }
 
-        if (mViewModel.isFetchingDoctorPatientData()){
-            pullToRefresh.setRefreshing(true);
-        }
-        else{
-            pullToRefresh.setRefreshing(false);
-
-        }
+//        if (mViewModel.isFetchingDoctorPatientData()){
+//            pullToRefresh.setRefreshing(true);
+//        }
+//        else{
+//            pullToRefresh.setRefreshing(false);
+//
+//        }
 
 //        populateList();
     }
@@ -226,6 +227,22 @@ public class DoctorPatientFragment extends Fragment {
     }
 
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if (pullToRefresh== null){
+            return;
+        }
+        if (mViewModel.isFetchingDoctorPatientData()){
+            pullToRefresh.setRefreshing(true);
+        }
+        else{
+            pullToRefresh.setRefreshing(false);
+
+        }
+
+    }
 }
 
 

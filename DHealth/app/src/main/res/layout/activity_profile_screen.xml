@@ -158,7 +158,8 @@
                 android:paddingLeft="4dp"
                 app:layout_constraintEnd_toEndOf="@+id/et_email"
                 app:layout_constraintStart_toStartOf="@+id/tv_dob"
-                app:layout_constraintTop_toBottomOf="@+id/tv_dob" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_dob"
+                />
 
             <TextView
                 android:id="@+id/tv_address"

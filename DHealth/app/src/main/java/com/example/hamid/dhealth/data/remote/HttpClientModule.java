@@ -79,8 +79,9 @@ public class HttpClientModule {
         httpClient.cache(cache);
         httpClient.addInterceptor(logging);
 //        httpClient.addNetworkInterceptor(new RequestInterceptor());
-        httpClient.connectTimeout(60, TimeUnit.SECONDS);
-        httpClient.readTimeout(60, TimeUnit.SECONDS);
+        httpClient.writeTimeout(60,TimeUnit.MINUTES);
+        httpClient.connectTimeout(60, TimeUnit.MINUTES);
+        httpClient.readTimeout(60, TimeUnit.MINUTES);
         return httpClient.build();
     }
 

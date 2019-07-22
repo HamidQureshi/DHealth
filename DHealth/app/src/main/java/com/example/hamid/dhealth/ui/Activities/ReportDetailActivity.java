@@ -201,7 +201,16 @@ public class ReportDetailActivity extends AppCompatActivity {
         }
 
 
-    }
+        if (preferenceManager.readFromPref(this, PreferenceKeys.SP_PROFILE_TYPE, PreferenceKeys.LBL_DOCTOR).equalsIgnoreCase(PreferenceKeys.LBL_DOCTOR)) {
+            tv_lbl_assigned_to.setVisibility(View.GONE);
+            et_assigned_to.setVisibility(View.GONE);
+            btn_update.setVisibility(View.GONE);
+        }
+
+
+
+
+        }
 
     private void populateLayout(Report report) {
 
