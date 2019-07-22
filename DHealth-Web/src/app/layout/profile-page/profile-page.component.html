@@ -1,0 +1,89 @@
+<div class="create-profile-page">
+    <div class="content">
+        <form class="create-profile-form" ng-controller="formCtrl" fxFlex>
+
+            <div fxFlex fxLayout="row" fxLayout.lt-md="column" class="text-center">
+                <div fxFlexFill>
+                    <img id="i_img" [src]="image" #img_f mat-card-image [alt]="placeholder"><br>
+                    <input [hidden]="hidden" type='file' (change)="onSelectFile($event)">
+                </div>
+            </div>
+
+            <div fxFlex fxLayout="row" fxLayout.lt-md="column">
+                <div fxFlex style="margin: 0px 20px 0px 0">
+                    <div fxFlexFill>
+                        <mat-form-field class="w-100">
+                            <input id="i_fn" #firstname_f matInput placeholder="First Name  " disabled="disabled"
+                                style="color: black;">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div fxFlex fxLayoutAlign="end">
+                    <div fxFlexFill>
+                        <mat-form-field class="w-100">
+                            <input id="i_ln" #lastname_f matInput placeholder="Last Name  " disabled="disabled"
+                                style="color: black;">
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+
+            <div fxFlex fxlayout="row" fxlayout.lt-md="column">
+                <div fxFlexFill>
+                    <mat-form-field class="w-100">
+                        <input id="i_email" #email_f matInput placeholder="Email  " disabled="disabled"
+                            style="color: black;">
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div fxFlex fxlayout="row" fxlayout.lt-md="column">
+                <div fxFlexFill>
+                    <mat-form-field class="w-100">
+
+                        <input id="i_dob" #dob_f matInput #dob_f matInput [matDatepicker]="picker"
+                            placeholder="Date of Birth" disabled="disabled" style="color: black;">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div fxFlex fxlayout="row" fxlayout.lt-md="column">
+                <div fxFlexFill>
+                    <mat-form-field class="w-100">
+                        <input id="i_pno" #pno_f matInput placeholder="Phone Number  " disabled="disabled"
+                            style="color: black;">
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div fxFlex fxlayout="row" fxlayout.lt-md="column">
+                <div fxFlexFill>
+                    <mat-form-field class="w-100">
+                        <input id="i_address" #address_f matInput placeholder="Address  " disabled="disabled"
+                            style="color: black;">
+                    </mat-form-field>
+                </div>
+            </div>
+
+
+            <div fxFlex fxLayout="row" fxLayout.lt-md="column">
+
+                <div fxFlexFill>
+                    <div fxFlex fxLayoutAlign="end">
+                        <button mat-raised-button color="primary" class="w-50" (click)="enableFields()"
+                            type='button'>Edit
+                            Profile</button>
+                        <button mat-raised-button color="primary" class="w-50" [disabled]= "editing_disabled"
+                            (click)="onUpdateProfile(firstname_f.value,lastname_f.value,email_f.value,dob_f.value,pno_f.value,address_f.value)"
+                            type='button' style="margin: 0px 20px 0px 20px">Update Profile</button>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>

@@ -1,0 +1,93 @@
+<div class="create-profile-page">
+  <div class="content">
+      <form class="create-profile-form" ng-controller="formCtrl" fxFlex  >
+          <div class="text-center">
+              <h2 class="app-name">DHealth</h2>
+          </div>
+
+            <div fxFlex fxLayout="row" fxLayout.lt-md="column" class="text-center">
+                <div fxFlexFill>
+                    <img id="i_img" [src]="image" #img_f mat-card-image class = "image"><br>
+                    <input mat-raised-button color="primary" type='file' (change)="onSelectFile($event)">
+
+                </div>
+            </div>
+
+
+          <div fxFlex  fxLayout="row" fxLayout.lt-md="column" >
+            <div fxFlex style="margin: 0px 20px 0px 0">
+                <div fxFlexFill>
+                    <mat-form-field class="w-100">
+                        <input #firstname_f matInput placeholder="First Name  " >
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div fxFlex fxLayoutAlign="end">
+                <div fxFlexFill>
+                    <mat-form-field class="w-100">
+                        <input #lastname_f matInput placeholder="Last Name  " >
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+
+          <div fxFlex  fxlayout="row" fxlayout.lt-md="column">
+              <div fxFlexFill>
+                  <mat-form-field class="w-100">
+                      <input id="i_email" #email_f matInput placeholder="Email  "  disabled="disable">
+                  </mat-form-field>
+              </div>
+          </div>
+
+          <div fxFlex  fxlayout="row" fxlayout.lt-md="column">
+            <div fxFlexFill>
+            
+                            <mat-form-field class="w-100">
+                                <input #dob_f matInput [matDatepicker]="picker" placeholder="Date of Birth">
+                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                <mat-datepicker #picker></mat-datepicker>
+                            </mat-form-field>
+                 
+            </div>
+
+
+        </div>
+
+        <div fxFlex  fxlayout="row" fxlayout.lt-md="column">
+            <div fxFlexFill>
+                <mat-form-field class="w-100">
+                    <input #pno_f matInput placeholder="Phone Number  " >
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div fxFlex  fxlayout="row" fxlayout.lt-md="column">
+            <div fxFlexFill>
+                <mat-form-field class="w-100">
+                    <input #address_f matInput placeholder="Address  " >
+                </mat-form-field>
+            </div>
+        </div>
+  
+        <div fxFlex  fxlayout="row" fxlayout.lt-md="column">
+                <div fxFlexFill>
+                    <mat-form-field class="w-100">
+                <mat-select placeholder="Select User Type" [(value)]="user_type">
+                    <mat-option value="Doctor">Doctor</mat-option>
+                    <mat-option value="patient">Patient</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+    </div>
+          
+
+          <div fxFlex  fxLayout="row" fxLayout.lt-md="column" >
+            <div fxFlexFill>
+                <button mat-raised-button color="primary" class="w-100" (click)="onCreateProfile(firstname_f.value,lastname_f.value,email_f.value,dob_f.value,pno_f.value,address_f.value)" type = 'button'>Create Profile</button>
+            </div>
+        </div>
+
+      </form>
+  </div>
+</div>
