@@ -1,0 +1,75 @@
+<div class="report-page">
+    <div class="content">
+        <form class="report-form" ng-controller="formCtrl" fxFlex>
+
+            <div fxFlex fxLayout="row" fxLayout.lt-md="column">
+                <div fxFlex style="margin: 0px 20px 0px 0">
+                    <div fxFlexFill>
+                        <mat-form-field class="w-100">
+                            <input id="i_pn" #patientname_f matInput placeholder="Patient Name  " disabled="disabled"
+                                style="color: black;">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div fxFlex fxLayoutAlign="end">
+                    <div fxFlexFill>
+                        <mat-form-field class="w-100">
+                            <input id="i_rt" #title_f matInput placeholder="Report Title  " style="color: black;">
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+
+            <div fxFlex fxlayout="row" fxlayout.lt-md="column">
+                <div fxFlex style="margin: 0px 20px 0px 0">
+                    <div fxFlexFill class="w-100">
+                        <ng-multiselect-dropdown [placeholder]="'No Doctor Selected'" [data]="dropdownList"
+                            [(ngModel)]="selectedItems" [settings]="dropdownSettings" (onSelect)="onItemSelect($event)"
+                            (onSelectAll)="onSelectAll($event)" name="doctorlist">
+                        </ng-multiselect-dropdown>
+                    </div>
+                </div>
+            </div>
+
+            <div fxFlex fxlayout="row" fxlayout.lt-md="column">
+                <div fxFlexFill>
+                    <mat-form-field class="w-100">
+                        <input id="i_description" #description_f matInput placeholder="Description  "
+                            style="color: black;">
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div fxFlex fxlayout="row" fxlayout.lt-md="column">
+                <div fxFlexFill>
+                    <mat-form-field class="w-100">
+                        <input id="i_da" #doc_f matInput placeholder="Document Attached  " disabled="disabled"
+                            style="color: black; ">
+                    </mat-form-field>
+                </div>
+            </div>
+
+
+            <div fxFlex fxLayout="row" fxLayout.lt-md="column">
+
+                <div fxFlexFill>
+                    <div fxFlex fxLayoutAlign="end">
+
+                        <input hidden type="file" #imgFileInput accept=".pdf" (change)="fileChange($event)"
+                            style="color: black; " />
+
+                        <button mat-raised-button color="primary" class="w-50" (click)="imgFileInput.click()"
+                            type='button'>Attach PDF</button>
+                        <button mat-raised-button color="primary" class="w-50" (click)="onAddReport()" type='button'
+                            style="margin: 0px 20px 0px 20px">Add Report</button>
+
+                    </div>
+                </div>
+            </div>
+
+        </form>
+
+
+    </div>
+</div>

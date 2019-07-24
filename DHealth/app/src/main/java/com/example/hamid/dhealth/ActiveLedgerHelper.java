@@ -281,6 +281,9 @@ public class ActiveLedgerHelper {
         JSONObject $i = new JSONObject();
         JSONObject $o = new JSONObject();
         JSONObject $tx = new JSONObject();
+        if(preferenceManager == null){
+            preferenceManager = new PreferenceManager();
+        }
         String onboard_id = preferenceManager.readFromPref(context, PreferenceKeys.SP_IDENTITY, "null");
 
         try {
@@ -351,6 +354,9 @@ public class ActiveLedgerHelper {
         JSONObject $i = new JSONObject();
         JSONObject $o = new JSONObject();
         JSONObject $tx = new JSONObject();
+        if(preferenceManager == null){
+            preferenceManager = new PreferenceManager();
+        }
         String onboard_id = preferenceManager.readFromPref(context, PreferenceKeys.SP_IDENTITY, "null");
 
         try {
@@ -404,6 +410,9 @@ public class ActiveLedgerHelper {
         JSONObject $i = new JSONObject();
         JSONObject $o = new JSONObject();
         JSONObject $tx = new JSONObject();
+        if(preferenceManager == null){
+            preferenceManager = new PreferenceManager();
+        }
         String onboard_id = preferenceManager.readFromPref(context, PreferenceKeys.SP_IDENTITY, "null");
 
         try {

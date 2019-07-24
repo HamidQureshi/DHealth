@@ -1,0 +1,44 @@
+<div class="register-page">
+  <div class="content">
+      <form class="register-form" ng-controller="formCtrl" fxFlex  >
+          <div class="text-center">
+              <h2 class="app-name">DHealth</h2>
+          </div>
+          <div fxFlex  fxlayout="row" fxlayout.lt-md="column">
+              <div fxFlexFill>
+                  <mat-form-field class="w-100">
+                      <input #email_f matInput placeholder="Email  " >
+                  </mat-form-field>
+              </div>
+          </div>
+          <div fxFlex  fxLayout="row" fxLayout.lt-md="column">
+              <div fxFlexFill>
+                  <mat-form-field class="w-100">
+                      <input #password_f matInput type="password" placeholder="Password" >
+                  </mat-form-field>
+              </div>
+          </div>
+          <div fxFlex  fxLayout="row" fxLayout.lt-md="column" style="margin: 20px 0 30px 0">
+              <div fxFlex>
+                  <mat-checkbox color="primary">Remember Me</mat-checkbox>
+              </div>
+              <div fxFlex  fxLayoutAlign="end">
+                  <a href="javascript:void(0)">Forget Password</a>
+              </div>
+          </div>
+          
+          <div fxFlex  fxLayout="row" fxLayout.lt-md="column"style="margin: 0px 0 30px 0">
+              <div fxFlexFill>
+                  <button mat-raised-button color="primary" class="w-100" (click)="onRegister(email_f.value,password_f.value)" type = 'button'>Register</button>
+              </div>
+          </div>
+
+          <div fxFlex  fxLayout="row" fxLayout.lt-md="column" >
+            <div fxFlexFill>
+                <button mat-raised-button color="primary" class="w-100" (click)="onLogin()" type = 'button'>Already a user? Login</button>
+            </div>
+        </div>
+
+      </form>
+  </div>
+</div>

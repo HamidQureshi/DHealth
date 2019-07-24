@@ -1,0 +1,16 @@
+<div id="sidebar">
+    <mat-nav-list>
+
+        <a mat-list-item [routerLinkActive]="'active'" [routerLink]="['/profile-page']">
+            <mat-icon class="sidenav-icon">account_box</mat-icon> {{ 'Profile ' }}
+        </a>
+        <a mat-list-item [routerLinkActive]="'active'" [routerLink]="['/doctorpatient-page']">
+            <mat-icon class="sidenav-icon">list</mat-icon> {{ item }}
+        </a>
+        <a mat-list-item [routerLinkActive]="'active'" [routerLink]="['/report-list']">
+            <mat-icon class="sidenav-icon">note_add</mat-icon> {{ 'Report List' | translate }}
+        </a>
+        
+        
+    </mat-nav-list>
+</div>

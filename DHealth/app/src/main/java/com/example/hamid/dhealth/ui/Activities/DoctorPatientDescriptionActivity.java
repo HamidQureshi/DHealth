@@ -19,6 +19,8 @@ import com.example.hamid.dhealth.utils.Utils;
 
 import javax.inject.Inject;
 
+import dagger.android.AndroidInjection;
+
 public class DoctorPatientDescriptionActivity extends AppCompatActivity {
 
     public static final String DATA = "data";
@@ -32,6 +34,8 @@ public class DoctorPatientDescriptionActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        AndroidInjection.inject(this);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doctor_patient_description);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);

@@ -1,0 +1,161 @@
+<div class="mb-20" fxLayout="column" fxLayout.lt-md="column" fxFlex fxLayoutGap="20px">
+    <div fxFlex *ngFor="let item of users; let i = index">
+
+        <div *ngIf="i % 2 == 0" class="row">
+
+            <div fxFlex fxLayout="row" fxLayout.lt-md="column">
+
+
+                <div fxFlex style="margin: 0px 20px 0px 0px">
+                    <div fxFlexFill *ngIf="i + 0 < users.length">
+
+                        <mat-card (click)="onSelect(users[i + 0])">
+
+                            <div *ngIf="item.dp && item.dp.length > 10">
+                                <img mat-card-image [src]="transform('data:image/jpeg;base64, ' + users[i+0].dp)"
+                                    alt="Red dot" style="margin: 20px 20px 0px 0px" style="border-radius:50%">
+                            </div>
+
+                            <mat-card-header style="justify-content: center">
+                               
+                                <div class="content">
+
+                                        <div fxFlex fxlayout="row" fxlayout.lt-md="column">
+                                            <div fxFlexFill>
+                                                <mat-form-field class="w-100">
+                                                    <input #firstname_f matInput placeholder="First Name  " value='{{users[i + 0].first_name}}' disabled="disabled" style="color: black;">
+                                                </mat-form-field>
+
+                                                <mat-form-field class="w-100">
+                                                    <input #lastname_f matInput placeholder="Last Name  " value='{{users[i + 0].last_name}}' disabled="disabled"
+                                                        style="color: black; ">
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+
+                            
+                                    <div fxFlex fxlayout="row" fxlayout.lt-md="column">
+                                        <div fxFlexFill>
+                                            <mat-form-field class="w-100">
+                                                <input #email_f matInput placeholder="Email  " value='{{users[i + 0].email}}'disabled="disabled" style="color: black;">
+                                            </mat-form-field>
+
+                                            <mat-form-field class="w-100">
+                                                <input #dob_f matInput placeholder="Date of Birth  " value='{{users[i + 0].date_of_birth}}' disabled="disabled"
+                                                    style="color: black;">
+                                            </mat-form-field>
+
+                                        </div>
+                                    </div>
+
+
+                                    <div fxFlex fxlayout="row" fxlayout.lt-md="column">
+                                        <div fxFlexFill>
+                                            <mat-form-field class="w-100">
+                                                <input #pno_f matInput placeholder="Phone Number  " value='{{users[i + 0].phone_number}}'disabled="disabled" style="color: black;">
+                                            </mat-form-field>
+                                  
+                                            <mat-form-field class="w-100">
+                                                <input #address_f matInput placeholder="Address  " value='{{users[i + 0].address}}' disabled="disabled"
+                                                    style="color: black;">
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+
+                                    <div fxFlex fxlayout="row" fxlayout.lt-md="column">
+                                        <div fxFlexFill>
+                                            <mat-form-field class="w-100">
+                                                <input #address_f matInput placeholder="Gender  " value='{{users[i + 0].gender}}'disabled="disabled" style="color: black;">
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </mat-card-header>
+                        </mat-card>
+
+                    </div>
+                </div>
+
+                <div fxFlex style="margin: 0px 20px 0px 0">
+                    <div fxFlexFill *ngIf="i + 1 < users.length">
+
+                        <mat-card (click)="onSelect(users[i + 1])">
+                            <div *ngIf="item.dp ">
+                                <img mat-card-image [src]="transform('data:image/jpeg;base64, ' + users[i+1].dp)"
+                                    alt="Red dot" style="margin: 20px 30px 0px 0px"  style="border-radius:50%">
+
+                            </div>
+                            <mat-card-header style="justify-content: center">
+                                
+
+                                    <div class="content">
+                                    
+                                        <div fxFlex fxlayout="row" fxlayout.lt-md="column">
+                                            <div fxFlexFill>
+                                                <mat-form-field class="w-100">
+                                                    <input #firstname_f matInput placeholder="First Name  " value='{{users[i + 1].first_name}}'disabled="disabled" style="color: black;">
+                                                </mat-form-field>
+
+                                                <mat-form-field class="w-100">
+                                                    <input #lastname_f matInput placeholder="Last Name  " value='{{users[i + 1].last_name}}' disabled="disabled"
+                                                        style="color: black;">
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                    
+                                                                        
+                                        <div fxFlex fxlayout="row" fxlayout.lt-md="column">
+                                            <div fxFlexFill>
+                                                <mat-form-field class="w-100">
+                                                    <input #email_f matInput placeholder="Email  " value='{{users[i + 1].email}}'disabled="disabled" style="color: black;">
+                                                </mat-form-field>
+
+                                                <mat-form-field class="w-100">
+                                                    <input #dob_f matInput placeholder="Date of Birth  " value='{{users[i + 1].date_of_birth}}' disabled="disabled"
+                                                        style="color: black;">
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                    
+                                                                          
+                                        <div fxFlex fxlayout="row" fxlayout.lt-md="column">
+                                            <div fxFlexFill>
+                                                <mat-form-field class="w-100">
+                                                    <input #pno_f matInput placeholder="Phone Number  " value='{{users[i + 1].phone_number}}'disabled="disabled" style="color: black;">
+                                                </mat-form-field>
+
+                                                <mat-form-field class="w-100">
+                                                    <input #address_f matInput placeholder="Address  " value='{{users[i + 1].address}}' disabled="disabled"
+                                                        style="color: black;">
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                    
+                                                                        
+                                        <div fxFlex fxlayout="row" fxlayout.lt-md="column">
+                                            <div fxFlexFill>
+                                                <mat-form-field class="w-100">
+                                                    <input #address_f matInput placeholder="Gender  " value='{{users[i + 1].gender}}'disabled="disabled" style="color: black;">
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                    
+                                    </div>
+
+
+                            </mat-card-header>
+                        </mat-card>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+
+</div>
