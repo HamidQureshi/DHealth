@@ -137,6 +137,7 @@ public class ActiveAdapter {
 	public JSONObject getAssignedpatients(String identity) throws Exception {
 
 		Map<String, Object> sql = getPatientsQuery(identity);
+		System.out.println("sql------"+sql);
 		GsonBuilder gsonBuilder = new GsonBuilder();
 		gsonBuilder.serializeNulls();
 		Gson gson = gsonBuilder.create();
@@ -150,6 +151,7 @@ public class ActiveAdapter {
 		StringEntity entity = new StringEntity(json);
 		entity.setContentType("application/json");
 		httppost.setEntity(entity);
+	
 		HttpResponse response = httpclient.execute(httppost);
 		String responseAsString = EntityUtils.toString(response.getEntity());
 
@@ -166,7 +168,6 @@ public class ActiveAdapter {
 			patients.add(id.getString("patientId"));
 		}
 
-
 		builder = new URIBuilder(retrieveUrl);
 
 		httppost = new HttpPost(builder.build());
@@ -177,6 +178,7 @@ public class ActiveAdapter {
 		entity.setContentType("application/json");
 		httppost.setEntity(entity);
 		response = httpclient.execute(httppost);
+
 		responseAsString = EntityUtils.toString(response.getEntity());
 
 		JSONObject jlist = new JSONObject(responseAsString);

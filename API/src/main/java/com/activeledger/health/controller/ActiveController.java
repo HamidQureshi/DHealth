@@ -2,6 +2,11 @@ package com.activeledger.health.controller;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.Example;
+import io.swagger.annotations.ExampleProperty;
 
 import java.util.Map;
 
@@ -12,6 +17,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
@@ -28,7 +34,7 @@ import com.activeledger.health.service.ActiveService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 
-@Api
+@Api(value="Health API")
 @Path("/")
 public class ActiveController {
 
@@ -43,27 +49,36 @@ public class ActiveController {
 		mapper = new ObjectMapper();
 	}
 
-	@ApiOperation(value = "Here lies my secrets",
-			notes = "This is the most confidential operation. Dont use it if you are not ready.",
-			response = String.class,
-    		responseContainer = "Response"
+	@ApiOperation(value = "Confidential",
+			notes = "Please dont run it. You will break the internet."
+		
+    		//responseContainer = "Response"
     	)
 	@GET
+	@Produces("text/html")
 	public Response test() {
-		String desc = "I am Batman";
-		return Response.ok().entity(desc).build();
+		String des="I am Batman (O.O).Shhhhhh!!!!";
+		return Response.status(Status.OK).entity(des).build();
 	}
 
+	
+	@ApiOperation(value = "User Registration",
+			notes = "Registration of the user",
+		
+    		responseContainer = "Response"
+    	)
+	@ApiResponses(value = {  @ApiResponse(code = 200, message = "User registered successfully"),@ApiResponse(code = 400, message = "Username already exists"),
+		      @ApiResponse(code = 500, message = "Error Registering User") })
 	@POST
 	@Path("/register")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public Response register(User user) throws Exception {
+	public Response register( @ApiParam(value = "User Details", required = true) User user) throws Exception {
 
 		Resp resp = new Resp();
 		try {
 			logger.info("------Registering user-----");
-			activeService.save(user);
+			activeService.register(user);
 			String token = jwtGenerator.generate(user);
 			resp.setCode(200);
 			resp.setDesc("User registered successfully");
@@ -82,45 +97,69 @@ public class ActiveController {
 
 	}
 
+	
+	@ApiOperation(value = "Create User Profile",
+			notes = "Detailed user profile",
+		
+    		responseContainer = "Response"
+    	)
+	@ApiResponses(value = {  @ApiResponse(code = 200, message = "User profile created successfully"),@ApiResponse(code = 400, message = "User profile not created")})
+	
+      
+	 
 	@POST
 	@Path("/transaction/createProfile")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public Response createProfile(Map<String, Object> transaction, @HeaderParam("Authorization") String token)
+	
+	public Response createProfile(@ApiParam(value = "Transaction to send to activeledger", required = true ,
+			examples = @Example(value = @ExampleProperty(mediaType = MediaType.APPLICATION_JSON, value = "[\"a\",\"b\"]"))
+			
+			) Map<String, Object> transaction,@ApiParam(value = "Token for authentication of user", required = true) @HeaderParam("Authorization") String token)
 			throws Exception {
 
 		logger.info("------Creating user profile-----");
-		JSONObject user = activeService.register(token, transaction);
+		JSONObject user = activeService.createProfile(token, transaction);
 		ActiveResponse activeResp = new ActiveResponse();
 
 		Resp resp = new Resp();
 		Status st;
 		if (!user.has("error")) {
 			resp.setCode(200);
-			resp.setDesc("User Registered Successfully");
+			resp.setDesc("User profile created successfully");
 			st = Status.OK;
+			if (user.has("stream")) {
+				activeResp.setStreams(user.getJSONObject("stream").toMap());
+
+			} else
+				activeResp.setStreams(user.getJSONArray("streams").toList());
 
 		} else {
+
 			resp.setCode(400);
-			resp.setDesc("User was not able to register");
+			resp.setDesc("User profile not created:"+user.get("error"));
 			st = Status.BAD_REQUEST;
 		}
 		activeResp.setResp(resp);
-		if (user.has("stream")) {
-			activeResp.setStreams(user.getJSONObject("stream").toMap());
+		
 
-		} else
-			activeResp.setStreams(user.getJSONArray("streams").toList());
 
 		return Response.status(st).header("Content-Type", "application/json").entity(activeResp).build();
 
 	}
 
+	@ApiOperation(value = "Send Transaction",
+			notes = "Any Transaction of correct format can be send using this endpoint",
+		
+    		responseContainer = "Response"
+    	)
+	@ApiResponses(value = {  @ApiResponse(code = 200, message = "Successfull"), @ApiResponse(code = 400, message = "Unsuccessfull")
+		      })
 	@POST
 	@Path("/transaction")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public Response sendTransaction(Map<String, Object> transaction, @HeaderParam("Authorization") String token)
+	public Response sendTransaction(Map<String, Object> transaction,@ApiParam(value = "Token for authentication of user", required = true) @HeaderParam("Authorization") String token)
 			throws Exception {
 		logger.info("------Create and send transaction-----");
 		Map<String, Object> txn = activeService.sendTransaction(token, transaction);
@@ -144,7 +183,7 @@ public class ActiveController {
 
 	}
 
-	@GET
+/*	@GET
 	@Path("/customLogout")
 	@Produces("application/json")
 	public Response logout() {
@@ -153,8 +192,16 @@ public class ActiveController {
 		resp.setCode(200);
 		resp.setDesc("Logout was successfull");
 		return Response.ok().entity(resp).build();
-	}
+	}*/
 
+
+	@ApiOperation(value = "Get Users",
+			notes = "Gets patients or doctors based on the userType path parameter i.e. patients or doctors",
+		
+    		responseContainer = "Response"
+    	)
+	@ApiResponses(value = {  @ApiResponse(code = 200, message = "Users")
+		      })
 	@GET
 	@Path("/transaction/users/{userType}")
 	@Consumes("application/json")
@@ -179,11 +226,20 @@ public class ActiveController {
 
 	}
 
+	
+
+	@ApiOperation(value = "Get Assigned Patients",
+			notes = "Get patients assigned to the doctor. Doctor is extracted from the token",
+		
+    		responseContainer = "Response"
+    	)
+	@ApiResponses(value = {  @ApiResponse(code = 200, message = "patients")
+		      })
 	@GET
 	@Path("/transaction/patients")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public Response getAssignedPatients(@HeaderParam("Authorization") String token) throws Exception {
+	public Response getAssignedPatients(@ApiParam(value = "Token for authentication of user", required = true)@HeaderParam("Authorization") String token) throws Exception {
 
 		JSONObject docs = activeService.getAssignedPatients(token);
 		ActiveResponse activeResp = new ActiveResponse();
@@ -204,6 +260,14 @@ public class ActiveController {
 
 	}
 
+	@ApiOperation(value = "Get User",
+			notes = "Get User with the given identity",
+		
+    		responseContainer = "Response"
+    	)
+	@ApiResponses(value = {  @ApiResponse(code = 200, message = "User")
+		      })
+
 	@GET
 	@Path("/user/{identity}")
 	@Consumes("application/json")
@@ -215,11 +279,18 @@ public class ActiveController {
 		return Response.ok().entity(docs.toString()).build();
 	}
 
+	@ApiOperation(value = "Get User Reports",
+			notes = "Get User Reports. User is extracted using the token",
+		
+    		responseContainer = "Response"
+    	)
+	@ApiResponses(value = {  @ApiResponse(code = 200, message = "Reports")
+		      })
 	@GET
 	@Path("/transaction/reports")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public Response getReports(@HeaderParam("Authorization") String token) throws Exception {
+	public Response getReports(@ApiParam(value = "Token for authentication of user", required = true)@HeaderParam("Authorization") String token) throws Exception {
 
 		JSONObject reports = activeService.getReports(token);
 		ActiveResponse activeResp = new ActiveResponse();
