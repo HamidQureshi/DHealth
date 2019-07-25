@@ -3,14 +3,9 @@ import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
-
-import {
-  MatSnackBar,
-  MatSnackBarConfig,
-  MatSnackBarHorizontalPosition,
-  MatSnackBarVerticalPosition,
-} from '@angular/material';
 import { LedgerHelper } from '../helper/ledgerhelper';
+import { LayoutComponent } from '../layout/layout.component';
+
 
 @Component({
   selector: 'app-login',
@@ -21,18 +16,8 @@ import { LedgerHelper } from '../helper/ledgerhelper';
 
 @Injectable()
 export class LoginComponent implements OnInit {
-  constructor(private ledgerHelper: LedgerHelper,private router: Router,
-     private http: HttpClient, public snackBar: MatSnackBar) { }
-
-  message: string = 'Snack Bar opened.';
-  actionButtonLabel: string = 'Close';
-  action: boolean = true;
-  setAutoHide: boolean = true;
-  autoHide: number = 2000;
-  horizontalPosition: MatSnackBarHorizontalPosition = 'center';
-  verticalPosition: MatSnackBarVerticalPosition = 'bottom';
-  addExtraClass: boolean = false;
-
+  constructor(private layoutComp: LayoutComponent, private ledgerHelper: LedgerHelper, private router: Router,
+     private http: HttpClient) { }
 
   ngOnInit() { }
 
@@ -54,9 +39,9 @@ export class LoginComponent implements OnInit {
         console.log(data);
 
         console.log(data.status);
-        if (data.status == 200) {
-          this.message = data.body.resp.desc;
-          this.open();
+        if (data.status === 200) {
+     
+          this.layoutComp.showSnackBar(data.body.resp.desc);
 
           console.log(data.headers.get('Token'));
 
@@ -83,8 +68,7 @@ export class LoginComponent implements OnInit {
             this.ledgerHelper.isLoggedin = '' + true;
 
             this.router.navigate(['/dashboard']);
-          }
-          else {
+          } else {
 
             this.ledgerHelper.email = '' + username;
             this.ledgerHelper.profileCreated = '' + false;
@@ -95,8 +79,7 @@ export class LoginComponent implements OnInit {
           }
 
         } else {
-          this.message = data.statusText;
-          this.open();
+          this.layoutComp.showSnackBar(data.statusText);
         }
       });
 
@@ -106,18 +89,8 @@ export class LoginComponent implements OnInit {
     return this.http.post<any>(this.ledgerHelper.loginUrl, null, { headers: header, responseType: 'json' });
   }
 
-
   onRegister() {
     this.router.navigate(['/register']);
   }
-
-  open() {
-    let config = new MatSnackBarConfig();
-    config.verticalPosition = this.verticalPosition;
-    config.horizontalPosition = this.horizontalPosition;
-    config.duration = this.setAutoHide ? this.autoHide : 0;
-    this.snackBar.open(this.message, this.action ? this.actionButtonLabel : undefined, config);
-  }
-
 
 }

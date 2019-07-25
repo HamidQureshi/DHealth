@@ -1,15 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { HttpClient } from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
-import { MatSnackBar, MatSnackBarConfig, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material';
 import { Report } from '../model/report';
-import { PersistenceService, StorageType } from 'angular-persistence';
-import { KeyHandler, IKey, KeyType, TransactionHandler, IBaseTransaction } from '@activeledger/sdk';
+import { TransactionHandler, IBaseTransaction } from '@activeledger/sdk';
 import { LedgerHelper } from 'src/app/helper/ledgerhelper';
 import { Router } from '@angular/router';
-
-
+import { LayoutComponent } from '../layout.component';
 
 @Component({
     selector: 'app-report',
@@ -18,29 +14,19 @@ import { Router } from '@angular/router';
 })
 export class ReportComponent implements OnInit {
 
-
-    message: string = 'Snack Bar opened.';
-    actionButtonLabel: string = 'Close';
-    action: boolean = true;
-    setAutoHide: boolean = true;
-    autoHide: number = 2000;
-    horizontalPosition: MatSnackBarHorizontalPosition = 'center';
-    verticalPosition: MatSnackBarVerticalPosition = 'bottom';
-    addExtraClass: boolean = false;
-
     reports: Array<Report> = [];
 
-    report = JSON.parse(this.ledgerHelper.report); 
+    report = JSON.parse(this.ledgerHelper.report);
 
     dropdownList = [];
     selectedItems = [];
-    selectedDoctorsID : Array<String> =[];
+    selectedDoctorsID: Array<String> = [];
     dropdownSettings = {};
 
     cannot_assign_patients = false;
 
-    constructor(private ledgerHelper: LedgerHelper, private http: HttpClient,
-        private router: Router, public snackBar: MatSnackBar) {
+    constructor(private layoutComp: LayoutComponent, private ledgerHelper: LedgerHelper, private http: HttpClient,
+        private router: Router) {
     }
 
     ngOnInit() {
@@ -50,10 +36,8 @@ export class ReportComponent implements OnInit {
         (<HTMLInputElement>document.getElementById('i_description')).value = this.report.description;
         (<HTMLInputElement>document.getElementById('i_da')).value = this.report.fileName;
 
-
-        var doctorlist = JSON.parse(this.ledgerHelper.userList);
-        var selected = this.report.doctors;
-
+        const doctorlist = JSON.parse(this.ledgerHelper.userList);
+        const selected = this.report.doctors;
 
         if (this.ledgerHelper.profile_type === 'Doctor') {
             this.cannot_assign_patients = true;
@@ -61,13 +45,13 @@ export class ReportComponent implements OnInit {
         }
 
         for (let i = 0; i < doctorlist.length ; i++){
-            var item = { item_id: doctorlist[i]._id, item_text: '' + doctorlist[i].first_name + ' ' + doctorlist[i].last_name};
+            const item = { item_id: doctorlist[i]._id, item_text: '' + doctorlist[i].first_name + ' ' + doctorlist[i].last_name};
             this.dropdownList.push(item);
 
             for (let j = 0; j < selected.length; j++) {
 
                 if (doctorlist[i]._id === selected[j]){
-                    var item = { item_id: doctorlist[i]._id, item_text: '' + doctorlist[i].first_name + ' ' + doctorlist[i].last_name };
+                    const item = { item_id: doctorlist[i]._id, item_text: '' + doctorlist[i].first_name + ' ' + doctorlist[i].last_name };
                     this.selectedItems.push(item);
                 }
             }
@@ -83,9 +67,7 @@ export class ReportComponent implements OnInit {
             allowSearchFilter: true
         };
 
-
     }
-
 
     onItemSelect(item: any) {
     }
@@ -95,7 +77,7 @@ export class ReportComponent implements OnInit {
 
     showPDF() {
         const linkSource = 'data:application/pdf;base64,' + this.report.content;
-        const downloadLink = document.createElement("a");
+        const downloadLink = document.createElement('a');
         const fileName = this.report.fileName;
 
         downloadLink.href = linkSource;
@@ -105,17 +87,17 @@ export class ReportComponent implements OnInit {
 
     onUpdateReport() {
 
-        let id = this.ledgerHelper._id; 
+        const id = this.ledgerHelper._id; 
         const headers = new HttpHeaders({
             'Content-Type': 'application/json',
-            'Authorization': '' + this.ledgerHelper.token 
+            'Authorization': '' + this.ledgerHelper.token
         });
 
         for(let i =0; i < this.selectedItems.length ; i++){
             this.selectedDoctorsID.push(this.selectedItems[i].item_id);
         }
 
-        let report = { 
+        const report = { 
 
             id: this.report.id,
             title: this.report.title,
@@ -154,10 +136,9 @@ export class ReportComponent implements OnInit {
 
 
                 baseTransaction1 = signedTx;
-                let signature = baseTransaction1['$sigs']['activeledger']
+                const signature = baseTransaction1['$sigs']['activeledger']
                 baseTransaction1['$sigs'] = {};
                 baseTransaction1['$sigs'][id] = signature;
-          
 
                 console.log(baseTransaction1);
 
@@ -165,13 +146,12 @@ export class ReportComponent implements OnInit {
             .subscribe(data => {
                 console.log(data);
 
-                if (data.status == 200) {
-                    this.message = 'Report Update Successfully!';
-                    this.open();
+                if (data.status === 200) {
+                    this.layoutComp.showSnackBar('Report Update Successfully!');
 
                     this.reports = JSON.parse(this.ledgerHelper.reports);
 
-                    this.reports.find(item => item.id == this.report.id).doctors = this.selectedDoctorsID
+                    this.reports.find(item => item.id == this.report.id).doctors = this.selectedDoctorsID;
 
 
                             this.ledgerHelper.reports =  JSON.stringify(this.reports);
@@ -179,26 +159,16 @@ export class ReportComponent implements OnInit {
                             this.router.navigate(['/report-list'], { replaceUrl: true });
 
                 } else {
-                    this.message = ' Report Update  Failed! ';
-                    this.open();
+                    this.layoutComp.showSnackBar(' Report Update  Failed! ');
                 }
             });
 
-
             })
             .catch();
-
     }
 
     updateReportAPI(body, header) {
         return this.http.post<any>(this.ledgerHelper.updateReportURL, body, { headers: header, observe: 'response' });
     }
 
-    open() {
-        let config = new MatSnackBarConfig();
-        config.verticalPosition = this.verticalPosition;
-        config.horizontalPosition = this.horizontalPosition;
-        config.duration = this.setAutoHide ? this.autoHide : 0;
-        this.snackBar.open(this.message, this.action ? this.actionButtonLabel : undefined, config);
-    }
 }

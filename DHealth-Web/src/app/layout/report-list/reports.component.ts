@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
-import { MatSnackBar, MatSnackBarConfig, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material';
 import { Router } from '@angular/router';
 import { Report } from '../model/report';
 import { LedgerHelper } from 'src/app/helper/ledgerhelper';
@@ -17,22 +16,11 @@ export class ReportsComponent implements OnInit {
     @ViewChild(MatPaginator) paginator: MatPaginator;
     @ViewChild(MatSort) sort: MatSort;
 
-
-    message: string = 'Snack Bar opened.';
-    actionButtonLabel: string = 'Close';
-    action: boolean = true;
-    setAutoHide: boolean = true;
-    autoHide: number = 2000;
-    horizontalPosition: MatSnackBarHorizontalPosition = 'center';
-    verticalPosition: MatSnackBarVerticalPosition = 'bottom';
-    addExtraClass: boolean = false;
-
     reports: Array<Report> = [];
 
     cannot_upload_report = false;
 
-    constructor(private ledgerHelper: LedgerHelper, private router: Router,
-         public snackBar: MatSnackBar) {
+    constructor(private ledgerHelper: LedgerHelper, private router: Router) {
     }
 
     ngOnInit() {
@@ -65,13 +53,5 @@ export class ReportsComponent implements OnInit {
         if (this.dataSource.paginator) {
             this.dataSource.paginator.firstPage();
         }
-    }
-
-    open() {
-        let config = new MatSnackBarConfig();
-        config.verticalPosition = this.verticalPosition;
-        config.horizontalPosition = this.horizontalPosition;
-        config.duration = this.setAutoHide ? this.autoHide : 0;
-        this.snackBar.open(this.message, this.action ? this.actionButtonLabel : undefined, config);
     }
 }

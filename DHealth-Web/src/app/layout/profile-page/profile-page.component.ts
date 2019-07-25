@@ -1,18 +1,11 @@
-import { Component, OnInit, ViewChild, ElementRef, Renderer } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
-import {
-  MatSnackBar,
-  MatSnackBarConfig,
-  MatSnackBarHorizontalPosition,
-  MatSnackBarVerticalPosition,
-} from '@angular/material';
-import { KeyHandler, IKey, KeyType, TransactionHandler, IBaseTransaction } from '@activeledger/sdk';
+import { TransactionHandler, IBaseTransaction } from '@activeledger/sdk';
 import { DomSanitizer } from '@angular/platform-browser';
 import { LedgerHelper } from 'src/app/helper/ledgerhelper';
-
+import { LayoutComponent } from '../layout.component';
 
 @Component({
   selector: 'app-profile-page',
@@ -20,19 +13,11 @@ import { LedgerHelper } from 'src/app/helper/ledgerhelper';
   styleUrls: ['./profile-page.component.scss']
 })
 export class ProfilePageComponent implements OnInit {
-  image :any;
-  placeholder:any;
-  constructor(private ledgerHelper: LedgerHelper, private router: Router, private http: HttpClient, public snackBar: MatSnackBar, private sanitizer: DomSanitizer) { }
+  image: any;
+  placeholder: any;
+  constructor(private layoutComp: LayoutComponent, private ledgerHelper: LedgerHelper, private router: Router,
+    private http: HttpClient, private sanitizer: DomSanitizer) { }
 
-
-  message: string = 'Snack Bar opened.';
-  actionButtonLabel: string = 'Close';
-  action: boolean = true;
-  setAutoHide: boolean = true;
-  autoHide: number = 2000;
-  horizontalPosition: MatSnackBarHorizontalPosition = 'center';
-  verticalPosition: MatSnackBarVerticalPosition = 'bottom';
-  addExtraClass: boolean = false;
   public hidden = true;
   public editing_disabled = true;
 
@@ -41,19 +26,16 @@ export class ProfilePageComponent implements OnInit {
 
   ngOnInit() {
 
-    (<HTMLInputElement>document.getElementById('i_fn')).value = this.ledgerHelper.first_name; 
-    (<HTMLInputElement>document.getElementById('i_ln')).value = this.ledgerHelper.last_name; 
-    (<HTMLInputElement>document.getElementById('i_address')).value = this.ledgerHelper.address; 
-    (<HTMLInputElement>document.getElementById('i_dob')).value = this.ledgerHelper.date_of_birth; 
-    (<HTMLInputElement>document.getElementById('i_email')).value = this.ledgerHelper.email; 
+    (<HTMLInputElement>document.getElementById('i_fn')).value = this.ledgerHelper.first_name;
+    (<HTMLInputElement>document.getElementById('i_ln')).value = this.ledgerHelper.last_name;
+    (<HTMLInputElement>document.getElementById('i_address')).value = this.ledgerHelper.address;
+    (<HTMLInputElement>document.getElementById('i_dob')).value = this.ledgerHelper.date_of_birth;
+    (<HTMLInputElement>document.getElementById('i_email')).value = this.ledgerHelper.email;
     (<HTMLInputElement>document.getElementById('i_pno')).value = this.ledgerHelper.phone_number;
 
     if (!(this.ledgerHelper.dp === null)) {
-      // console.log('true' + this.ledgerHelper.dp.trim())
-
-      this.image = this.transform('data:image/jpeg;base64, ' + this.ledgerHelper.dp.trim()); 
-    }
-    else{
+      this.image = this.transform('data:image/jpeg;base64, ' + this.ledgerHelper.dp.trim());
+    } else {
       this.image = this.transform('data:image/jpeg;base64, ' + this.ledgerHelper.placeholder_img);
     }
 
@@ -61,11 +43,11 @@ export class ProfilePageComponent implements OnInit {
 
   onUpdateProfile(firstname, lastname, email, dob, pno, address) {
 
-    let id = this.ledgerHelper._id;
+    const id = this.ledgerHelper._id;
 
     const header = new HttpHeaders({
       'Content-Type': 'application/json',
-      'Authorization': '' + this.ledgerHelper.token 
+      'Authorization': '' + this.ledgerHelper.token
     });
 
 
@@ -90,21 +72,20 @@ export class ProfilePageComponent implements OnInit {
     baseTransaction1.$tx.$o[id]['date_of_birth'] = dob;
     baseTransaction1.$tx.$o[id]['phone_number'] = pno;
     baseTransaction1.$tx.$o[id]['address'] = address;
-    const to_remove = 'data:image/jpeg;base64,';
-    const to_remove2 = 'SafeValue must use [property]=binding:';
+
     let dp = this.image.toString();
-    baseTransaction1.$tx.$o[id]['dp'] = dp.replace(to_remove, '').replace(to_remove2, '');
+    baseTransaction1.$tx.$o[id]['dp'] = this.ledgerHelper.sanitizeDP(dp);
     dp = baseTransaction1.$tx.$o[id]['dp'];
 
 
     const txHandler = new TransactionHandler();
 
     txHandler
-      .signTransaction(baseTransaction1, this.ledgerHelper.key) 
+      .signTransaction(baseTransaction1, this.ledgerHelper.key)
       .then((signedTx: IBaseTransaction) => {
 
         baseTransaction1 = signedTx;
-        let signature = baseTransaction1['$sigs']['activeledger']
+        const signature = baseTransaction1['$sigs']['activeledger']
         baseTransaction1['$sigs'] = {};
         baseTransaction1['$sigs'][id] = signature;
 
@@ -115,8 +96,7 @@ export class ProfilePageComponent implements OnInit {
             console.log(data);
 
             if (data.status === 200) {
-              this.message = data.body.resp.desc;
-              this.open();
+              this.layoutComp.showSnackBar(data.body.resp.desc);
 
               console.log('profile page --> ' + dp);
               this.ledgerHelper.address = '' + address;
@@ -125,31 +105,27 @@ export class ProfilePageComponent implements OnInit {
               this.ledgerHelper.first_name = '' + firstname;
               this.ledgerHelper.last_name = '' + lastname;
               this.ledgerHelper.phone_number = '' + pno;
- 
+
               this.disableFields();
             } else {
-              this.message = ' Something went wrong! ';
-              this.open();
+              this.layoutComp.showSnackBar(' Something went wrong! ');
             }
           });
 
       })
       .catch();
 
-
   }
 
-  onSelectFile(event) { 
+  onSelectFile(event) {
     if (event.target.files && event.target.files[0]) {
-      var reader = new FileReader();
+      const reader = new FileReader();
 
-      reader.readAsDataURL(event.target.files[0]); 
+      reader.readAsDataURL(event.target.files[0]);
 
-      reader.onload = (event) => {
-        // this.image = event.target.result;
+      reader.onload = () => {
         this.image = reader.result;
-
-      }
+      };
     }
   }
 
@@ -157,16 +133,8 @@ export class ProfilePageComponent implements OnInit {
     return this.http.post<any>(this.ledgerHelper.updateProfileUrl, body, { headers: headers1, observe: 'response' });
   }
 
-
-  open() {
-    let config = new MatSnackBarConfig();
-    config.verticalPosition = this.verticalPosition;
-    config.horizontalPosition = this.horizontalPosition;
-    config.duration = this.setAutoHide ? this.autoHide : 0;
-    this.snackBar.open(this.message, this.action ? this.actionButtonLabel : undefined, config);
-  }
-
   enableFields() {
+    this.layoutComp.showSnackBar('Profile Editing Enabled');
     this.editing_disabled = false;
     (<HTMLInputElement>document.getElementById('i_fn')).disabled = false;
     (<HTMLInputElement>document.getElementById('i_ln')).disabled = false;

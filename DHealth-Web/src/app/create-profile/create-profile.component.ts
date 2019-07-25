@@ -3,15 +3,10 @@ import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
-import {
-  MatSnackBar,
-  MatSnackBarConfig,
-  MatSnackBarHorizontalPosition,
-  MatSnackBarVerticalPosition,
-} from '@angular/material';
 import { KeyHandler, IKey, KeyType, TransactionHandler, IBaseTransaction } from '@activeledger/sdk';
 import { DomSanitizer } from '@angular/platform-browser';
 import { LedgerHelper } from '../helper/ledgerhelper';
+import { LayoutComponent } from '../layout/layout.component';
 
 
 @Component({
@@ -22,27 +17,16 @@ import { LedgerHelper } from '../helper/ledgerhelper';
 
 @Injectable()
 export class CreateProfileComponent implements OnInit {
-  constructor(private ledgerHelper: LedgerHelper, private router: Router,
-     private http: HttpClient, public snackBar: MatSnackBar, private sanitizer: DomSanitizer) { }
+  constructor(private layoutComp: LayoutComponent, private ledgerHelper: LedgerHelper, private router: Router,
+    private http: HttpClient, private sanitizer: DomSanitizer) { }
 
   image: any;
   image_set = false;
-
-  message: string = 'Snack Bar opened.';
-  actionButtonLabel: string = 'Close';
-  action: boolean = true;
-  setAutoHide: boolean = true;
-  autoHide: number = 2000;
-  horizontalPosition: MatSnackBarHorizontalPosition = 'center';
-  verticalPosition: MatSnackBarVerticalPosition = 'bottom';
-  addExtraClass: boolean = false;
-
   user_type = 'Doctor';
-
 
   ngOnInit() {
     this.generateKeys();
-    (<HTMLInputElement>document.getElementById('i_email')).value = this.ledgerHelper.email; 
+    (<HTMLInputElement>document.getElementById('i_email')).value = this.ledgerHelper.email;
     this.image = this.transform('data:image/jpeg;base64, ' + this.ledgerHelper.placeholder_img);
   }
 
@@ -53,15 +37,14 @@ export class CreateProfileComponent implements OnInit {
 
     const header = new HttpHeaders({
       'Content-Type': 'application/json',
-      'Authorization': '' + this.ledgerHelper.token 
+      'Authorization': '' + this.ledgerHelper.token
     });
 
     let display = null;
-    if( this.image_set) {
-    const to_remove = 'data:image/jpeg;base64,';
+    if (this.image_set) {
       display = this.image.toString();
-      display = display.replace(to_remove, '');
-  }
+      display = this.ledgerHelper.sanitizeDP(display);
+    }
 
     let baseTransaction: IBaseTransaction = {
       $tx: {
@@ -93,7 +76,7 @@ export class CreateProfileComponent implements OnInit {
     const txHandler = new TransactionHandler();
 
     txHandler
-      .signTransaction(baseTransaction, this.ledgerHelper.key) 
+      .signTransaction(baseTransaction, this.ledgerHelper.key)
       .then((signedTx: IBaseTransaction) => {
 
         baseTransaction = signedTx;
@@ -108,22 +91,21 @@ export class CreateProfileComponent implements OnInit {
         console.log(data);
 
         if (data.status === 200) {
-          this.message = data.body.resp.desc;
-          this.open();
+          this.layoutComp.showSnackBar(data.body.resp.desc);
 
 
-            this.ledgerHelper.address = '' + data.body.streams.address;
-            this.ledgerHelper.date_of_birth = '' + data.body.streams.date_of_birth;
-            this.ledgerHelper.dp = '' + data.body.streams.dp;
-            this.ledgerHelper.email = '' + data.body.streams.email;
-            this.ledgerHelper.first_name = '' + data.body.streams.first_name;
-            this.ledgerHelper.last_name = '' + data.body.streams.last_name;
-            this.ledgerHelper.gender = '' + data.body.streams.gender;
-            this.ledgerHelper.phone_number = '' + data.body.streams.phone_number;
-            this.ledgerHelper.profile_type = '' + data.body.streams.profile_type;
-            this.ledgerHelper.reports = '' + data.body.streams.reports;
-            this.ledgerHelper.security = '' + data.body.streams.security;
-            this.ledgerHelper._id = '' + data.body.streams._id;
+          this.ledgerHelper.address = '' + data.body.streams.address;
+          this.ledgerHelper.date_of_birth = '' + data.body.streams.date_of_birth;
+          this.ledgerHelper.dp = '' + data.body.streams.dp;
+          this.ledgerHelper.email = '' + data.body.streams.email;
+          this.ledgerHelper.first_name = '' + data.body.streams.first_name;
+          this.ledgerHelper.last_name = '' + data.body.streams.last_name;
+          this.ledgerHelper.gender = '' + data.body.streams.gender;
+          this.ledgerHelper.phone_number = '' + data.body.streams.phone_number;
+          this.ledgerHelper.profile_type = '' + data.body.streams.profile_type;
+          this.ledgerHelper.reports = '' + data.body.streams.reports;
+          this.ledgerHelper.security = '' + data.body.streams.security;
+          this.ledgerHelper._id = '' + data.body.streams._id;
 
           this.ledgerHelper.profileCreated = '' + true;
           this.ledgerHelper.isLoggedin = '' + true;
@@ -131,8 +113,7 @@ export class CreateProfileComponent implements OnInit {
           this.router.navigate(['/dashboard']);
 
         } else {
-          this.message = ' Something went wrong! ';
-          this.open();
+          this.layoutComp.showSnackBar(' Something went wrong! ');
         }
       });
 
@@ -140,14 +121,14 @@ export class CreateProfileComponent implements OnInit {
 
   onSelectFile(event) {
     if (event.target.files && event.target.files[0]) {
-      var reader = new FileReader();
+      const reader = new FileReader();
 
       reader.readAsDataURL(event.target.files[0]);
 
-      reader.onload = (event) => {
-       this.image_set = true;
+      reader.onload = () => {
+        this.image_set = true;
         this.image = reader.result;
-      }
+      };
     }
   }
 
@@ -163,24 +144,13 @@ export class CreateProfileComponent implements OnInit {
       .generateKey('activeledger', KeyType.RSA)
       .then((generatedKey: IKey) => {
         this.ledgerHelper.key = generatedKey;
-   
       })
       .catch()
-
   }
 
   transform(html) {
     return this.sanitizer.bypassSecurityTrustUrl(html);
   }
-  open() {
-    let config = new MatSnackBarConfig();
-    config.verticalPosition = this.verticalPosition;
-    config.horizontalPosition = this.horizontalPosition;
-    config.duration = this.setAutoHide ? this.autoHide : 0;
-    this.snackBar.open(this.message, this.action ? this.actionButtonLabel : undefined, config);
-  }
-
-
 
 }
 
