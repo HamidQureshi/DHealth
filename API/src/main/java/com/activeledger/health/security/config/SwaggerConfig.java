@@ -1,4 +1,4 @@
-package com.activeledger.health.security.config;
+/*package com.activeledger.health.security.config;
 
 import javax.ws.rs.ApplicationPath;
 
@@ -27,3 +27,4 @@ public class SwaggerConfig extends ResourceConfig {
 		  
 	}
 }
+*/

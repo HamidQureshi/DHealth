@@ -54,7 +54,7 @@ public class ActiveService {
 		return map;
 	}
 
-	public void save(User user) {
+	public void register(User user) {
 		logger.info("-------hashing password------");
 		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 		userDao.save(user);
@@ -70,7 +70,7 @@ public class ActiveService {
 		// return respMap;
 	}
 
-	public JSONObject register(String token, Map<String, Object> transaction) throws Exception {
+	public JSONObject createProfile(String token, Map<String, Object> transaction) throws Exception {
 
 		parsing = new JsonParsing();
 		respMap = new HashMap<>();

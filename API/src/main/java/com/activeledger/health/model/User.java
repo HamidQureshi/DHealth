@@ -1,24 +1,30 @@
 package com.activeledger.health.model;
 
+import io.swagger.annotations.ApiModel;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
+
+@ApiModel(value="User Model", description="Only username and password required")
 @Entity
 @JsonInclude(Include.NON_NULL)
 public class User {
-
+	@JsonIgnore
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 	private String username;
 	private String password;
+	@JsonIgnore
 	private boolean enabled = true;
-
+	@JsonIgnore
 	private String identity;
 
 	public String getUsername() {
