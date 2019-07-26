@@ -6,10 +6,10 @@ Underlying API for the health App.
 
 ## Description
 
-Health App is using this API to interact with the Activeledger. API acts as an intermidiary between the App and Activeledger.
+Health App is using this API as an intermidiary to interact with the Activeledger.
 It uses Java SDK to form transactions. API is also using H2 database to store user information. Flyway is used for database migration.
 
-Spring security is added in API. Once you have registered or logged in using your username and password, you will recieve a token 
+Spring security is also added in API. Once you have registered or logged in using your credentials, you will recieve a token 
 in response header. This token is used when sending all other transactions. The token needs to be appended in request header for all transactions.
 
 ## Build
