@@ -43,6 +43,7 @@ var map = {
 		"./src/app/layout/add-report-page/add-report.module.ts",
 		"default~add-report-page-add-report-module~create-profile-create-profile-module~doctorpatient-page-do~f464ba0f",
 		"default~add-report-page-add-report-module~create-profile-create-profile-module~doctorpatient-page-do~174bf283",
+		"default~add-report-page-add-report-module~create-profile-create-profile-module~layout-layout-module~~00c490c7",
 		"default~add-report-page-add-report-module~create-profile-create-profile-module~profile-page-profile-~23323344",
 		"default~add-report-page-add-report-module~report-page-report-module",
 		"add-report-page-add-report-module"
@@ -51,6 +52,7 @@ var map = {
 		"./src/app/create-profile/create-profile.module.ts",
 		"default~add-report-page-add-report-module~create-profile-create-profile-module~doctorpatient-page-do~f464ba0f",
 		"default~add-report-page-add-report-module~create-profile-create-profile-module~doctorpatient-page-do~174bf283",
+		"default~add-report-page-add-report-module~create-profile-create-profile-module~layout-layout-module~~00c490c7",
 		"default~create-profile-create-profile-module~doctorpatient-page-doctorpatient-page-module~login-logi~70c26c84",
 		"default~add-report-page-add-report-module~create-profile-create-profile-module~profile-page-profile-~23323344",
 		"create-profile-create-profile-module"
@@ -66,12 +68,14 @@ var map = {
 		"./src/app/layout/layout.module.ts",
 		"default~add-report-page-add-report-module~create-profile-create-profile-module~doctorpatient-page-do~f464ba0f",
 		"default~add-report-page-add-report-module~create-profile-create-profile-module~doctorpatient-page-do~174bf283",
+		"default~add-report-page-add-report-module~create-profile-create-profile-module~layout-layout-module~~00c490c7",
 		"layout-layout-module"
 	],
 	"./login/login.module": [
 		"./src/app/login/login.module.ts",
 		"default~add-report-page-add-report-module~create-profile-create-profile-module~doctorpatient-page-do~f464ba0f",
 		"default~add-report-page-add-report-module~create-profile-create-profile-module~doctorpatient-page-do~174bf283",
+		"default~add-report-page-add-report-module~create-profile-create-profile-module~layout-layout-module~~00c490c7",
 		"default~create-profile-create-profile-module~doctorpatient-page-doctorpatient-page-module~login-logi~70c26c84",
 		"login-login-module"
 	],
@@ -85,6 +89,7 @@ var map = {
 		"./src/app/layout/profile-page/profile-page.module.ts",
 		"default~add-report-page-add-report-module~create-profile-create-profile-module~doctorpatient-page-do~f464ba0f",
 		"default~add-report-page-add-report-module~create-profile-create-profile-module~doctorpatient-page-do~174bf283",
+		"default~add-report-page-add-report-module~create-profile-create-profile-module~layout-layout-module~~00c490c7",
 		"default~create-profile-create-profile-module~doctorpatient-page-doctorpatient-page-module~login-logi~70c26c84",
 		"default~add-report-page-add-report-module~create-profile-create-profile-module~profile-page-profile-~23323344",
 		"profile-page-profile-page-module"
@@ -93,6 +98,7 @@ var map = {
 		"./src/app/register/register.module.ts",
 		"default~add-report-page-add-report-module~create-profile-create-profile-module~doctorpatient-page-do~f464ba0f",
 		"default~add-report-page-add-report-module~create-profile-create-profile-module~doctorpatient-page-do~174bf283",
+		"default~add-report-page-add-report-module~create-profile-create-profile-module~layout-layout-module~~00c490c7",
 		"default~create-profile-create-profile-module~doctorpatient-page-doctorpatient-page-module~login-logi~70c26c84",
 		"register-register-module"
 	],
@@ -106,6 +112,7 @@ var map = {
 		"./src/app/layout/report-page/report.module.ts",
 		"default~add-report-page-add-report-module~create-profile-create-profile-module~doctorpatient-page-do~f464ba0f",
 		"default~add-report-page-add-report-module~create-profile-create-profile-module~doctorpatient-page-do~174bf283",
+		"default~add-report-page-add-report-module~create-profile-create-profile-module~layout-layout-module~~00c490c7",
 		"default~add-report-page-add-report-module~create-profile-create-profile-module~profile-page-profile-~23323344",
 		"default~add-report-page-add-report-module~report-page-report-module",
 		"report-page-report-module"
@@ -279,15 +286,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ngx_translate_http_loader__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @ngx-translate/http-loader */ "./node_modules/@ngx-translate/http-loader/fesm5/ngx-translate-http-loader.js");
 /* harmony import */ var _app_routing_module__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./app-routing.module */ "./src/app/app-routing.module.ts");
 /* harmony import */ var _app_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./app.component */ "./src/app/app.component.ts");
-/* harmony import */ var _config_config_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./config/config.component */ "./src/app/config/config.component.ts");
-/* harmony import */ var angular_persistence__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! angular-persistence */ "./node_modules/angular-persistence/index.js");
+/* harmony import */ var angular_persistence__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! angular-persistence */ "./node_modules/angular-persistence/index.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-
 
 
 
@@ -307,7 +312,7 @@ var AppModule = /** @class */ (function () {
     }
     AppModule = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_2__["NgModule"])({
-            declarations: [_app_component__WEBPACK_IMPORTED_MODULE_9__["AppComponent"], _config_config_component__WEBPACK_IMPORTED_MODULE_10__["ConfigComponent"]],
+            declarations: [_app_component__WEBPACK_IMPORTED_MODULE_9__["AppComponent"]],
             imports: [
                 _angular_platform_browser__WEBPACK_IMPORTED_MODULE_3__["BrowserModule"],
                 _app_routing_module__WEBPACK_IMPORTED_MODULE_8__["AppRoutingModule"],
@@ -315,7 +320,7 @@ var AppModule = /** @class */ (function () {
                 _angular_cdk_layout__WEBPACK_IMPORTED_MODULE_0__["LayoutModule"],
                 _angular_cdk_overlay__WEBPACK_IMPORTED_MODULE_1__["OverlayModule"],
                 _angular_common_http__WEBPACK_IMPORTED_MODULE_5__["HttpClientModule"],
-                angular_persistence__WEBPACK_IMPORTED_MODULE_11__["PersistenceModule"],
+                angular_persistence__WEBPACK_IMPORTED_MODULE_10__["PersistenceModule"],
                 _ngx_translate_core__WEBPACK_IMPORTED_MODULE_6__["TranslateModule"].forRoot({
                     loader: {
                         provide: _ngx_translate_core__WEBPACK_IMPORTED_MODULE_6__["TranslateLoader"],
@@ -329,69 +334,6 @@ var AppModule = /** @class */ (function () {
         })
     ], AppModule);
     return AppModule;
-}());
-
-
-
-/***/ }),
-
-/***/ "./src/app/config/config.component.html":
-/*!**********************************************!*\
-  !*** ./src/app/config/config.component.html ***!
-  \**********************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "<p>\n  config works!\n</p>\n"
-
-/***/ }),
-
-/***/ "./src/app/config/config.component.scss":
-/*!**********************************************!*\
-  !*** ./src/app/config/config.component.scss ***!
-  \**********************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2NvbmZpZy9jb25maWcuY29tcG9uZW50LnNjc3MifQ== */"
-
-/***/ }),
-
-/***/ "./src/app/config/config.component.ts":
-/*!********************************************!*\
-  !*** ./src/app/config/config.component.ts ***!
-  \********************************************/
-/*! exports provided: ConfigComponent */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ConfigComponent", function() { return ConfigComponent; });
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (undefined && undefined.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-var ConfigComponent = /** @class */ (function () {
-    function ConfigComponent() {
-    }
-    ConfigComponent.prototype.ngOnInit = function () {
-    };
-    ConfigComponent = __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
-            selector: 'app-config',
-            template: __webpack_require__(/*! ./config.component.html */ "./src/app/config/config.component.html"),
-            styles: [__webpack_require__(/*! ./config.component.scss */ "./src/app/config/config.component.scss")]
-        }),
-        __metadata("design:paramtypes", [])
-    ], ConfigComponent);
-    return ConfigComponent;
 }());
 
 
@@ -507,7 +449,7 @@ Object(_angular_platform_browser_dynamic__WEBPACK_IMPORTED_MODULE_1__["platformB
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\Hamid\Desktop\ALSDK\examples\sb-admin-material\src\main.ts */"./src/main.ts");
+module.exports = __webpack_require__(/*! C:\Users\Hamid\Desktop\ALSDK\DHealth\health\DHealth-Web\src\main.ts */"./src/main.ts");
 
 
 /***/ })

@@ -251,7 +251,7 @@ var ReportsRoutingModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<mat-form-field>\r\n    <input matInput (keyup)=\"applyFilter($event.target.value)\" placeholder=\"Filter\">\r\n</mat-form-field>\r\n\r\n<div class=\"mat-elevation-z8\">\r\n    <table mat-table [dataSource]=\"dataSource\" matSort>\r\n\r\n        <!-- ID Column -->\r\n        <ng-container matColumnDef=\"id\">\r\n            <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>\r\n            <td mat-cell *matCellDef=\"let row\"> {{row.id}} </td>\r\n        </ng-container>\r\n\r\n        <!-- Progress Column -->\r\n        <ng-container matColumnDef=\"title\">\r\n            <th mat-header-cell *matHeaderCellDef mat-sort-header> Report Title </th>\r\n            <td mat-cell *matCellDef=\"let row\"> {{row.title}} </td>\r\n        </ng-container>\r\n\r\n        <!-- Name Column -->\r\n        <ng-container matColumnDef=\"name\">\r\n            <th mat-header-cell *matHeaderCellDef mat-sort-header> Patient Name </th>\r\n            <td mat-cell *matCellDef=\"let row\"> {{row.patientName}} </td>\r\n        </ng-container>\r\n\r\n        <!-- Color Column -->\r\n        <ng-container matColumnDef=\"doc_name\">\r\n            <th mat-header-cell *matHeaderCellDef mat-sort-header> Document Name </th>\r\n            <td mat-cell *matCellDef=\"let row\" [style.color]=\"row.color\"> {{row.fileName}} </td>\r\n        </ng-container>\r\n\r\n        <tr mat-header-row *matHeaderRowDef=\"displayedColumns\"></tr>\r\n        <tr mat-row *matRowDef=\"let row; columns: displayedColumns;\" (click)=\"getRecord(row)\"></tr>\r\n        \r\n    </table>\r\n\r\n    <mat-paginator [pageSize]=\"10\" [pageSizeOptions]=\"[5, 10, 25, 100]\"></mat-paginator>\r\n\r\n</div>\r\n\r\n<div>\r\n        <ngx-fab [backgroundColor]=\"'#3f51b5'\"[fabSize]=\"'medium'\" [position]=\"'top-right'\" [iconClass]=\"'fas fa-plus'\" [iconColor]=\"'#ffffff'\" (click)=\"addReport()\">\r\n            Add report\r\n        </ngx-fab>\r\n</div>\r\n"
+module.exports = "<mat-form-field>\r\n    <input matInput (keyup)=\"applyFilter($event.target.value)\" placeholder=\"Filter\">\r\n</mat-form-field>\r\n\r\n<div class=\"mat-elevation-z8\">\r\n    <table mat-table [dataSource]=\"dataSource\" matSort>\r\n\r\n        <!-- ID Column -->\r\n        <ng-container matColumnDef=\"id\">\r\n            <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>\r\n            <td mat-cell *matCellDef=\"let row\"> {{row.id}} </td>\r\n        </ng-container>\r\n\r\n        <!-- Progress Column -->\r\n        <ng-container matColumnDef=\"title\">\r\n            <th mat-header-cell *matHeaderCellDef mat-sort-header> Report Title </th>\r\n            <td mat-cell *matCellDef=\"let row\"> {{row.title}} </td>\r\n        </ng-container>\r\n\r\n        <!-- Name Column -->\r\n        <ng-container matColumnDef=\"name\">\r\n            <th mat-header-cell *matHeaderCellDef mat-sort-header> Patient Name </th>\r\n            <td mat-cell *matCellDef=\"let row\"> {{row.patientName}} </td>\r\n        </ng-container>\r\n\r\n        <!-- Color Column -->\r\n        <ng-container matColumnDef=\"doc_name\">\r\n            <th mat-header-cell *matHeaderCellDef mat-sort-header> Document Name </th>\r\n            <td mat-cell *matCellDef=\"let row\" [style.color]=\"row.color\"> {{row.fileName}} </td>\r\n        </ng-container>\r\n\r\n        <tr mat-header-row *matHeaderRowDef=\"displayedColumns\"></tr>\r\n        <tr mat-row *matRowDef=\"let row; columns: displayedColumns;\" (click)=\"getRecord(row)\"></tr>\r\n        \r\n    </table>\r\n\r\n    <mat-paginator [pageSize]=\"10\" [pageSizeOptions]=\"[5, 10, 25, 100]\"></mat-paginator>\r\n\r\n</div>\r\n\r\n<div>\r\n        <ngx-fab [backgroundColor]=\"'#3f51b5'\"[fabSize]=\"'medium'\" [position]=\"'top-right'\" [iconClass]=\"'fas fa-plus'\" [iconColor]=\"'#ffffff'\" [hidden] = \"cannot_upload_report\" (click)=\"addReport()\">\r\n            Add report\r\n        </ngx-fab>\r\n</div>\r\n"
 
 /***/ }),
 
@@ -262,7 +262,7 @@ module.exports = "<mat-form-field>\r\n    <input matInput (keyup)=\"applyFilter(
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "table {\n  width: 100%; }\n\n.mat-form-field {\n  font-size: 14px;\n  width: 100%; }\n\ntd,\nth {\n  width: 25%; }\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvbGF5b3V0L3JlcG9ydC1saXN0L0M6XFxVc2Vyc1xcSGFtaWRcXERlc2t0b3BcXEFMU0RLXFxleGFtcGxlc1xcc2ItYWRtaW4tbWF0ZXJpYWwvc3JjXFxhcHBcXGxheW91dFxccmVwb3J0LWxpc3RcXHJlcG9ydHMuY29tcG9uZW50LnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDSSxXQUFXLEVBQUE7O0FBR2Y7RUFDSSxlQUFlO0VBQ2YsV0FBVyxFQUFBOztBQUdmOztFQUVJLFVBQVUsRUFBQSIsImZpbGUiOiJzcmMvYXBwL2xheW91dC9yZXBvcnQtbGlzdC9yZXBvcnRzLmNvbXBvbmVudC5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsidGFibGUge1xyXG4gICAgd2lkdGg6IDEwMCU7XHJcbn1cclxuXHJcbi5tYXQtZm9ybS1maWVsZCB7XHJcbiAgICBmb250LXNpemU6IDE0cHg7XHJcbiAgICB3aWR0aDogMTAwJTtcclxufVxyXG5cclxudGQsXHJcbnRoIHtcclxuICAgIHdpZHRoOiAyNSU7XHJcbn1cclxuIl19 */"
+module.exports = "table {\n  width: 100%; }\n\n.mat-form-field {\n  font-size: 14px;\n  width: 100%; }\n\ntd,\nth {\n  width: 25%; }\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvbGF5b3V0L3JlcG9ydC1saXN0L0M6XFxVc2Vyc1xcSGFtaWRcXERlc2t0b3BcXEFMU0RLXFxESGVhbHRoXFxoZWFsdGhcXERIZWFsdGgtV2ViL3NyY1xcYXBwXFxsYXlvdXRcXHJlcG9ydC1saXN0XFxyZXBvcnRzLmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0ksV0FBVyxFQUFBOztBQUdmO0VBQ0ksZUFBZTtFQUNmLFdBQVcsRUFBQTs7QUFHZjs7RUFFSSxVQUFVLEVBQUEiLCJmaWxlIjoic3JjL2FwcC9sYXlvdXQvcmVwb3J0LWxpc3QvcmVwb3J0cy5jb21wb25lbnQuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbInRhYmxlIHtcclxuICAgIHdpZHRoOiAxMDAlO1xyXG59XHJcblxyXG4ubWF0LWZvcm0tZmllbGQge1xyXG4gICAgZm9udC1zaXplOiAxNHB4O1xyXG4gICAgd2lkdGg6IDEwMCU7XHJcbn1cclxuXHJcbnRkLFxyXG50aCB7XHJcbiAgICB3aWR0aDogMjUlO1xyXG59XHJcbiJdfQ== */"
 
 /***/ }),
 
@@ -293,38 +293,30 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
-
 var ReportsComponent = /** @class */ (function () {
-    function ReportsComponent(ledgerHelper, router, snackBar) {
+    function ReportsComponent(ledgerHelper, router) {
         this.ledgerHelper = ledgerHelper;
         this.router = router;
-        this.snackBar = snackBar;
         this.displayedColumns = ['id', 'name', 'title', 'doc_name'];
-        this.message = 'Snack Bar opened.';
-        this.actionButtonLabel = 'Close';
-        this.action = true;
-        this.setAutoHide = true;
-        this.autoHide = 2000;
-        this.horizontalPosition = 'center';
-        this.verticalPosition = 'bottom';
-        this.addExtraClass = false;
         this.reports = [];
+        this.cannot_upload_report = false;
     }
     ReportsComponent.prototype.ngOnInit = function () {
-        console.log('reports component--- ' + this.ledgerHelper.reports);
         this.reports = JSON.parse(this.ledgerHelper.reports);
         this.dataSource = new _angular_material__WEBPACK_IMPORTED_MODULE_1__["MatTableDataSource"](this.reports);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
+        if (this.ledgerHelper.profile_type === 'Doctor') {
+            this.cannot_upload_report = true;
+        }
     };
     ReportsComponent.prototype.addReport = function () {
         this.router.navigate(['/add-report'], { replaceUrl: true });
     };
     ReportsComponent.prototype.getRecord = function (row) {
         console.log(row);
-        src_app_helper_ledgerhelper__WEBPACK_IMPORTED_MODULE_3__["LedgerHelper"].report = JSON.stringify(row);
-        // localStorage.setItem('report', '' + JSON.stringify(row));
-        this.router.navigate(['/report']);
+        this.ledgerHelper.report = JSON.stringify(row);
+        this.router.navigate(['/report'], { replaceUrl: true });
     };
     ReportsComponent.prototype.applyFilter = function (filterValue) {
         filterValue = filterValue.trim();
@@ -333,13 +325,6 @@ var ReportsComponent = /** @class */ (function () {
         if (this.dataSource.paginator) {
             this.dataSource.paginator.firstPage();
         }
-    };
-    ReportsComponent.prototype.open = function () {
-        var config = new _angular_material__WEBPACK_IMPORTED_MODULE_1__["MatSnackBarConfig"]();
-        config.verticalPosition = this.verticalPosition;
-        config.horizontalPosition = this.horizontalPosition;
-        config.duration = this.setAutoHide ? this.autoHide : 0;
-        this.snackBar.open(this.message, this.action ? this.actionButtonLabel : undefined, config);
     };
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"])(_angular_material__WEBPACK_IMPORTED_MODULE_1__["MatPaginator"]),
@@ -355,8 +340,7 @@ var ReportsComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./reports.component.html */ "./src/app/layout/report-list/reports.component.html"),
             styles: [__webpack_require__(/*! ./reports.component.scss */ "./src/app/layout/report-list/reports.component.scss")]
         }),
-        __metadata("design:paramtypes", [src_app_helper_ledgerhelper__WEBPACK_IMPORTED_MODULE_3__["LedgerHelper"], _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"],
-            _angular_material__WEBPACK_IMPORTED_MODULE_1__["MatSnackBar"]])
+        __metadata("design:paramtypes", [src_app_helper_ledgerhelper__WEBPACK_IMPORTED_MODULE_3__["LedgerHelper"], _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"]])
     ], ReportsComponent);
     return ReportsComponent;
 }());

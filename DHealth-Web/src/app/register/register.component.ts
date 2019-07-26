@@ -2,14 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { HttpResponse, HttpHeaders } from '@angular/common/http';
-import {
-  MatSnackBar,
-  MatSnackBarConfig,
-  MatSnackBarHorizontalPosition,
-  MatSnackBarVerticalPosition,
-} from '@angular/material';
+import { HttpHeaders } from '@angular/common/http';
 import { LedgerHelper } from '../helper/ledgerhelper';
+import { LayoutComponent } from '../layout/layout.component';
+
 
 @Component({
   selector: 'app-register',
@@ -19,16 +15,8 @@ import { LedgerHelper } from '../helper/ledgerhelper';
 
 @Injectable()
 export class RegisterComponent implements OnInit {
-  constructor(private ledgerHelper: LedgerHelper, private router: Router, private http: HttpClient, public snackBar: MatSnackBar) { }
-
-  message: string = 'Snack Bar opened.';
-  actionButtonLabel: string = 'Close';
-  action: boolean = true;
-  setAutoHide: boolean = true;
-  autoHide: number = 2000;
-  horizontalPosition: MatSnackBarHorizontalPosition = 'center';
-  verticalPosition: MatSnackBarVerticalPosition = 'bottom';
-  addExtraClass: boolean = false;
+  constructor(private layoutComp: LayoutComponent, private ledgerHelper: LedgerHelper,
+     private router: Router, private http: HttpClient) { }
 
   ngOnInit() { }
 
@@ -42,45 +30,32 @@ export class RegisterComponent implements OnInit {
     });
 
     const body = {
-      "username": username,
-      "password": password
+      'username': username,
+      'password': password
     }
 
 
     this.http.post<any>(this.ledgerHelper.registerUrl, body, { headers: header, responseType: 'json', observe: 'response' })
       .subscribe(resp => {
 
-        console.log(resp.headers.get('Token'));
-
         this.ledgerHelper.token = resp.headers.get('Token');
 
-        this.message = resp.body.desc;
-        this.open();
+        this.layoutComp.showSnackBar(resp.body.desc);
 
         if (resp.status === 200) {
 
-            this.ledgerHelper.email = '' + username;
-            this.ledgerHelper.profileCreated = '' + false;
+          this.ledgerHelper.email = '' + username;
+          this.ledgerHelper.profileCreated = '' + false;
 
           this.router.navigate(['/create-profile']);
         }
 
       });
 
-
   }
-
 
   onLogin() {
     this.router.navigate(['/login']);
-  }
-
-  open() {
-    let config = new MatSnackBarConfig();
-    config.verticalPosition = this.verticalPosition;
-    config.horizontalPosition = this.horizontalPosition;
-    config.duration = this.setAutoHide ? this.autoHide : 0;
-    this.snackBar.open(this.message, this.action ? this.actionButtonLabel : undefined, config);
   }
 
 }

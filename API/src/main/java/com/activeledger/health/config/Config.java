@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableJpaRepositories({
 "com.activeledger.health"})
 
+
 public class Config {
 	
 }

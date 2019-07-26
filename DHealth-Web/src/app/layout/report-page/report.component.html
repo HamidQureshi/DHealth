@@ -25,7 +25,7 @@
         <div fxFlex fxlayout="row" fxlayout.lt-md="column">
             <div fxFlex style="margin: 0px 20px 0px 0">
             <div fxFlexFill class="w-100">
-                <ng-multiselect-dropdown [placeholder]="'No Doctor Selected'" [data]="dropdownList" [(ngModel)]="selectedItems" [hidden] = "cannot_assign_patients"
+                <ng-multiselect-dropdown [placeholder]="'Please Select Doctor'" [data]="dropdownList" [(ngModel)]="selectedItems" [hidden] = "cannot_assign_patients"
                     [settings]="dropdownSettings" (onSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)" name = "doctorlist" >
                 </ng-multiselect-dropdown>
             </div>

@@ -62,7 +62,7 @@ module.exports = "<div class=\"report-page\">\r\n    <div class=\"content\">\r\n
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".profile-page {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  height: 100%;\n  position: relative; }\n  .profile-page .content {\n    z-index: 1;\n    display: flex;\n    align-items: center;\n    justify-content: center; }\n  .profile-page .content .app-name {\n      margin-top: 0px;\n      padding-bottom: 10px;\n      font-size: 32px; }\n  .profile-page .content .profile-page {\n      padding: 40px;\n      background: #fff;\n      width: 500px;\n      box-shadow: 0 0 10px #ddd; }\n  .profile-page .content .profile-page input:-webkit-autofill {\n        -webkit-box-shadow: 0 0 0 30px white inset; }\n  .profile-page:after {\n    content: '';\n    background: #fff;\n    position: absolute;\n    top: 0;\n    left: 0;\n    bottom: 50%;\n    right: 0; }\n  .profile-page:before {\n    content: '';\n    background: #3f51b5;\n    position: absolute;\n    top: 50%;\n    left: 0;\n    bottom: 0;\n    right: 0; }\n  .text-center {\n  text-align: center; }\n  .w-100 {\n  width: 100%; }\n  .example-h2 {\n  margin: 10px; }\n  .example-section {\n  display: flex;\n  align-content: center;\n  align-items: center;\n  height: 60px; }\n  .example-margin {\n  margin: 0 10px; }\n  .mat-card-image {\n  width: 200px;\n  height: 200px; }\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvbGF5b3V0L2FkZC1yZXBvcnQtcGFnZS9DOlxcVXNlcnNcXEhhbWlkXFxEZXNrdG9wXFxBTFNES1xcZXhhbXBsZXNcXHNiLWFkbWluLW1hdGVyaWFsL3NyY1xcYXBwXFxsYXlvdXRcXGFkZC1yZXBvcnQtcGFnZVxcYWRkLXJlcG9ydC5jb21wb25lbnQuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNJLGFBQWE7RUFDYixtQkFBbUI7RUFDbkIsdUJBQXVCO0VBQ3ZCLFlBQVk7RUFDWixrQkFBa0IsRUFBQTtFQUx0QjtJQU9RLFVBQVU7SUFDVixhQUFhO0lBQ2IsbUJBQW1CO0lBQ25CLHVCQUF1QixFQUFBO0VBVi9CO01BWVksZUFBZTtNQUNmLG9CQUFvQjtNQUNwQixlQUFlLEVBQUE7RUFkM0I7TUFpQlksYUFBYTtNQUNiLGdCQUFnQjtNQUNoQixZQUFZO01BQ1oseUJBQXlCLEVBQUE7RUFwQnJDO1FBc0JnQiwwQ0FBMEMsRUFBQTtFQXRCMUQ7SUE0QlEsV0FBVztJQUNYLGdCQUFnQjtJQUNoQixrQkFBa0I7SUFDbEIsTUFBTTtJQUNOLE9BQU87SUFDUCxXQUFXO0lBQ1gsUUFBUSxFQUFBO0VBbENoQjtJQXFDUSxXQUFXO0lBQ1gsbUJBQW1CO0lBQ25CLGtCQUFrQjtJQUNsQixRQUFRO0lBQ1IsT0FBTztJQUNQLFNBQVM7SUFDVCxRQUFRLEVBQUE7RUFHaEI7RUFDSSxrQkFBa0IsRUFBQTtFQUV0QjtFQUNJLFdBQVcsRUFBQTtFQUdmO0VBQ0ksWUFBWSxFQUFBO0VBR2Q7RUFDRSxhQUFhO0VBQ2IscUJBQXFCO0VBQ3JCLG1CQUFtQjtFQUNuQixZQUFZLEVBQUE7RUFHZDtFQUNFLGNBQWMsRUFBQTtFQUdoQjtFQUNFLFlBQVc7RUFDWCxhQUFZLEVBQUEiLCJmaWxlIjoic3JjL2FwcC9sYXlvdXQvYWRkLXJlcG9ydC1wYWdlL2FkZC1yZXBvcnQuY29tcG9uZW50LnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyIucHJvZmlsZS1wYWdlIHtcclxuICAgIGRpc3BsYXk6IGZsZXg7XHJcbiAgICBhbGlnbi1pdGVtczogY2VudGVyO1xyXG4gICAganVzdGlmeS1jb250ZW50OiBjZW50ZXI7XHJcbiAgICBoZWlnaHQ6IDEwMCU7XHJcbiAgICBwb3NpdGlvbjogcmVsYXRpdmU7XHJcbiAgICAuY29udGVudCB7XHJcbiAgICAgICAgei1pbmRleDogMTtcclxuICAgICAgICBkaXNwbGF5OiBmbGV4O1xyXG4gICAgICAgIGFsaWduLWl0ZW1zOiBjZW50ZXI7XHJcbiAgICAgICAganVzdGlmeS1jb250ZW50OiBjZW50ZXI7XHJcbiAgICAgICAgLmFwcC1uYW1lIHtcclxuICAgICAgICAgICAgbWFyZ2luLXRvcDogMHB4O1xyXG4gICAgICAgICAgICBwYWRkaW5nLWJvdHRvbTogMTBweDtcclxuICAgICAgICAgICAgZm9udC1zaXplOiAzMnB4O1xyXG4gICAgICAgIH1cclxuICAgICAgICAucHJvZmlsZS1wYWdlIHtcclxuICAgICAgICAgICAgcGFkZGluZzogNDBweDtcclxuICAgICAgICAgICAgYmFja2dyb3VuZDogI2ZmZjtcclxuICAgICAgICAgICAgd2lkdGg6IDUwMHB4O1xyXG4gICAgICAgICAgICBib3gtc2hhZG93OiAwIDAgMTBweCAjZGRkO1xyXG4gICAgICAgICAgICBpbnB1dDotd2Via2l0LWF1dG9maWxsIHtcclxuICAgICAgICAgICAgICAgIC13ZWJraXQtYm94LXNoYWRvdzogMCAwIDAgMzBweCB3aGl0ZSBpbnNldDtcclxuICAgICAgICAgICAgfVxyXG4gICAgICAgIH1cclxuICAgIH1cclxuXHJcbiAgICAmOmFmdGVyIHtcclxuICAgICAgICBjb250ZW50OiAnJztcclxuICAgICAgICBiYWNrZ3JvdW5kOiAjZmZmO1xyXG4gICAgICAgIHBvc2l0aW9uOiBhYnNvbHV0ZTtcclxuICAgICAgICB0b3A6IDA7XHJcbiAgICAgICAgbGVmdDogMDtcclxuICAgICAgICBib3R0b206IDUwJTtcclxuICAgICAgICByaWdodDogMDtcclxuICAgIH1cclxuICAgICY6YmVmb3JlIHtcclxuICAgICAgICBjb250ZW50OiAnJztcclxuICAgICAgICBiYWNrZ3JvdW5kOiAjM2Y1MWI1O1xyXG4gICAgICAgIHBvc2l0aW9uOiBhYnNvbHV0ZTtcclxuICAgICAgICB0b3A6IDUwJTtcclxuICAgICAgICBsZWZ0OiAwO1xyXG4gICAgICAgIGJvdHRvbTogMDtcclxuICAgICAgICByaWdodDogMDtcclxuICAgIH1cclxufVxyXG4udGV4dC1jZW50ZXIge1xyXG4gICAgdGV4dC1hbGlnbjogY2VudGVyO1xyXG59XHJcbi53LTEwMCB7XHJcbiAgICB3aWR0aDogMTAwJTtcclxufVxyXG5cclxuLmV4YW1wbGUtaDIge1xyXG4gICAgbWFyZ2luOiAxMHB4O1xyXG4gIH1cclxuICBcclxuICAuZXhhbXBsZS1zZWN0aW9uIHtcclxuICAgIGRpc3BsYXk6IGZsZXg7XHJcbiAgICBhbGlnbi1jb250ZW50OiBjZW50ZXI7XHJcbiAgICBhbGlnbi1pdGVtczogY2VudGVyO1xyXG4gICAgaGVpZ2h0OiA2MHB4O1xyXG4gIH1cclxuICBcclxuICAuZXhhbXBsZS1tYXJnaW4ge1xyXG4gICAgbWFyZ2luOiAwIDEwcHg7XHJcbiAgfVxyXG5cclxuICAubWF0LWNhcmQtaW1hZ2V7XHJcbiAgICB3aWR0aDoyMDBweDtcclxuICAgIGhlaWdodDoyMDBweDtcclxufSJdfQ== */"
+module.exports = ".profile-page {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  height: 100%;\n  position: relative; }\n  .profile-page .content {\n    z-index: 1;\n    display: flex;\n    align-items: center;\n    justify-content: center; }\n  .profile-page .content .app-name {\n      margin-top: 0px;\n      padding-bottom: 10px;\n      font-size: 32px; }\n  .profile-page .content .profile-page {\n      padding: 40px;\n      background: #fff;\n      width: 500px;\n      box-shadow: 0 0 10px #ddd; }\n  .profile-page .content .profile-page input:-webkit-autofill {\n        -webkit-box-shadow: 0 0 0 30px white inset; }\n  .profile-page:after {\n    content: '';\n    background: #fff;\n    position: absolute;\n    top: 0;\n    left: 0;\n    bottom: 50%;\n    right: 0; }\n  .profile-page:before {\n    content: '';\n    background: #3f51b5;\n    position: absolute;\n    top: 50%;\n    left: 0;\n    bottom: 0;\n    right: 0; }\n  .text-center {\n  text-align: center; }\n  .w-100 {\n  width: 100%; }\n  .example-h2 {\n  margin: 10px; }\n  .example-section {\n  display: flex;\n  align-content: center;\n  align-items: center;\n  height: 60px; }\n  .example-margin {\n  margin: 0 10px; }\n  .mat-card-image {\n  width: 200px;\n  height: 200px; }\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvbGF5b3V0L2FkZC1yZXBvcnQtcGFnZS9DOlxcVXNlcnNcXEhhbWlkXFxEZXNrdG9wXFxBTFNES1xcREhlYWx0aFxcaGVhbHRoXFxESGVhbHRoLVdlYi9zcmNcXGFwcFxcbGF5b3V0XFxhZGQtcmVwb3J0LXBhZ2VcXGFkZC1yZXBvcnQuY29tcG9uZW50LnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDSSxhQUFhO0VBQ2IsbUJBQW1CO0VBQ25CLHVCQUF1QjtFQUN2QixZQUFZO0VBQ1osa0JBQWtCLEVBQUE7RUFMdEI7SUFPUSxVQUFVO0lBQ1YsYUFBYTtJQUNiLG1CQUFtQjtJQUNuQix1QkFBdUIsRUFBQTtFQVYvQjtNQVlZLGVBQWU7TUFDZixvQkFBb0I7TUFDcEIsZUFBZSxFQUFBO0VBZDNCO01BaUJZLGFBQWE7TUFDYixnQkFBZ0I7TUFDaEIsWUFBWTtNQUNaLHlCQUF5QixFQUFBO0VBcEJyQztRQXNCZ0IsMENBQTBDLEVBQUE7RUF0QjFEO0lBNEJRLFdBQVc7SUFDWCxnQkFBZ0I7SUFDaEIsa0JBQWtCO0lBQ2xCLE1BQU07SUFDTixPQUFPO0lBQ1AsV0FBVztJQUNYLFFBQVEsRUFBQTtFQWxDaEI7SUFxQ1EsV0FBVztJQUNYLG1CQUFtQjtJQUNuQixrQkFBa0I7SUFDbEIsUUFBUTtJQUNSLE9BQU87SUFDUCxTQUFTO0lBQ1QsUUFBUSxFQUFBO0VBR2hCO0VBQ0ksa0JBQWtCLEVBQUE7RUFFdEI7RUFDSSxXQUFXLEVBQUE7RUFHZjtFQUNJLFlBQVksRUFBQTtFQUdkO0VBQ0UsYUFBYTtFQUNiLHFCQUFxQjtFQUNyQixtQkFBbUI7RUFDbkIsWUFBWSxFQUFBO0VBR2Q7RUFDRSxjQUFjLEVBQUE7RUFHaEI7RUFDRSxZQUFXO0VBQ1gsYUFBWSxFQUFBIiwiZmlsZSI6InNyYy9hcHAvbGF5b3V0L2FkZC1yZXBvcnQtcGFnZS9hZGQtcmVwb3J0LmNvbXBvbmVudC5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLnByb2ZpbGUtcGFnZSB7XHJcbiAgICBkaXNwbGF5OiBmbGV4O1xyXG4gICAgYWxpZ24taXRlbXM6IGNlbnRlcjtcclxuICAgIGp1c3RpZnktY29udGVudDogY2VudGVyO1xyXG4gICAgaGVpZ2h0OiAxMDAlO1xyXG4gICAgcG9zaXRpb246IHJlbGF0aXZlO1xyXG4gICAgLmNvbnRlbnQge1xyXG4gICAgICAgIHotaW5kZXg6IDE7XHJcbiAgICAgICAgZGlzcGxheTogZmxleDtcclxuICAgICAgICBhbGlnbi1pdGVtczogY2VudGVyO1xyXG4gICAgICAgIGp1c3RpZnktY29udGVudDogY2VudGVyO1xyXG4gICAgICAgIC5hcHAtbmFtZSB7XHJcbiAgICAgICAgICAgIG1hcmdpbi10b3A6IDBweDtcclxuICAgICAgICAgICAgcGFkZGluZy1ib3R0b206IDEwcHg7XHJcbiAgICAgICAgICAgIGZvbnQtc2l6ZTogMzJweDtcclxuICAgICAgICB9XHJcbiAgICAgICAgLnByb2ZpbGUtcGFnZSB7XHJcbiAgICAgICAgICAgIHBhZGRpbmc6IDQwcHg7XHJcbiAgICAgICAgICAgIGJhY2tncm91bmQ6ICNmZmY7XHJcbiAgICAgICAgICAgIHdpZHRoOiA1MDBweDtcclxuICAgICAgICAgICAgYm94LXNoYWRvdzogMCAwIDEwcHggI2RkZDtcclxuICAgICAgICAgICAgaW5wdXQ6LXdlYmtpdC1hdXRvZmlsbCB7XHJcbiAgICAgICAgICAgICAgICAtd2Via2l0LWJveC1zaGFkb3c6IDAgMCAwIDMwcHggd2hpdGUgaW5zZXQ7XHJcbiAgICAgICAgICAgIH1cclxuICAgICAgICB9XHJcbiAgICB9XHJcblxyXG4gICAgJjphZnRlciB7XHJcbiAgICAgICAgY29udGVudDogJyc7XHJcbiAgICAgICAgYmFja2dyb3VuZDogI2ZmZjtcclxuICAgICAgICBwb3NpdGlvbjogYWJzb2x1dGU7XHJcbiAgICAgICAgdG9wOiAwO1xyXG4gICAgICAgIGxlZnQ6IDA7XHJcbiAgICAgICAgYm90dG9tOiA1MCU7XHJcbiAgICAgICAgcmlnaHQ6IDA7XHJcbiAgICB9XHJcbiAgICAmOmJlZm9yZSB7XHJcbiAgICAgICAgY29udGVudDogJyc7XHJcbiAgICAgICAgYmFja2dyb3VuZDogIzNmNTFiNTtcclxuICAgICAgICBwb3NpdGlvbjogYWJzb2x1dGU7XHJcbiAgICAgICAgdG9wOiA1MCU7XHJcbiAgICAgICAgbGVmdDogMDtcclxuICAgICAgICBib3R0b206IDA7XHJcbiAgICAgICAgcmlnaHQ6IDA7XHJcbiAgICB9XHJcbn1cclxuLnRleHQtY2VudGVyIHtcclxuICAgIHRleHQtYWxpZ246IGNlbnRlcjtcclxufVxyXG4udy0xMDAge1xyXG4gICAgd2lkdGg6IDEwMCU7XHJcbn1cclxuXHJcbi5leGFtcGxlLWgyIHtcclxuICAgIG1hcmdpbjogMTBweDtcclxuICB9XHJcbiAgXHJcbiAgLmV4YW1wbGUtc2VjdGlvbiB7XHJcbiAgICBkaXNwbGF5OiBmbGV4O1xyXG4gICAgYWxpZ24tY29udGVudDogY2VudGVyO1xyXG4gICAgYWxpZ24taXRlbXM6IGNlbnRlcjtcclxuICAgIGhlaWdodDogNjBweDtcclxuICB9XHJcbiAgXHJcbiAgLmV4YW1wbGUtbWFyZ2luIHtcclxuICAgIG1hcmdpbjogMCAxMHB4O1xyXG4gIH1cclxuXHJcbiAgLm1hdC1jYXJkLWltYWdle1xyXG4gICAgd2lkdGg6MjAwcHg7XHJcbiAgICBoZWlnaHQ6MjAwcHg7XHJcbn0iXX0= */"
 
 /***/ }),
 
@@ -78,11 +78,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AddReportComponent", function() { return AddReportComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
-/* harmony import */ var _angular_material__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/material */ "./node_modules/@angular/material/esm5/material.es5.js");
-/* harmony import */ var _activeledger_sdk__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @activeledger/sdk */ "./node_modules/@activeledger/sdk/lib/index.js");
-/* harmony import */ var _activeledger_sdk__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_activeledger_sdk__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var src_app_helper_ledgerhelper__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! src/app/helper/ledgerhelper */ "./src/app/helper/ledgerhelper.ts");
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var _activeledger_sdk__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @activeledger/sdk */ "./node_modules/@activeledger/sdk/lib/index.js");
+/* harmony import */ var _activeledger_sdk__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_activeledger_sdk__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var src_app_helper_ledgerhelper__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/helper/ledgerhelper */ "./src/app/helper/ledgerhelper.ts");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var _layout_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../layout.component */ "./src/app/layout/layout.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -100,19 +100,11 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 var AddReportComponent = /** @class */ (function () {
-    function AddReportComponent(ledgerHelper, router, http, snackBar) {
+    function AddReportComponent(layoutComp, ledgerHelper, router, http) {
+        this.layoutComp = layoutComp;
         this.ledgerHelper = ledgerHelper;
         this.router = router;
         this.http = http;
-        this.snackBar = snackBar;
-        this.message = 'Snack Bar opened.';
-        this.actionButtonLabel = 'Close';
-        this.action = true;
-        this.setAutoHide = true;
-        this.autoHide = 2000;
-        this.horizontalPosition = 'center';
-        this.verticalPosition = 'bottom';
-        this.addExtraClass = false;
         this.reports = [];
         this.report = this.ledgerHelper.reports;
         this.dropdownList = [];
@@ -121,7 +113,7 @@ var AddReportComponent = /** @class */ (function () {
         this.dropdownSettings = {};
     }
     AddReportComponent.prototype.ngOnInit = function () {
-        document.getElementById('i_pn').value = src_app_helper_ledgerhelper__WEBPACK_IMPORTED_MODULE_4__["LedgerHelper"].full_name;
+        document.getElementById('i_pn').value = this.ledgerHelper.full_name;
         var doctorlist = JSON.parse(this.ledgerHelper.userList);
         for (var i = 0; i < doctorlist.length; i++) {
             var item = { item_id: doctorlist[i]._id, item_text: '' + doctorlist[i].first_name + ' ' + doctorlist[i].last_name };
@@ -143,10 +135,10 @@ var AddReportComponent = /** @class */ (function () {
     };
     AddReportComponent.prototype.onAddReport = function () {
         var _this = this;
-        var id = src_app_helper_ledgerhelper__WEBPACK_IMPORTED_MODULE_4__["LedgerHelper"]._id;
+        var id = this.ledgerHelper._id;
         var headers = new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({
             'Content-Type': 'application/json',
-            'Authorization': src_app_helper_ledgerhelper__WEBPACK_IMPORTED_MODULE_4__["LedgerHelper"].token
+            'Authorization': this.ledgerHelper.token
         });
         for (var i = 0; i < this.selectedItems.length; i++) {
             this.selectedDoctorsID.push(this.selectedItems[i].item_id);
@@ -154,7 +146,7 @@ var AddReportComponent = /** @class */ (function () {
         var report = {
             id: '' + (JSON.parse(this.ledgerHelper.reports).length + 1),
             title: document.getElementById('i_rt').value,
-            patientName: src_app_helper_ledgerhelper__WEBPACK_IMPORTED_MODULE_4__["LedgerHelper"].full_name,
+            patientName: this.ledgerHelper.full_name,
             fileName: this.filename,
             description: document.getElementById('i_description').value,
             content: this.fileBase64,
@@ -164,7 +156,7 @@ var AddReportComponent = /** @class */ (function () {
         var baseTransaction1 = {
             $tx: {
                 $contract: 'report',
-                $namespace: 'healthtestnet',
+                $namespace: 'health',
                 $entry: 'upload',
                 $i: {},
                 $o: {},
@@ -175,9 +167,9 @@ var AddReportComponent = /** @class */ (function () {
         baseTransaction1.$tx.$i[id] = {};
         baseTransaction1.$tx.$o[id] = this.reports;
         console.log(JSON.stringify(baseTransaction1));
-        var txHandler = new _activeledger_sdk__WEBPACK_IMPORTED_MODULE_3__["TransactionHandler"]();
+        var txHandler = new _activeledger_sdk__WEBPACK_IMPORTED_MODULE_2__["TransactionHandler"]();
         txHandler
-            .signTransaction(baseTransaction1, src_app_helper_ledgerhelper__WEBPACK_IMPORTED_MODULE_4__["LedgerHelper"].key)
+            .signTransaction(baseTransaction1, this.ledgerHelper.key)
             .then(function (signedTx) {
             baseTransaction1 = signedTx;
             var signature = baseTransaction1['$sigs']['activeledger'];
@@ -188,8 +180,7 @@ var AddReportComponent = /** @class */ (function () {
                 .subscribe(function (data) {
                 console.log(data);
                 if (data.status === 200) {
-                    _this.message = 'Report Update Successfully!';
-                    _this.open();
+                    _this.layoutComp.showSnackBar('Report Update Successfully!');
                     //update the report in pref
                     _this.reports = JSON.parse(_this.ledgerHelper.reports);
                     _this.reports.push(report);
@@ -197,8 +188,7 @@ var AddReportComponent = /** @class */ (function () {
                     _this.router.navigate(['/report-list'], { replaceUrl: true });
                 }
                 else {
-                    _this.message = ' Report Update  Failed! ';
-                    _this.open();
+                    _this.layoutComp.showSnackBar(' Report Update  Failed! ');
                 }
             });
         })
@@ -221,14 +211,7 @@ var AddReportComponent = /** @class */ (function () {
         }
     };
     AddReportComponent.prototype.addReportAPI = function (body, header) {
-        return this.http.post(src_app_helper_ledgerhelper__WEBPACK_IMPORTED_MODULE_4__["LedgerHelper"].addReportURL, body, { headers: header, observe: 'response' });
-    };
-    AddReportComponent.prototype.open = function () {
-        var config = new _angular_material__WEBPACK_IMPORTED_MODULE_2__["MatSnackBarConfig"]();
-        config.verticalPosition = this.verticalPosition;
-        config.horizontalPosition = this.horizontalPosition;
-        config.duration = this.setAutoHide ? this.autoHide : 0;
-        this.snackBar.open(this.message, this.action ? this.actionButtonLabel : undefined, config);
+        return this.http.post(this.ledgerHelper.addReportURL, body, { headers: header, observe: 'response' });
     };
     AddReportComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -236,8 +219,8 @@ var AddReportComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./add-report.component.html */ "./src/app/layout/add-report-page/add-report.component.html"),
             styles: [__webpack_require__(/*! ./add-report.component.scss */ "./src/app/layout/add-report-page/add-report.component.scss")]
         }),
-        __metadata("design:paramtypes", [src_app_helper_ledgerhelper__WEBPACK_IMPORTED_MODULE_4__["LedgerHelper"], _angular_router__WEBPACK_IMPORTED_MODULE_5__["Router"],
-            _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"], _angular_material__WEBPACK_IMPORTED_MODULE_2__["MatSnackBar"]])
+        __metadata("design:paramtypes", [_layout_component__WEBPACK_IMPORTED_MODULE_5__["LayoutComponent"], src_app_helper_ledgerhelper__WEBPACK_IMPORTED_MODULE_3__["LedgerHelper"], _angular_router__WEBPACK_IMPORTED_MODULE_4__["Router"],
+            _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]])
     ], AddReportComponent);
     return AddReportComponent;
 }());

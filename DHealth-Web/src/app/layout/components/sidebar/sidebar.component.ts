@@ -17,8 +17,7 @@ export class SidebarComponent implements OnInit {
         this.showMenu = '';
         if (this.ledgerHelper.profile_type === 'Doctor') {
             this.item = 'Patient List';
-        }
-        else{
+        } else{
             this.item = 'Doctor List';
         }
 

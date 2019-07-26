@@ -34,8 +34,8 @@
       <file leaf-file-name="UploadFileActivity.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/hamid/dhealth/ui/Activities/UploadFileActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="292">
-              <caret line="256" column="42" selection-start-line="256" selection-start-column="32" selection-end-line="256" selection-end-column="42" />
+            <state relative-caret-position="323">
+              <caret line="144" column="52" lean-forward="true" selection-start-line="144" selection-start-column="52" selection-end-line="144" selection-end-column="52" />
             </state>
           </provider>
         </entry>
@@ -2491,13 +2491,6 @@
             </path>
             <path>
               <item name="DHealth" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
-              <item name="dhealth" type="cbb59c9e:AndroidPsiDirectoryNode" />
-              <item name="ui" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="DHealth" type="1abcf292:AndroidViewProjectNode" />
               <item name="Gradle Scripts" type="ae0cef3a:AndroidBuildScriptsGroupNode" />
             </path>
           </expand>
@@ -2652,11 +2645,11 @@
       <window_info anchor="bottom" id="Run" order="2" />
       <window_info anchor="bottom" id="Version Control" show_stripe_button="false" />
       <window_info anchor="bottom" id="Terminal" />
-      <window_info active="true" anchor="bottom" id="Logcat" visible="true" weight="0.4619395" />
+      <window_info anchor="bottom" id="Logcat" weight="0.4619395" />
       <window_info id="Captures" order="2" weight="0.25" />
       <window_info id="Capture Tool" />
       <window_info id="Designer" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24946696" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24946696" />
       <window_info anchor="bottom" id="Build" weight="0.3295099" />
       <window_info anchor="right" id="Android WiFi ADB" />
       <window_info anchor="right" id="Gradle" />
@@ -2888,8 +2881,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/hamid/dhealth/ui/Activities/UploadFileActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="292">
-          <caret line="256" column="42" selection-start-line="256" selection-start-column="32" selection-end-line="256" selection-end-column="42" />
+        <state relative-caret-position="323">
+          <caret line="144" column="52" lean-forward="true" selection-start-line="144" selection-start-column="52" selection-end-line="144" selection-end-column="52" />
         </state>
       </provider>
     </entry>

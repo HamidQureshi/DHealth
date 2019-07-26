@@ -5,9 +5,10 @@ import { HttpHeaders } from '@angular/common/http';
 import { User } from './model/user';
 import { Report } from './model/report';
 
-import { PersistenceService, StorageType } from 'angular-persistence';
 import { LedgerHelper } from '../helper/ledgerhelper';
 import { MatSnackBar, MatSnackBarConfig, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material';
+import { Injectable } from '@angular/core';
+
 
 
 @Component({
@@ -15,9 +16,13 @@ import { MatSnackBar, MatSnackBarConfig, MatSnackBarHorizontalPosition, MatSnack
     templateUrl: './layout.component.html',
     styleUrls: ['./layout.component.scss']
 })
+
+    @Injectable({
+        providedIn: 'root'
+    })
+
 export class LayoutComponent implements OnInit {
-    constructor(private ledgerHelper: LedgerHelper, private http: HttpClient,
-        private persistenceService: PersistenceService, public snackBar: MatSnackBar) {
+    constructor(private ledgerHelper: LedgerHelper, private http: HttpClient, public snackBar: MatSnackBar) {
     }
     key: IKey;
     getDoctorURL = 'http://testnet-uk.activeledger.io:5555/transaction/users/doctors';
@@ -27,6 +32,14 @@ export class LayoutComponent implements OnInit {
     users: Array<User> = [];
     reports: Array<Report> = [];
 
+    // message = 'Snack Bar opened.';
+    actionButtonLabel = 'Close';
+    action = true;
+    setAutoHide = true;
+    autoHide = 2000;
+    horizontalPosition: MatSnackBarHorizontalPosition = 'center';
+    verticalPosition: MatSnackBarVerticalPosition = 'bottom';
+    addExtraClass = false;
 
     ngOnInit() {
 
@@ -35,14 +48,11 @@ export class LayoutComponent implements OnInit {
             Authorization: this.ledgerHelper.token
         });
 
-
-        // this.getDoctorList(header);
-        console.log(this.ledgerHelper.profile_type)
-        if (this.ledgerHelper.profile_type == 'Doctor'){
+        if (this.ledgerHelper.profile_type == 'Doctor') {
             this.getAssignedPatientList(header);
-      }else{
-      this.getDoctorList(header);
-    }
+        } else {
+            this.getDoctorList(header);
+        }
 
         this.getReportList(header);
 
@@ -56,7 +66,7 @@ export class LayoutComponent implements OnInit {
             .subscribe(data => {
                 console.log(data);
 
-                if (data.status == 200) {
+                if (data.status === 200) {
                     // this.message = data.body.resp.desc;
                     // this.open();
 
@@ -97,11 +107,9 @@ export class LayoutComponent implements OnInit {
                     // this.persistenceService.set('doctorlist', JSON.stringify(this.users));
                     this.ledgerHelper.userList = JSON.stringify(this.users);
 
-
-
                 } else {
-                    this.message = ' Something went wrong! ';
-                    this.open();
+                    const message = ' Something went wrong! ';
+                    this.showSnackBar(message);
                 }
 
             });
@@ -112,17 +120,17 @@ export class LayoutComponent implements OnInit {
             .subscribe(data => {
                 console.log(data);
 
-                if (data.status == 200) {
+                if (data.status === 200) {
                     // this.message = 'Patient List Fetched'//data.body.resp.desc;
                     // this.open();
 
                     if (data.body.streams.length <= 0) {
-                        this.message = 'No patients assigned';
-                        this.open();
+                        const message = 'No patients assigned';
+                        this.showSnackBar(message);
                         return;
                     }
 
-                    let index =1;
+                    let index = 1;
 
                     for (let i = 0; i < data.body.streams.length; i++) {
 
@@ -168,7 +176,7 @@ export class LayoutComponent implements OnInit {
                             _id: data.body.streams[i]._id,
                             reports: data.body.streams[i].reports,
                         };
- 
+
                         this.users.push(user);
 
                     }
@@ -180,8 +188,8 @@ export class LayoutComponent implements OnInit {
                     this.ledgerHelper.userList = JSON.stringify(this.users);
 
                 } else {
-                    this.message = ' Something went wrong! ';
-                    this.open();
+                    const message = ' Something went wrong! ';
+                    this.showSnackBar(message);
                 }
 
             });
@@ -192,13 +200,13 @@ export class LayoutComponent implements OnInit {
         this.getReport(headers).subscribe(data => {
             console.log(data);
 
-            if (data.status == 200) {
+            if (data.status === 200) {
                 // this.message = 'Reports List Fetched'//data.body.resp.desc;
                 // this.open();
 
-                if (data.body.streams.length < 0) {
-                    this.message = 'No reports found in ledger';
-                    this.open();
+                if (data.body.streams.length <= 0) {
+                    const message = 'No reports found in ledger';
+                    this.showSnackBar(message);
                     return;
                 }
 
@@ -222,27 +230,18 @@ export class LayoutComponent implements OnInit {
                 this.ledgerHelper.reports = JSON.stringify(this.reports);
 
             } else {
-                this.message = ' Something went wrong! ';
-                this.open();
+                const message = ' Something went wrong! ';
+                this.showSnackBar(message);
             }
         });
     }
 
-    message: string = 'Snack Bar opened.';
-    actionButtonLabel: string = 'Close';
-    action: boolean = true;
-    setAutoHide: boolean = true;
-    autoHide: number = 2000;
-    horizontalPosition: MatSnackBarHorizontalPosition = 'center';
-    verticalPosition: MatSnackBarVerticalPosition = 'bottom';
-    addExtraClass: boolean = false;
-
-    open() {
-        let config = new MatSnackBarConfig();
+    showSnackBar(message) {
+        const config = new MatSnackBarConfig();
         config.verticalPosition = this.verticalPosition;
         config.horizontalPosition = this.horizontalPosition;
         config.duration = this.setAutoHide ? this.autoHide : 0;
-        this.snackBar.open(this.message, this.action ? this.actionButtonLabel : undefined, config);
+        this.snackBar.open(message, this.action ? this.actionButtonLabel : undefined, config);
     }
 
     getDoctor(header) {
