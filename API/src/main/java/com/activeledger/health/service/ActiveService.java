@@ -56,6 +56,7 @@ public class ActiveService {
 
 	public void register(User user) {
 		logger.info("-------hashing password------");
+		System.out.print(user);
 		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 		userDao.save(user);
 	}

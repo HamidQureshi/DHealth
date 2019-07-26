@@ -41,7 +41,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Configuration
 @EnableWebSecurity
-/*@EnableWebMvc*/
+
 
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -74,8 +74,15 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	public void configure(WebSecurity web) {
 		// Overridden to exclude some url's
-		web.ignoring().antMatchers("/css/**","/lib/**","/images/**","/fonts/**","/lang/**","/api", "/api/register", "/api/h2/**","/index.html**", "/api/resources/**", "/resources/**","/static/**","/api/swagger.json","/swagger.json","/webapp/**","/v2/api-docs",
-                "/api/v2/api-docs", "/api/configuration/ui", "/api/swagger-resources/**", "/api/configuration/**","/swagger-ui.js", "/api/swagger-ui.html", "/api/webjars/**");
+
+		web.ignoring().antMatchers("/", "/register", "/h2/**",
+                "/swagger-ui.js",
+                "/v2/api-docs",
+                "/configuration/ui",
+                "/swagger-resources/**",
+                "/configuration/security",
+                "/swagger-ui.html",
+                "/webjars/**");
 	}
 	
 
@@ -85,12 +92,12 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 			http.csrf().disable()
 
         
-		.authorizeRequests().antMatchers("/api").permitAll().antMatchers("/api/user").permitAll().antMatchers("/api/register", "/resources/**")
-				.permitAll().antMatchers("/api/h2/**").permitAll().antMatchers("/api/customLogout/**").permitAll().antMatchers("/index.html**").permitAll()
+		.authorizeRequests().antMatchers("/").permitAll().antMatchers(" /user").permitAll().antMatchers(" /register")
+				.permitAll().antMatchers(" /h2/**").permitAll().antMatchers(" /customLogout/**").permitAll()
 				 .anyRequest()
 				.authenticated().and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().logout()
-				.logoutUrl("/logout").clearAuthentication(true).invalidateHttpSession(true)
-				.logoutSuccessUrl("/customLogout");
+				.logoutUrl("/logout").clearAuthentication(true).invalidateHttpSession(true);
+				
 		//http.addFilter( new Authorizationf( authenticationManager()));
 		http.addFilter(new UserAuthenticationFilter(authenticationManager(), activeService, secret));
 		http.addFilterAfter(authenticationTokenFilter(), UsernamePasswordAuthenticationFilter.class);
@@ -115,13 +122,12 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
         return source;
     }
 	
-	@Bean
-    public WebMvcConfigurer corsConfigurer()
-    {
-        return new WebMvcConfigurerAdapter() {
+	public WebMvcConfigurer corsConfigurer() {
+        return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**");
+            
+                registry.addMapping("/**").allowedOrigins("*").allowedHeaders("*").exposedHeaders("*");
             }
         };
     }
