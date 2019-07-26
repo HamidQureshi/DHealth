@@ -28,7 +28,7 @@ import com.activeledger.health.controller.ActiveController;
     "com.activeledger.health"})
 @EnableJpaRepositories({
 "com.activeledger.health"})
-//@ApplicationPath("/api")
+
 public class Config {
 	
 	
