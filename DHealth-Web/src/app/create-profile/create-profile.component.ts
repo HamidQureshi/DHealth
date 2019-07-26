@@ -7,6 +7,7 @@ import { KeyHandler, IKey, KeyType, TransactionHandler, IBaseTransaction } from 
 import { DomSanitizer } from '@angular/platform-browser';
 import { LedgerHelper } from '../helper/ledgerhelper';
 import { LayoutComponent } from '../layout/layout.component';
+import { Ng2ImgMaxService } from 'ng2-img-max';
 
 
 @Component({
@@ -18,7 +19,7 @@ import { LayoutComponent } from '../layout/layout.component';
 @Injectable()
 export class CreateProfileComponent implements OnInit {
   constructor(private layoutComp: LayoutComponent, private ledgerHelper: LedgerHelper, private router: Router,
-    private http: HttpClient, private sanitizer: DomSanitizer) { }
+    private http: HttpClient, private sanitizer: DomSanitizer, private ng2ImgMax: Ng2ImgMaxService) { }
 
   image: any;
   image_set = false;
@@ -123,12 +124,25 @@ export class CreateProfileComponent implements OnInit {
     if (event.target.files && event.target.files[0]) {
       const reader = new FileReader();
 
-      reader.readAsDataURL(event.target.files[0]);
+      this.ng2ImgMax.resizeImage(event.target.files[0], 400, 300).subscribe(
+        result => {
+          reader.readAsDataURL(result);
+          reader.onload = () => {
+            this.image_set = true;
+            this.image = reader.result;
+                    };
+        },
+        error => {
+          console.log('😢 Oh no!', error);
+        }
+      );
 
-      reader.onload = () => {
-        this.image_set = true;
-        this.image = reader.result;
-      };
+      // reader.readAsDataURL(event.target.files[0]);
+
+      // reader.onload = () => {
+      //   this.image_set = true;
+      //   this.image = reader.result;
+      // };
     }
   }
 

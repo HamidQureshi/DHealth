@@ -3,7 +3,7 @@
         <form class="report-form" ng-controller="formCtrl" fxFlex>
 
             <div fxFlex fxLayout="row" fxLayout.lt-md="column">
-                <div fxFlex style="margin: 0px 20px 0px 0">
+                <div fxFlex style="margin: 0px 0px 0px 0">
                     <div fxFlexFill>
                         <mat-form-field class="w-100">
                             <input id="i_pn" #patientname_f matInput placeholder="Patient Name  " disabled="disabled"
@@ -23,7 +23,7 @@
             </div>
 
         <div fxFlex fxlayout="row" fxlayout.lt-md="column">
-            <div fxFlex style="margin: 0px 20px 0px 0">
+            <div fxFlex style="margin: 0px 20px 20px 0px">
             <div fxFlexFill class="w-100">
                 <ng-multiselect-dropdown [placeholder]="'Please Select Doctor'" [data]="dropdownList" [(ngModel)]="selectedItems" [hidden] = "cannot_assign_patients"
                     [settings]="dropdownSettings" (onSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)" name = "doctorlist" >
@@ -63,6 +63,9 @@
                     </div>
                 </div>
             </div>
+
+
+         
 
 
 

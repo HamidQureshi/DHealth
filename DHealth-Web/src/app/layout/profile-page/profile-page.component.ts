@@ -6,6 +6,8 @@ import { TransactionHandler, IBaseTransaction } from '@activeledger/sdk';
 import { DomSanitizer } from '@angular/platform-browser';
 import { LedgerHelper } from 'src/app/helper/ledgerhelper';
 import { LayoutComponent } from '../layout.component';
+import { Ng2ImgMaxService } from 'ng2-img-max';
+
 
 @Component({
   selector: 'app-profile-page',
@@ -16,7 +18,7 @@ export class ProfilePageComponent implements OnInit {
   image: any;
   placeholder: any;
   constructor(private layoutComp: LayoutComponent, private ledgerHelper: LedgerHelper, private router: Router,
-    private http: HttpClient, private sanitizer: DomSanitizer) { }
+    private http: HttpClient, private sanitizer: DomSanitizer, private ng2ImgMax: Ng2ImgMaxService) { }
 
   public hidden = true;
   public editing_disabled = true;
@@ -50,8 +52,6 @@ export class ProfilePageComponent implements OnInit {
       'Authorization': '' + this.ledgerHelper.token
     });
 
-
-
     let baseTransaction1: IBaseTransaction = {
       $tx: {
         $contract: 'user',
@@ -64,7 +64,6 @@ export class ProfilePageComponent implements OnInit {
       $sigs: {}
     };
 
-
     baseTransaction1.$tx.$i[id] = {};
     baseTransaction1.$tx.$o[id] = {};
     baseTransaction1.$tx.$o[id]['first_name'] = firstname;
@@ -76,7 +75,6 @@ export class ProfilePageComponent implements OnInit {
     let dp = this.image.toString();
     baseTransaction1.$tx.$o[id]['dp'] = this.ledgerHelper.sanitizeDP(dp);
     dp = baseTransaction1.$tx.$o[id]['dp'];
-
 
     const txHandler = new TransactionHandler();
 
@@ -121,11 +119,23 @@ export class ProfilePageComponent implements OnInit {
     if (event.target.files && event.target.files[0]) {
       const reader = new FileReader();
 
-      reader.readAsDataURL(event.target.files[0]);
+      this.ng2ImgMax.resizeImage(event.target.files[0], 400, 300).subscribe(
+        result => {
+          reader.readAsDataURL(result);
+          reader.onload = () => {
+            this.image = reader.result;
+          };
+        },
+        error => {
+          console.log('😢 Oh no!', error);
+        }
+      );
 
-      reader.onload = () => {
-        this.image = reader.result;
-      };
+      // reader.readAsDataURL(event.target.files[0]);
+
+      // reader.onload = () => {
+      //   this.image = reader.result;
+      // };
     }
   }
 

@@ -287,12 +287,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _app_routing_module__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./app-routing.module */ "./src/app/app-routing.module.ts");
 /* harmony import */ var _app_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./app.component */ "./src/app/app.component.ts");
 /* harmony import */ var angular_persistence__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! angular-persistence */ "./node_modules/angular-persistence/index.js");
+/* harmony import */ var ng2_img_max__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ng2-img-max */ "./node_modules/ng2-img-max/dist/ng2-img-max.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -321,6 +323,7 @@ var AppModule = /** @class */ (function () {
                 _angular_cdk_overlay__WEBPACK_IMPORTED_MODULE_1__["OverlayModule"],
                 _angular_common_http__WEBPACK_IMPORTED_MODULE_5__["HttpClientModule"],
                 angular_persistence__WEBPACK_IMPORTED_MODULE_10__["PersistenceModule"],
+                ng2_img_max__WEBPACK_IMPORTED_MODULE_11__["Ng2ImgMaxModule"],
                 _ngx_translate_core__WEBPACK_IMPORTED_MODULE_6__["TranslateModule"].forRoot({
                     loader: {
                         provide: _ngx_translate_core__WEBPACK_IMPORTED_MODULE_6__["TranslateLoader"],

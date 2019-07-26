@@ -10,7 +10,8 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { PersistenceModule } from 'angular-persistence';
-
+import { Ng2ImgMaxModule } from 'ng2-img-max';
+import { MatSnackBarModule } from '@angular/material';
 
 export const createTranslateLoader = (http: HttpClient) => {
     return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -26,6 +27,8 @@ export const createTranslateLoader = (http: HttpClient) => {
         OverlayModule,
         HttpClientModule,
         PersistenceModule,
+        Ng2ImgMaxModule,
+        MatSnackBarModule,
         TranslateModule.forRoot({
             loader: {
                 provide: TranslateLoader,
