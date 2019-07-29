@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".ui.Activities.UploadFileActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/tv_lbl_name"
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="24dp"
+                android:text="Patient Name: "
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/et_name"
+                android:layout_width="187dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:hint="Dr Dan Brown"
+                android:textColor="@color/black"
+                android:textColorHint="@color/bg_register"
+                android:textSize="15sp"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_lbl_name"
+                app:layout_constraintStart_toEndOf="@+id/tv_lbl_name"
+                app:layout_constraintTop_toTopOf="@+id/tv_lbl_name" />
+
+            <TextView
+                android:id="@+id/tv_lbl_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:text="Report Title: "
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/tv_lbl_name"
+                app:layout_constraintTop_toBottomOf="@+id/tv_lbl_name" />
+
+            <EditText
+                android:id="@+id/et_title"
+                android:layout_width="187dp"
+                android:layout_height="wrap_content"
+                android:hint="Diabetic Report"
+                android:textColor="@color/black"
+                android:textColorHint="@color/bg_register"
+                android:textSize="15sp"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_lbl_title"
+                app:layout_constraintStart_toStartOf="@+id/et_name"
+                app:layout_constraintTop_toTopOf="@+id/tv_lbl_title" />
+
+            <TextView
+                android:id="@+id/tv_lbl_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:text="Report Status: "
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="@+id/tv_lbl_title"
+                app:layout_constraintTop_toBottomOf="@+id/tv_lbl_title" />
+
+            <TextView
+                android:id="@+id/tv_staus"
+                android:layout_width="187dp"
+                android:layout_height="21dp"
+                android:text="Pending"
+                android:textColor="@color/btn_logut_bg"
+                android:textSize="15sp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_lbl_status"
+                app:layout_constraintStart_toStartOf="@+id/et_name"
+                app:layout_constraintTop_toTopOf="@+id/tv_lbl_status" />
+
+            <TextView
+                android:id="@+id/tv_lbl_uploaddate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:text="Upload Date: "
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="@+id/tv_lbl_status"
+                app:layout_constraintTop_toBottomOf="@+id/tv_lbl_status" />
+
+            <EditText
+                android:id="@+id/et_uploaddate"
+                android:layout_width="187dp"
+                android:layout_height="wrap_content"
+                android:hint="24/07/1994"
+                android:textColor="@color/black"
+                android:textColorHint="@color/bg_register"
+                android:textSize="15sp"
+                android:visibility="gone"
+
+                app:layout_constraintBottom_toBottomOf="@+id/tv_lbl_uploaddate"
+                app:layout_constraintStart_toStartOf="@+id/tv_staus"
+                app:layout_constraintTop_toTopOf="@+id/tv_lbl_uploaddate" />
+
+
+            <TextView
+                android:id="@+id/tv_lbl_assigned_to"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:text="Assigned To: "
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/tv_lbl_uploaddate"
+                app:layout_constraintTop_toBottomOf="@+id/tv_lbl_uploaddate" />
+
+
+            <io.apptik.widget.multiselectspinner.MultiSelectSpinner
+                android:id="@+id/et_assigned_to"
+                android:layout_width="187dp"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_lbl_assigned_to"
+                app:layout_constraintStart_toStartOf="@+id/et_uploaddate"
+                app:layout_constraintTop_toTopOf="@+id/tv_lbl_assigned_to" />
+
+
+            <TextView
+                android:id="@+id/tv_lbl_signeddate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:text="Date Signed: "
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="@+id/tv_lbl_assigned_to"
+                app:layout_constraintTop_toBottomOf="@+id/tv_lbl_assigned_to" />
+
+            <EditText
+                android:id="@+id/et_signeddate"
+                android:layout_width="187dp"
+                android:layout_height="wrap_content"
+                android:hint="24/07/1994"
+                android:textColor="@color/black"
+                android:textColorHint="@color/bg_register"
+                android:textSize="15sp"
+                android:visibility="gone"
+
+                app:layout_constraintBottom_toBottomOf="@+id/tv_lbl_signeddate"
+                app:layout_constraintStart_toStartOf="@+id/et_assigned_to"
+                app:layout_constraintTop_toTopOf="@+id/tv_lbl_signeddate" />
+
+
+            <TextView
+                android:id="@+id/tv_lbl_description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:text="Description: "
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/tv_lbl_signeddate"
+                app:layout_constraintTop_toBottomOf="@+id/tv_lbl_signeddate" />
+
+            <EditText
+                android:id="@+id/et_description"
+                android:layout_width="187dp"
+                android:layout_height="wrap_content"
+                android:hint="BLAH BLAH BLAH"
+                android:textColor="@color/black"
+                android:textColorHint="@color/bg_register"
+                android:textSize="15sp"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_lbl_description"
+                app:layout_constraintStart_toStartOf="@+id/et_signeddate"
+                app:layout_constraintTop_toTopOf="@+id/tv_lbl_description" />
+
+
+            <TextView
+                android:id="@+id/tv_lbl_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:text="Content: "
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="@+id/tv_lbl_description"
+                app:layout_constraintTop_toBottomOf="@+id/et_description" />
+
+            <EditText
+                android:id="@+id/et_content"
+                android:layout_width="187dp"
+                android:layout_height="wrap_content"
+                android:hint="BLAH BLAH BLAH"
+                android:textColor="@color/black"
+                android:textColorHint="@color/bg_register"
+                android:textSize="15sp"
+                android:visibility="gone"
+
+                app:layout_constraintBottom_toBottomOf="@+id/tv_lbl_content"
+                app:layout_constraintStart_toStartOf="@+id/et_description"
+                app:layout_constraintTop_toTopOf="@+id/tv_lbl_content" />
+
+            <TextView
+                android:id="@+id/tv_lbl_document"
+                android:layout_width="126dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:text="Document Attached: "
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/tv_lbl_content"
+                app:layout_constraintTop_toBottomOf="@+id/et_content" />
+
+            <TextView
+                android:id="@+id/tv_document"
+                android:layout_width="187dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:hint="NONE"
+                android:lines="2"
+                android:textColor="@color/black"
+                android:textColorHint="@color/bg_register"
+                android:textSize="15sp"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_lbl_document"
+                app:layout_constraintStart_toEndOf="@+id/tv_lbl_document"
+                app:layout_constraintTop_toTopOf="@+id/tv_lbl_document" />
+
+            <Button
+                android:id="@+id/btn_upload_file"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/button"
+                android:onClick="uploadFILE"
+                android:text="upload file"
+                android:paddingLeft="7dp"
+                android:paddingRight="7dp"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/btn_finish"
+                app:layout_constraintHorizontal_bias="0.435"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_document"
+                app:layout_constraintVertical_bias="1.0" />
+
+            <Button
+                android:id="@+id/btn_finish"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="52dp"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/button"
+                android:onClick="AddReport"
+                android:text="Finish"
+                android:paddingLeft="7dp"
+                android:paddingRight="7dp"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_document"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="74dp"
+                android:layout_height="76dp"
+                android:layout_gravity="center|bottom"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="276dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.091" />
+
+
+        </android.support.constraint.ConstraintLayout>
+
+    </ScrollView>
+
+</android.support.constraint.ConstraintLayout>

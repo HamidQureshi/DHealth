@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--<color name="colorPrimary">#ff6861</color>-->
+    <!--<color name="dark_blue">#ff6861</color>-->
+    <!--<color name="colorAccent">#ff6861</color>-->
+    <!--<color name="black">#ff6861</color>-->
+
+    <!--<color name="btn_logut_bg">#ff6861</color>-->
+    <!--<color name="borderColor">#ff6861</color>-->
+
+
+    <color name="colorPrimary">#1E88E5</color>
+    <color name="colorPrimaryDark">#2196F3</color>
+    <color name="colorAccent">#42A5F5</color>
+    <color name="black">#42A5F5</color>
+
+    <color name="btn_logut_bg">#42A5F5</color>
+    <color name="borderColor">#42A5F5</color>
+
+    <color name="bg_register">#2e3237</color>
+    <color name="btn_login_bg">#eceef1</color>
+
+    <color name="white">#ffffff</color>
+    <color name="jet_black">#000</color>
+
+</resources>
