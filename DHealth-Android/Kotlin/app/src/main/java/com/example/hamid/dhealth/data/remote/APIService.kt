@@ -22,7 +22,7 @@
  */
 package com.example.hamid.dhealth.data.remote
 
-import io.reactivex.Observable
+import io.reactivex.Single
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -35,35 +35,35 @@ interface APIService {
 
     @Headers("Content-Type: application/json")
     @POST("/register")
-    fun registerUser(@Body post: String): Observable<Response<String>>
+    fun registerUser(@Body post: String): Single<Response<String>>
 
     @Headers("Content-Type: application/json")
     @POST("/login")
-    fun loginUser(@Header("Authorization") authHeader: String): Observable<Response<String>>
+    fun loginUser(@Header("Authorization") authHeader: String): Single<Response<String>>
 
     @Headers("Content-Type: application/json")
     @POST("/transaction/createProfile")
-    fun createProfile(@Header("Authorization") token: String, @Body profile: String): Observable<Response<String>>
+    fun createProfile(@Header("Authorization") token: String, @Body profile: String): Single<Response<String>>
 
     @Headers("Content-Type: application/json")
     @POST("/transaction")
-    fun sendTransaction(@Header("Authorization") token: String, @Body profile: String): Observable<Response<String>>
+    fun sendTransaction(@Header("Authorization") token: String, @Body profile: String): Single<Response<String>>
 
     @Headers("Content-Type: application/json")
     @GET("/transaction/users/doctors")
-    fun getDoctorList(@Header("Authorization") token: String): Observable<Response<String>>
+    fun getDoctorList(@Header("Authorization") token: String): Single<Response<String>>
 
     @Headers("Content-Type: application/json")
     @GET("/transaction/users/patients")
-    fun getPatientList(@Header("Authorization") token: String): Observable<Response<String>>
+    fun getPatientList(@Header("Authorization") token: String): Single<Response<String>>
 
     @Headers("Content-Type: application/json")
     @GET("/transaction/patients")
-    fun getAssignedPatientList(@Header("Authorization") token: String): Observable<Response<String>>
+    fun getAssignedPatientList(@Header("Authorization") token: String): Single<Response<String>>
 
     @Headers("Content-Type: application/json")
     @GET("/transaction/reports")
-    fun getReport(@Header("Authorization") token: String): Observable<Response<String>>
+    fun getReport(@Header("Authorization") token: String): Single<Response<String>>
 
 
 }

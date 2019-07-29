@@ -16,6 +16,7 @@ import com.example.hamid.dhealth.data.remote.APIService
 import javax.inject.Inject
 
 import io.reactivex.Observable
+import io.reactivex.Single
 import io.reactivex.annotations.NonNull
 import retrofit2.Response
 
@@ -119,20 +120,20 @@ constructor(@NonNull application: Application, apiService: APIService, databaseD
         repository.insertReportList(reportList)
     }
 
-    fun createProfile(token: String, transaction: String): Observable<Response<String>> {
+    fun createProfile(token: String, transaction: String): Single<Response<String>> {
         return repository.createProfile(token, transaction)
     }
 
-    fun loginUser(user: String): Observable<Response<String>> {
+    fun loginUser(user: String): Single<Response<String>> {
         return repository.loginUser(user)
     }
 
-    fun registerUser(user: String): Observable<Response<String>> {
+    fun registerUser(user: String): Single<Response<String>> {
         return repository.registerUser(user)
     }
 
     // this method can be used to send transaction as an HTTP request to the ledger
-    fun sendTransaction(token: String, transaction: String): Observable<Response<String>> {
+    fun sendTransaction(token: String, transaction: String): Single<Response<String>> {
         return repository.sendTransaction(token, transaction)
     }
 

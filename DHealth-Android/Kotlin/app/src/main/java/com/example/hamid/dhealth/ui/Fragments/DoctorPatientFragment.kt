@@ -90,7 +90,7 @@ class DoctorPatientFragment : Fragment() {
             doctorList = mViewModel!!.getDoctorList()!!.value
         }
         val profileType = preferenceManager.readFromPref(activity!!, PreferenceKeys.SP_PROFILE_TYPE, PreferenceKeys.LBL_DOCTOR)
-        doctorPatientListAdapter = DoctorPatientListAdapter(context, doctorList, patientList, profileType)
+        doctorPatientListAdapter = DoctorPatientListAdapter(context!!, doctorList, patientList, profileType!!)
 
         val mLayoutManager = GridLayoutManager(context, 1)
         rv_dplist!!.layoutManager = mLayoutManager
@@ -110,7 +110,7 @@ class DoctorPatientFragment : Fragment() {
             mViewModel!!.getPatientList()!!.observe(this, Observer { patients ->
                 progressBar!!.visibility = View.GONE
                 // Update the cached copy of the words in the adapter.
-                doctorPatientListAdapter!!.setPatientList(patients)
+                doctorPatientListAdapter!!.setPatientList(patients!!)
                 pullToRefresh!!.isRefreshing = false
             })
         } else {
@@ -118,7 +118,7 @@ class DoctorPatientFragment : Fragment() {
             mViewModel!!.getDoctorList()!!.observe(this, Observer { doctors ->
                 progressBar!!.visibility = View.GONE
                 // Update the cached copy of the words in the adapter.
-                doctorPatientListAdapter!!.setDoctorList(doctors)
+                doctorPatientListAdapter!!.setDoctorList(doctors!!)
                 pullToRefresh!!.isRefreshing = false
             })
         }

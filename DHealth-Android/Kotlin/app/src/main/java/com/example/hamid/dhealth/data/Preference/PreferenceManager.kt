@@ -38,7 +38,7 @@ class PreferenceManager {
         return sharedPreference.getString(key, defaultValue)
     }
 
-    fun readFromPref(context: Context, key: String, defaultValue: Boolean?): Boolean? {
+    fun readFromPref(context: Context, key: String, defaultValue: Boolean?): Boolean {
         val sharedPreferences = getSharedPreference(context)
         return sharedPreferences.getBoolean(key, defaultValue!!)
     }

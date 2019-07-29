@@ -51,6 +51,8 @@ import io.reactivex.schedulers.Schedulers
 import retrofit2.Response
 
 import android.app.Activity.RESULT_OK
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.observers.DisposableSingleObserver
 
 class ProfileFragment : Fragment(), View.OnClickListener {
     lateinit var et_name: EditText
@@ -72,7 +74,7 @@ class ProfileFragment : Fragment(), View.OnClickListener {
     private var profile_type = PreferenceKeys.LBL_DOCTOR
     private var gender = PreferenceKeys.LBL_MALE
     private var encryption = PreferenceKeys.LBL_RSA
-    private var disposable: Disposable? = null
+    private var disposable = CompositeDisposable()
     private var progressBar: ProgressBar? = null
     private var mViewModel: AppViewModel? = null
 
@@ -210,6 +212,7 @@ class ProfileFragment : Fragment(), View.OnClickListener {
         et_dob.setText(preferenceManager.readFromPref(activity!!, PreferenceKeys.SP_DOB, "JOHN DOE"))
         et_phone.setText(preferenceManager.readFromPref(activity!!, PreferenceKeys.SP_PHONENO, "JOHN DOE"))
         et_address.setText(preferenceManager.readFromPref(activity!!, PreferenceKeys.SP_ADDRESS, "JOHN DOE"))
+        if(!preferenceManager.readFromPref(activity!!, PreferenceKeys.SP_PROFILEPIC, "").isNullOrBlank())
         iv_dp.setImageBitmap(Utils.decodeBase64(preferenceManager.readFromPref(activity!!, PreferenceKeys.SP_PROFILEPIC, "")!!))
     }
 
@@ -382,23 +385,15 @@ class ProfileFragment : Fragment(), View.OnClickListener {
 
         val transactionString = Utility.getInstance().convertJSONObjectToString(updateUserTransaction)
 
-        Utils.Log("UpdateUser Transaction", transactionString)
-        Log.e("UpdateUser token", preferenceManager.readFromPref(activity!!, PreferenceKeys.SP_APP_TOKEN, "null"))
-
+        disposable.add(
         mViewModel!!.sendTransaction(preferenceManager.readFromPref(activity!!, PreferenceKeys.SP_APP_TOKEN, "null")!!, transactionString)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(object : Observer<Response<String>> {
-
-                    override fun onSubscribe(d: Disposable) {
-                        disposable = d
-                    }
+                .subscribeWith(object : DisposableSingleObserver<Response<String>>() {
 
                     override fun onError(e: Throwable) {}
 
-                    override fun onComplete() {}
-
-                    override fun onNext(response: Response<String>) {
+                    override fun onSuccess(response: Response<String>) {
                         progressBar!!.visibility = View.GONE
                         Log.e("UpdateUser response--->", response.code().toString() + "")
                         if (response.code() == 200) {
@@ -431,13 +426,12 @@ class ProfileFragment : Fragment(), View.OnClickListener {
                             Toast.makeText(activity, "User Updated Failed!", Toast.LENGTH_SHORT).show()
                         }
                     }
-                })
+                }))
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        if (disposable != null && !disposable!!.isDisposed)
-            disposable!!.dispose()
+            disposable.clear()
     }
 
         companion object {

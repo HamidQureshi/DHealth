@@ -124,7 +124,7 @@ class ReportsFragment : Fragment(), View.OnClickListener {
         reports = ArrayList()
         reports = mViewModel!!.reportList!!.value
 
-        reportsListAdapter = ReportsListAdapter(context, reports)
+        reportsListAdapter = ReportsListAdapter(context!!, reports!!)
         setupRecyclerView()
 
         progressBar = view!!.findViewById<View>(R.id.progressBar) as ProgressBar
@@ -137,7 +137,7 @@ class ReportsFragment : Fragment(), View.OnClickListener {
 
 
         mViewModel!!.reportList!!.observe(this, Observer { reports ->
-            reportsListAdapter!!.setReportList(reports)
+            reportsListAdapter!!.setReportList(reports!!)
             //update reports list
             pullToRefresh.isRefreshing = false
         })
@@ -159,22 +159,22 @@ class ReportsFragment : Fragment(), View.OnClickListener {
         rv_report_list!!.itemAnimator = DefaultItemAnimator()
         rv_report_list!!.adapter = reportsListAdapter
 
-        val swipeController = SwipeController(object : SwipeControllerActions() {
-            override fun onRightClicked(position: Int) {
-                reportsListAdapter!!.reportList.removeAt(position)
-                reportsListAdapter!!.notifyItemRemoved(position)
-                reportsListAdapter!!.notifyItemRangeChanged(position, reportsListAdapter!!.itemCount)
-            }
-        })
+//        val swipeController = SwipeController(object : SwipeControllerActions() {
+//            override fun onRightClicked(position: Int) {
+//                reportsListAdapter!!.reportList.removeAt(position)
+//                reportsListAdapter!!.notifyItemRemoved(position)
+//                reportsListAdapter!!.notifyItemRangeChanged(position, reportsListAdapter!!.itemCount)
+//            }
+//        })
 
-        val itemTouchhelper = ItemTouchHelper(swipeController)
-        itemTouchhelper.attachToRecyclerView(rv_report_list)
+//        val itemTouchhelper = ItemTouchHelper(swipeController)
+//        itemTouchhelper.attachToRecyclerView(rv_report_list)
 
-        rv_report_list!!.addItemDecoration(object : RecyclerView.ItemDecoration() {
-            override fun onDraw(c: Canvas, parent: RecyclerView, state: RecyclerView.State?) {
-                swipeController.onDraw(c)
-            }
-        })
+//        rv_report_list!!.addItemDecoration(object : RecyclerView.ItemDecoration() {
+//            override fun onDraw(c: Canvas, parent: RecyclerView, state: RecyclerView.State?) {
+//                swipeController.onDraw(c)
+//            }
+//        })
 
 
     }

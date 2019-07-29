@@ -26,8 +26,11 @@ import javax.inject.Singleton
 
 import io.reactivex.Observable
 import io.reactivex.Observer
+import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
+import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.schedulers.Schedulers
 import retrofit2.Response
 
@@ -39,6 +42,8 @@ class DataRepository(private val apiService: APIService, private val databaseDAO
         private set
     var reportList: LiveData<List<Report>>? = null
         private set
+    private var disposable = CompositeDisposable()
+
 
     init {
         doctorList = databaseDAO.doctorList
@@ -47,23 +52,19 @@ class DataRepository(private val apiService: APIService, private val databaseDAO
     }
 
     fun getDoctorListFromServer(token: String) {
-
+        disposable.add(
         apiService.getDoctorList(token)
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
-                .subscribe(object : Observer<Response<String>> {
+                .subscribeWith(object : DisposableSingleObserver<Response<String>>() {
 
-                    override fun onSubscribe(d: Disposable) {
-
-                    }
 
                     override fun onError(e: Throwable) {
                         Log.e("doctorlist error", e.message + "")
                     }
 
-                    override fun onComplete() {}
 
-                    override fun onNext(response: Response<String>) {
+                    override fun onSuccess(response: Response<String>) {
 
                         Utils.Log("doctorlist code--->", response.code().toString() + "")
 
@@ -93,9 +94,6 @@ class DataRepository(private val apiService: APIService, private val databaseDAO
                                     val dp = jsonobject.optString("dp")
                                     val identity = jsonobject.optString("_id")
 
-                                    Log.e("doctorlist email--->", email)
-                                    Log.e("doctorlist identity--->", identity)
-
                                     val doctor = Doctor(first_name, last_name, email, date_of_birth, address, phone_number, gender, dp, identity)
                                     doctorList.add(doctor)
                                 }
@@ -110,29 +108,23 @@ class DataRepository(private val apiService: APIService, private val databaseDAO
                         }
 
                     }
-                })
+                }))
 
     }
 
     fun getPatientListFromServer(token: String) {
-
+        disposable.add(
         apiService.getPatientList(token)
-                //        HttpClientModule.getInstance().getAssignedPatientListFromServer(token)
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
-                .subscribe(object : Observer<Response<String>> {
+                .subscribeWith(object : DisposableSingleObserver<Response<String>>() {
 
-                    override fun onSubscribe(d: Disposable) {
-
-                    }
 
                     override fun onError(e: Throwable) {
                         e.printStackTrace()
                     }
 
-                    override fun onComplete() {}
-
-                    override fun onNext(response: Response<String>) {
+                    override fun onSuccess(response: Response<String>) {
 
                         Utils.Log("patientlist code--->", response.code().toString() + "")
 
@@ -158,9 +150,6 @@ class DataRepository(private val apiService: APIService, private val databaseDAO
                                     val dp = jsonobject.optString("dp")
                                     val identity = jsonobject.optString("_id")
 
-                                    Log.e("patientlist email--->", email)
-                                    Log.e("patientlist identity-->", identity)
-
                                     val patient = Patient(first_name, last_name, email, date_of_birth, address, phone_number, gender, dp, identity)
                                     patientList.add(patient)
                                 }
@@ -174,28 +163,22 @@ class DataRepository(private val apiService: APIService, private val databaseDAO
                         }
 
                     }
-                })
+                }))
 
     }
 
     fun getAssignedPatientListFromServer(token: String) {
-
+        disposable.add(
         apiService.getAssignedPatientList(token)
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
-                .subscribe(object : Observer<Response<String>> {
-
-                    override fun onSubscribe(d: Disposable) {
-
-                    }
+                .subscribeWith(object : DisposableSingleObserver<Response<String>>() {
 
                     override fun onError(e: Throwable) {
                         e.printStackTrace()
                     }
 
-                    override fun onComplete() {}
-
-                    override fun onNext(response: Response<String>) {
+                    override fun onSuccess(response: Response<String>) {
 
                         Utils.Log("assigned patientlist code--->", response.code().toString() + "")
 
@@ -246,7 +229,6 @@ class DataRepository(private val apiService: APIService, private val databaseDAO
                                         insertReportList(reportList)
                                     }
 
-
                                 }
 
                                 insertPatientList(patientList)
@@ -258,7 +240,7 @@ class DataRepository(private val apiService: APIService, private val databaseDAO
                         }
 
                     }
-                })
+                }))
 
     }
 
@@ -269,20 +251,15 @@ class DataRepository(private val apiService: APIService, private val databaseDAO
 
         Log.e("getReport token", token)
 
+        disposable.add(
         apiService.getReport(token)
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
-                .subscribe(object : io.reactivex.Observer<Response<String>> {
-
-                    override fun onSubscribe(d: Disposable) {
-                        //                        disposable = d;
-                    }
+                .subscribeWith(object : DisposableSingleObserver<Response<String>>() {
 
                     override fun onError(e: Throwable) {}
 
-                    override fun onComplete() {}
-
-                    override fun onNext(response: Response<String>) {
+                    override fun onSuccess(response: Response<String>) {
 
 //                        if (null != ReportsFragment.handler) {
 //                            val message = Message()
@@ -356,7 +333,7 @@ class DataRepository(private val apiService: APIService, private val databaseDAO
 //                            }
                         }
                     }
-                })
+                }))
     }
 
     fun searchReportList(title: String): List<Report> {
@@ -525,21 +502,21 @@ class DataRepository(private val apiService: APIService, private val databaseDAO
     }
 
 
-    fun registerUser(user: String): Observable<Response<String>> {
+    fun registerUser(user: String): Single<Response<String>> {
         return apiService.registerUser(user)
     }
 
-    fun loginUser(user: String): Observable<Response<String>> {
+    fun loginUser(user: String): Single<Response<String>> {
         return apiService.loginUser(user)
     }
 
     // this method can be used to send transaction as an HTTP request to the ledger
-    fun createProfile(token: String, transaction: String): Observable<Response<String>> {
+    fun createProfile(token: String, transaction: String): Single<Response<String>> {
         return apiService.createProfile(token, transaction)
     }
 
     // this method can be used to send transaction as an HTTP request to the ledger
-    fun sendTransaction(token: String, transaction: String): Observable<Response<String>> {
+    fun sendTransaction(token: String, transaction: String): Single<Response<String>> {
         return apiService.sendTransaction(token, transaction)
     }
 

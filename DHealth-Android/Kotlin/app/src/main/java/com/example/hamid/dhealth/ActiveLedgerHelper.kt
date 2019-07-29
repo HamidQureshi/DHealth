@@ -28,7 +28,7 @@ import io.reactivex.disposables.Disposable
 import com.example.activeledgersdk.ActiveLedgerSDK.signMessage
 
 class ActiveLedgerHelper {
-    @Inject
+
     lateinit var preferenceManager: PreferenceManager
     private val disposable: Disposable? = null
     var key_Pair: KeyPair? = null
@@ -43,7 +43,8 @@ class ActiveLedgerHelper {
     private var context: Context? = null
 
 
-    fun setupALSDK(context: Context) {
+    fun setupALSDK(context: Context, preferenceManager: PreferenceManager) {
+        this.preferenceManager = preferenceManager
         ActiveLedgerSDK.getInstance().initSDK(context, "http", "testnet-uk.activeledger.io", "5260")
         this.context = context
     }
@@ -298,7 +299,7 @@ class ActiveLedgerHelper {
         return transaction
     }
 
-    fun createUploadReportTransaction(keyPair: KeyPair, type: KeyType, name: String, title: String, status: String, uploaddate: String, assignedto: String,
+    fun createUploadReportTransaction(keyPair: KeyPair?, type: KeyType, name: String, title: String, status: String, uploaddate: String, assignedto: String,
                                       signeddate: String, description: String, base64document: String, fileName: String, selected_array: ArrayList<String>, email: String): JSONObject {
 
         val transaction = JSONObject()
