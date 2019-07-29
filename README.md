@@ -10,7 +10,7 @@ It currently has the following features.
 
 -       Reports can be shared with multiple doctors
 
--       Reports can be viewed on downloaded from the application
+-       Reports can be viewed and downloaded from the application
 
 This project has 4 components.
 
