@@ -24,15 +24,8 @@ package com.example.hamid.dhealth.data.remote
 
 
 import android.app.Application
-
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-
-import java.io.File
-import java.util.concurrent.TimeUnit
-
-import javax.inject.Singleton
-
 import dagger.Module
 import dagger.Provides
 import okhttp3.Cache
@@ -41,6 +34,9 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
+import java.io.File
+import java.util.concurrent.TimeUnit
+import javax.inject.Singleton
 
 @Module
 class HttpClientModule {

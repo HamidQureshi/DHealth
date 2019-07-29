@@ -10,15 +10,9 @@ import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.ProgressBar
 import android.widget.SearchView
-
 import com.example.hamid.dhealth.R
 import com.example.hamid.dhealth.data.Preference.PreferenceKeys
 import com.example.hamid.dhealth.data.Preference.PreferenceManager
@@ -28,17 +22,14 @@ import com.example.hamid.dhealth.factory.ViewModelFactory
 import com.example.hamid.dhealth.ui.Adapter.DoctorPatientListAdapter
 import com.example.hamid.dhealth.ui.viewmodel.AppViewModel
 import com.example.hamid.dhealth.utils.Utils
-
-import java.util.ArrayList
-
-import javax.inject.Inject
-
 import dagger.android.support.AndroidSupportInjection
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.annotations.NonNull
 import io.reactivex.annotations.Nullable
 import io.reactivex.schedulers.Schedulers
+import java.util.*
+import javax.inject.Inject
 
 
 class DoctorPatientFragment : Fragment() {
@@ -209,7 +200,6 @@ class DoctorPatientFragment : Fragment() {
         pullToRefresh!!.isRefreshing = mViewModel!!.isFetchingDoctorPatientData
 
     }
-
 
 
 }

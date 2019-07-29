@@ -1,12 +1,7 @@
 package com.example.hamid.dhealth.data.localdb.DAO
 
 import android.arch.lifecycle.LiveData
-import android.arch.persistence.room.Dao
-import android.arch.persistence.room.Delete
-import android.arch.persistence.room.Insert
-import android.arch.persistence.room.Query
-import android.arch.persistence.room.Update
-
+import android.arch.persistence.room.*
 import com.example.hamid.dhealth.data.localdb.Entity.Doctor
 import com.example.hamid.dhealth.data.localdb.Entity.Patient
 import com.example.hamid.dhealth.data.localdb.Entity.Report

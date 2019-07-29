@@ -13,26 +13,20 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.Toast
-
 import com.example.hamid.dhealth.R
 import com.example.hamid.dhealth.data.Preference.PreferenceKeys
 import com.example.hamid.dhealth.data.Preference.PreferenceManager
 import com.example.hamid.dhealth.factory.ViewModelFactory
 import com.example.hamid.dhealth.ui.viewmodel.AppViewModel
-
-import org.json.JSONException
-import org.json.JSONObject
-
-import javax.inject.Inject
-
 import dagger.android.AndroidInjection
-import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.disposables.Disposable
 import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.schedulers.Schedulers
+import org.json.JSONException
+import org.json.JSONObject
 import retrofit2.Response
+import javax.inject.Inject
 
 
 class LoginScreen : AppCompatActivity() {

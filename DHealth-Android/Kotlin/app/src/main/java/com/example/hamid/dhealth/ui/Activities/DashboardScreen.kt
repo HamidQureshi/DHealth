@@ -15,27 +15,20 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
-
 import com.example.hamid.dhealth.ActiveLedgerHelper
 import com.example.hamid.dhealth.R
 import com.example.hamid.dhealth.data.Preference.PreferenceKeys
 import com.example.hamid.dhealth.data.Preference.PreferenceManager
-import com.example.hamid.dhealth.data.localdb.Entity.Doctor
-import com.example.hamid.dhealth.data.localdb.Entity.Patient
-import com.example.hamid.dhealth.data.localdb.Entity.Report
 import com.example.hamid.dhealth.factory.ViewModelFactory
 import com.example.hamid.dhealth.ui.Fragments.DoctorPatientFragment
 import com.example.hamid.dhealth.ui.Fragments.ProfileFragment
 import com.example.hamid.dhealth.ui.Fragments.ReportsFragment
 import com.example.hamid.dhealth.ui.viewmodel.AppViewModel
 import com.example.hamid.dhealth.utils.Utils
-
-import javax.inject.Inject
-
 import dagger.android.AndroidInjection
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
-import io.reactivex.annotations.Nullable
+import javax.inject.Inject
 
 class DashboardScreen : AppCompatActivity(), HasSupportFragmentInjector {
 
@@ -71,7 +64,7 @@ class DashboardScreen : AppCompatActivity(), HasSupportFragmentInjector {
         setContentView(R.layout.activity_dashboard_screen)
         initialiseViewModel()
 
-        ActiveLedgerHelper.getInstance()!!.setupALSDK(applicationContext,preferenceManager)
+        ActiveLedgerHelper.getInstance()!!.setupALSDK(applicationContext, preferenceManager)
 
         toolbar = findViewById<View>(R.id.toolbar) as Toolbar
         setSupportActionBar(toolbar)
@@ -196,8 +189,8 @@ class DashboardScreen : AppCompatActivity(), HasSupportFragmentInjector {
     }
 
     fun refreshDP() {
-        if(!preferenceManager.readFromPref(this, PreferenceKeys.SP_PROFILEPIC, "").isNullOrBlank() )
-        iv_dp.setImageBitmap(Utils.decodeBase64(preferenceManager.readFromPref(this, PreferenceKeys.SP_PROFILEPIC, "")!!))
+        if (!preferenceManager.readFromPref(this, PreferenceKeys.SP_PROFILEPIC, "").isNullOrBlank())
+            iv_dp.setImageBitmap(Utils.decodeBase64(preferenceManager.readFromPref(this, PreferenceKeys.SP_PROFILEPIC, "")!!))
 
     }
 

@@ -6,14 +6,12 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
-
 import com.example.hamid.dhealth.R
 import com.example.hamid.dhealth.data.localdb.Entity.Report
 import com.example.hamid.dhealth.ui.Activities.ReportDetailActivity
 
-class ReportsListAdapter(private val mContext: Context,private var reportList: List<Report>) : RecyclerView.Adapter<ReportsListAdapter.ViewHolder>() {
+class ReportsListAdapter(private val mContext: Context, private var reportList: List<Report>) : RecyclerView.Adapter<ReportsListAdapter.ViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReportsListAdapter.ViewHolder {

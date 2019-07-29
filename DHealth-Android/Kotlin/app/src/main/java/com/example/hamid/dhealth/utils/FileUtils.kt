@@ -9,7 +9,6 @@ import android.database.DatabaseUtils
 import android.net.Uri
 import android.os.Build
 import android.os.Environment
-import android.os.ParcelFileDescriptor
 import android.provider.DocumentsContract
 import android.provider.MediaStore
 import android.provider.OpenableColumns
@@ -17,21 +16,9 @@ import android.support.v4.content.FileProvider
 import android.util.Base64
 import android.util.Log
 import android.webkit.MimeTypeMap
-
-import java.io.BufferedOutputStream
-import java.io.BufferedReader
-import java.io.File
-import java.io.FileDescriptor
-import java.io.FileInputStream
-import java.io.FileNotFoundException
-import java.io.FileOutputStream
-import java.io.IOException
-import java.io.InputStream
-import java.io.InputStreamReader
-import java.io.OutputStream
-import java.text.DecimalFormat
-
 import okhttp3.ResponseBody
+import java.io.*
+import java.text.DecimalFormat
 
 object FileUtils {
     val DOCUMENTS_DIR = "documents"
@@ -707,7 +694,7 @@ object FileUtils {
         var line: String
         line = reader.readLine()
 //        while ((line = reader.readLine()) != null) {
-        while (line  != null) {
+        while (line != null) {
             stringBuilder.append(line)
         }
         fileInputStream.close()

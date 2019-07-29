@@ -3,49 +3,33 @@ package com.example.hamid.dhealth.ui.viewmodel
 import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.LiveData
-
 import com.example.hamid.dhealth.data.DataRepository
-import com.example.hamid.dhealth.data.Preference.PreferenceKeys
 import com.example.hamid.dhealth.data.Preference.PreferenceManager
 import com.example.hamid.dhealth.data.localdb.DAO.DatabaseDAO
 import com.example.hamid.dhealth.data.localdb.Entity.Doctor
 import com.example.hamid.dhealth.data.localdb.Entity.Patient
 import com.example.hamid.dhealth.data.localdb.Entity.Report
 import com.example.hamid.dhealth.data.remote.APIService
-
-import javax.inject.Inject
-
-import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.annotations.NonNull
 import retrofit2.Response
+import javax.inject.Inject
 
 class AppViewModel @Inject
 constructor(@NonNull application: Application, apiService: APIService, databaseDAO: DatabaseDAO, preferenceManager: PreferenceManager) : AndroidViewModel(application) {
 
-//    @Inject
-//    lateinit var preferenceManager: PreferenceManager
     private val repository: DataRepository = DataRepository(apiService, databaseDAO)
-    //        if (doctor_list.getValue() == null) {
-    //            getDoctorListFromServer(preferenceManager.readFromPref(getApplication(), PreferenceKeys.SP_APP_TOKEN, "null"));
-    //        }
-    var doctor_list: LiveData<List<Doctor>>? = null
-    //        if (patient_list.getValue() == null) {
-    ////            getPatientListFromServer(preferenceManager.readFromPref(getApplication(), PreferenceKeys.SP_APP_TOKEN, "null"));
-    //            getAssignedPatientListFromServer(preferenceManager.readFromPref(getApplication(), PreferenceKeys.SP_APP_TOKEN, "null"));
-    //        }
-    val patient_list: LiveData<List<Patient>>?
-    //report viewmodel methods
-
-    val reportList: LiveData<List<Report>>?
+    var doctor_list: LiveData<List<Doctor>> = repository.doctorList
+    val patient_list: LiveData<List<Patient>> = repository.patientList
+    val reportList: LiveData<List<Report>> =  repository.reportList
     var isFetchingDoctorPatientData = false
     var isFetchingReportData = false
 
 
     init {
-        reportList = repository.reportList
-        doctor_list = repository.doctorList
-        patient_list = repository.patientList
+//        reportList = repository.reportList
+//        doctor_list = repository.doctorList
+//        patient_list = repository.patientList
     }
 
     fun getDoctorList(): LiveData<List<Doctor>>? {

@@ -1,15 +1,6 @@
 package com.example.hamid.dhealth.di.module
 
-import com.example.hamid.dhealth.ActiveLedgerHelper
-import com.example.hamid.dhealth.ui.Activities.DashboardScreen
-import com.example.hamid.dhealth.ui.Activities.DoctorPatientDescriptionActivity
-import com.example.hamid.dhealth.ui.Activities.LoginScreen
-import com.example.hamid.dhealth.ui.Activities.ProfileScreen
-import com.example.hamid.dhealth.ui.Activities.ReportDetailActivity
-import com.example.hamid.dhealth.ui.Activities.SignUpScreen
-import com.example.hamid.dhealth.ui.Activities.SplashActivity
-import com.example.hamid.dhealth.ui.Activities.UploadFileActivity
-
+import com.example.hamid.dhealth.ui.Activities.*
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 

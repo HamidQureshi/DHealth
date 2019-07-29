@@ -6,8 +6,8 @@ import android.support.v7.app.AppCompatActivity
 import com.example.hamid.dhealth.R
 import com.example.hamid.dhealth.data.Preference.PreferenceKeys
 import com.example.hamid.dhealth.data.Preference.PreferenceManager
-import javax.inject.Inject
 import dagger.android.AndroidInjection
+import javax.inject.Inject
 
 class SplashActivity : AppCompatActivity() {
 
@@ -25,9 +25,8 @@ class SplashActivity : AppCompatActivity() {
         if (login == false) {
             intent = Intent(this, LoginScreen::class.java)
         } else {
-            if (preferenceManager.readFromPref(this, PreferenceKeys.SP_PROFILEFINISHED, false))
-            {
-                  intent = Intent(this, DashboardScreen::class.java)
+            if (preferenceManager.readFromPref(this, PreferenceKeys.SP_PROFILEFINISHED, false)) {
+                intent = Intent(this, DashboardScreen::class.java)
             } else {
                 intent = Intent(this, ProfileScreen::class.java)
 

@@ -3,29 +3,22 @@ package com.example.hamid.dhealth
 import android.arch.lifecycle.MutableLiveData
 import android.content.Context
 import android.util.Log
-
 import com.example.activeledgersdk.ActiveLedgerSDK
+import com.example.activeledgersdk.ActiveLedgerSDK.signMessage
 import com.example.activeledgersdk.model.Territoriality
 import com.example.activeledgersdk.utility.KeyType
 import com.example.activeledgersdk.utility.Utility
 import com.example.hamid.dhealth.data.Preference.PreferenceKeys
 import com.example.hamid.dhealth.data.Preference.PreferenceManager
 import com.example.hamid.dhealth.utils.Configurations
-
+import io.reactivex.Observer
+import io.reactivex.disposables.Disposable
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
-
 import java.io.IOException
 import java.security.KeyPair
-import java.util.ArrayList
-
-import javax.inject.Inject
-
-import io.reactivex.Observer
-import io.reactivex.disposables.Disposable
-
-import com.example.activeledgersdk.ActiveLedgerSDK.signMessage
+import java.util.*
 
 class ActiveLedgerHelper {
 
@@ -157,7 +150,7 @@ class ActiveLedgerHelper {
     }
 
     // this method return the onboard transaction as JSON object
-    fun onboardTransaction( type: KeyType, first_name: String, last_name: String, email: String,
+    fun onboardTransaction(type: KeyType, first_name: String, last_name: String, email: String,
                            date_of_birth: String, phone_number: String, address: String, security: String, profile_type: String, gender: String, dp: String): JSONObject {
 
         val transaction = JSONObject()

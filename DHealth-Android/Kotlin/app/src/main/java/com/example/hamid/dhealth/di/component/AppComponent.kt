@@ -1,20 +1,13 @@
 package com.example.hamid.dhealth.di.component
 
 import android.app.Application
-
 import com.example.hamid.dhealth.data.remote.HttpClientModule
 import com.example.hamid.dhealth.di.AppController
-import com.example.hamid.dhealth.di.module.ActivityModule
-import com.example.hamid.dhealth.di.module.DBModule
-import com.example.hamid.dhealth.di.module.FragmentModule
-import com.example.hamid.dhealth.di.module.PreferenceModule
-import com.example.hamid.dhealth.di.module.ViewModelModule
-
-import javax.inject.Singleton
-
+import com.example.hamid.dhealth.di.module.*
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.support.AndroidSupportInjectionModule
+import javax.inject.Singleton
 
 @Singleton
 @Component(modules = [HttpClientModule::class, DBModule::class, ViewModelModule::class, ActivityModule::class, AndroidSupportInjectionModule::class, FragmentModule::class, PreferenceModule::class])

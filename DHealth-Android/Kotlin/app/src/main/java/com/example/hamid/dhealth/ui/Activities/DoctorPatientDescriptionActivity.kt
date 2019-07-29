@@ -7,17 +7,14 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
-
-import com.example.hamid.dhealth.data.localdb.Entity.Doctor
-import com.example.hamid.dhealth.data.localdb.Entity.Patient
+import com.example.hamid.dhealth.R
 import com.example.hamid.dhealth.data.Preference.PreferenceKeys
 import com.example.hamid.dhealth.data.Preference.PreferenceManager
-import com.example.hamid.dhealth.R
+import com.example.hamid.dhealth.data.localdb.Entity.Doctor
+import com.example.hamid.dhealth.data.localdb.Entity.Patient
 import com.example.hamid.dhealth.utils.Utils
-
-import javax.inject.Inject
-
 import dagger.android.AndroidInjection
+import javax.inject.Inject
 
 class DoctorPatientDescriptionActivity : AppCompatActivity() {
 

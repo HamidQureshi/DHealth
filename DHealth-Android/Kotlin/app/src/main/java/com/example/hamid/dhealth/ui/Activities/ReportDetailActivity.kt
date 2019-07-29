@@ -9,34 +9,18 @@ import android.support.v7.widget.Toolbar
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
-import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ProgressBar
-import android.widget.TextView
-import android.widget.Toast
-
+import android.widget.*
 import com.example.activeledgersdk.ActiveLedgerSDK
 import com.example.activeledgersdk.utility.Utility
 import com.example.hamid.dhealth.ActiveLedgerHelper
 import com.example.hamid.dhealth.R
 import com.example.hamid.dhealth.data.Preference.PreferenceKeys
 import com.example.hamid.dhealth.data.Preference.PreferenceManager
-
 import com.example.hamid.dhealth.data.localdb.Entity.Report
 import com.example.hamid.dhealth.factory.ViewModelFactory
 import com.example.hamid.dhealth.ui.viewmodel.AppViewModel
 import com.example.hamid.dhealth.utils.FileUtils
 import com.example.hamid.dhealth.utils.Utils
-
-import org.json.JSONArray
-import org.json.JSONException
-import org.json.JSONObject
-
-import java.util.ArrayList
-
-import javax.inject.Inject
-
 import dagger.android.AndroidInjection
 import io.apptik.widget.multiselectspinner.BaseMultiSelectSpinner
 import io.apptik.widget.multiselectspinner.MultiSelectSpinner
@@ -44,7 +28,12 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.schedulers.Schedulers
+import org.json.JSONArray
+import org.json.JSONException
+import org.json.JSONObject
 import retrofit2.Response
+import java.util.*
+import javax.inject.Inject
 
 class ReportDetailActivity : AppCompatActivity() {
     lateinit var et_title: EditText

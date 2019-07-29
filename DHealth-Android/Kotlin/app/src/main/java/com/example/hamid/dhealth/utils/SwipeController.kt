@@ -6,12 +6,8 @@ import android.graphics.Paint
 import android.graphics.RectF
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
-import android.support.v7.widget.helper.ItemTouchHelper.Callback
+import android.support.v7.widget.helper.ItemTouchHelper.*
 import android.view.MotionEvent
-import android.view.View
-
-import android.support.v7.widget.helper.ItemTouchHelper.ACTION_STATE_SWIPE
-import android.support.v7.widget.helper.ItemTouchHelper.LEFT
 
 internal enum class ButtonsState {
     GONE,

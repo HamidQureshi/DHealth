@@ -3,25 +3,17 @@ package com.example.hamid.dhealth.ui.Activities
 import android.Manifest
 import android.app.DatePickerDialog
 import android.arch.lifecycle.ViewModelProviders
-import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.View
-import android.widget.Button
-import android.widget.DatePicker
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.ProgressBar
-import android.widget.Toast
-import belka.us.androidtoggleswitch.widgets.BaseToggleSwitch
-
+import android.widget.*
+import belka.us.androidtoggleswitch.widgets.ToggleSwitch
 import com.example.activeledgersdk.ActiveLedgerSDK
 import com.example.activeledgersdk.utility.KeyType
 import com.example.activeledgersdk.utility.Utility
@@ -33,18 +25,6 @@ import com.example.hamid.dhealth.factory.ViewModelFactory
 import com.example.hamid.dhealth.ui.viewmodel.AppViewModel
 import com.example.hamid.dhealth.utils.ImageUtils
 import com.example.hamid.dhealth.utils.Utils
-
-import org.json.JSONException
-import org.json.JSONObject
-
-import java.io.IOException
-import java.security.KeyPair
-import java.util.ArrayList
-import java.util.Calendar
-
-import javax.inject.Inject
-
-import belka.us.androidtoggleswitch.widgets.ToggleSwitch
 import dagger.android.AndroidInjection
 import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -52,7 +32,13 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.schedulers.Schedulers
+import org.json.JSONException
+import org.json.JSONObject
 import retrofit2.Response
+import java.io.IOException
+import java.security.KeyPair
+import java.util.*
+import javax.inject.Inject
 
 class ProfileScreen : AppCompatActivity(), View.OnClickListener {
     lateinit var et_dob: EditText

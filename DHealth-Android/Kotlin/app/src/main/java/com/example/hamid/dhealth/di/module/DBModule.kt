@@ -1,18 +1,13 @@
 package com.example.hamid.dhealth.di.module
 
 import android.app.Application
-import android.arch.persistence.db.SupportSQLiteDatabase
 import android.arch.persistence.room.Room
-import android.arch.persistence.room.migration.Migration
-
 import com.example.hamid.dhealth.data.localdb.DAO.DatabaseDAO
 import com.example.hamid.dhealth.data.localdb.DAO.MedicalRoomDatabase
-
-import javax.inject.Singleton
-
 import dagger.Module
 import dagger.Provides
 import io.reactivex.annotations.NonNull
+import javax.inject.Singleton
 
 @Module
 class DBModule {

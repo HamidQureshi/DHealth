@@ -1,12 +1,10 @@
 package com.example.hamid.dhealth.ui.Fragments
 
 import android.Manifest
-import android.annotation.SuppressLint
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Canvas
 import android.os.Bundle
 import android.os.Handler
 import android.os.Message
@@ -19,19 +17,12 @@ import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.helper.ItemTouchHelper
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.ProgressBar
 import android.widget.SearchView
 import android.widget.TextView
 import android.widget.Toast
-
 import com.example.hamid.dhealth.R
 import com.example.hamid.dhealth.data.Preference.PreferenceKeys
 import com.example.hamid.dhealth.data.Preference.PreferenceManager
@@ -41,18 +32,13 @@ import com.example.hamid.dhealth.ui.Activities.UploadFileActivity
 import com.example.hamid.dhealth.ui.Adapter.ReportsListAdapter
 import com.example.hamid.dhealth.ui.viewmodel.AppViewModel
 import com.example.hamid.dhealth.utils.FileUtils
-import com.example.hamid.dhealth.utils.SwipeController
-import com.example.hamid.dhealth.utils.SwipeControllerActions
 import com.example.hamid.dhealth.utils.Utils
-
-import java.util.ArrayList
-
-import javax.inject.Inject
-
 import dagger.android.support.AndroidSupportInjection
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import java.util.*
+import javax.inject.Inject
 
 class ReportsFragment : Fragment(), View.OnClickListener {
     var reports: List<Report>? = null
@@ -182,7 +168,7 @@ class ReportsFragment : Fragment(), View.OnClickListener {
 
     private fun initLayouts() {
         fab_create_file = view!!.findViewById<View>(R.id.fab_create_file) as FloatingActionButton
-        if (preferenceManager!!.readFromPref(activity!!, PreferenceKeys.SP_PROFILE_TYPE, PreferenceKeys.LBL_DOCTOR)!!.equals(PreferenceKeys.LBL_DOCTOR, ignoreCase = true)) {
+        if (preferenceManager.readFromPref(activity!!, PreferenceKeys.SP_PROFILE_TYPE, PreferenceKeys.LBL_DOCTOR)!!.equals(PreferenceKeys.LBL_DOCTOR, ignoreCase = true)) {
             fab_create_file!!.visibility = View.GONE
         }
         fab_create_file!!.setOnClickListener(this)
@@ -247,10 +233,10 @@ class ReportsFragment : Fragment(), View.OnClickListener {
 
     private fun populateList() {
         progressBar!!.visibility = View.VISIBLE
-        if (preferenceManager!!.readFromPref(activity!!, PreferenceKeys.SP_PROFILE_TYPE, PreferenceKeys.LBL_DOCTOR)!!.equals(PreferenceKeys.LBL_DOCTOR, ignoreCase = true)) {
-            mViewModel!!.getAssignedPatientListFromServer(preferenceManager!!.readFromPref(activity!!, PreferenceKeys.SP_APP_TOKEN, "null")!!)
+        if (preferenceManager.readFromPref(activity!!, PreferenceKeys.SP_PROFILE_TYPE, PreferenceKeys.LBL_DOCTOR)!!.equals(PreferenceKeys.LBL_DOCTOR, ignoreCase = true)) {
+            mViewModel!!.getAssignedPatientListFromServer(preferenceManager.readFromPref(activity!!, PreferenceKeys.SP_APP_TOKEN, "null")!!)
         } else {
-            mViewModel!!.getReportsListFromServer(preferenceManager!!.readFromPref(activity!!, PreferenceKeys.SP_APP_TOKEN, "null")!!)
+            mViewModel!!.getReportsListFromServer(preferenceManager.readFromPref(activity!!, PreferenceKeys.SP_APP_TOKEN, "null")!!)
         }
 
     }
@@ -298,7 +284,6 @@ class ReportsFragment : Fragment(), View.OnClickListener {
             }
         }
     }
-
 
 
     companion object {

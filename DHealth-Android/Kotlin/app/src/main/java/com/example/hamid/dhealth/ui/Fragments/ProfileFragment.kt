@@ -1,6 +1,7 @@
 package com.example.hamid.dhealth.ui.Fragments
 
 import android.Manifest
+import android.app.Activity.RESULT_OK
 import android.app.DatePickerDialog
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
@@ -12,17 +13,9 @@ import android.provider.MediaStore
 import android.support.v4.app.Fragment
 import android.support.v7.app.AlertDialog
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.ProgressBar
-import android.widget.Toast
-
+import android.view.*
+import android.widget.*
+import belka.us.androidtoggleswitch.widgets.ToggleSwitch
 import com.example.activeledgersdk.ActiveLedgerSDK
 import com.example.activeledgersdk.utility.Utility
 import com.example.hamid.dhealth.ActiveLedgerHelper
@@ -35,24 +28,15 @@ import com.example.hamid.dhealth.ui.Activities.SplashActivity
 import com.example.hamid.dhealth.ui.viewmodel.AppViewModel
 import com.example.hamid.dhealth.utils.ImageUtils
 import com.example.hamid.dhealth.utils.Utils
-
-import java.io.IOException
-import java.util.ArrayList
-import java.util.Calendar
-
-import javax.inject.Inject
-
-import belka.us.androidtoggleswitch.widgets.ToggleSwitch
 import dagger.android.support.AndroidSupportInjection
-import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
-import io.reactivex.schedulers.Schedulers
-import retrofit2.Response
-
-import android.app.Activity.RESULT_OK
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableSingleObserver
+import io.reactivex.schedulers.Schedulers
+import retrofit2.Response
+import java.io.IOException
+import java.util.*
+import javax.inject.Inject
 
 class ProfileFragment : Fragment(), View.OnClickListener {
     lateinit var et_name: EditText
@@ -212,8 +196,8 @@ class ProfileFragment : Fragment(), View.OnClickListener {
         et_dob.setText(preferenceManager.readFromPref(activity!!, PreferenceKeys.SP_DOB, "JOHN DOE"))
         et_phone.setText(preferenceManager.readFromPref(activity!!, PreferenceKeys.SP_PHONENO, "JOHN DOE"))
         et_address.setText(preferenceManager.readFromPref(activity!!, PreferenceKeys.SP_ADDRESS, "JOHN DOE"))
-        if(!preferenceManager.readFromPref(activity!!, PreferenceKeys.SP_PROFILEPIC, "").isNullOrBlank())
-        iv_dp.setImageBitmap(Utils.decodeBase64(preferenceManager.readFromPref(activity!!, PreferenceKeys.SP_PROFILEPIC, "")!!))
+        if (!preferenceManager.readFromPref(activity!!, PreferenceKeys.SP_PROFILEPIC, "").isNullOrBlank())
+            iv_dp.setImageBitmap(Utils.decodeBase64(preferenceManager.readFromPref(activity!!, PreferenceKeys.SP_PROFILEPIC, "")!!))
     }
 
     private fun updatePref() {
@@ -386,55 +370,55 @@ class ProfileFragment : Fragment(), View.OnClickListener {
         val transactionString = Utility.getInstance().convertJSONObjectToString(updateUserTransaction)
 
         disposable.add(
-        mViewModel!!.sendTransaction(preferenceManager.readFromPref(activity!!, PreferenceKeys.SP_APP_TOKEN, "null")!!, transactionString)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(object : DisposableSingleObserver<Response<String>>() {
+                mViewModel!!.sendTransaction(preferenceManager.readFromPref(activity!!, PreferenceKeys.SP_APP_TOKEN, "null")!!, transactionString)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribeWith(object : DisposableSingleObserver<Response<String>>() {
 
-                    override fun onError(e: Throwable) {}
+                            override fun onError(e: Throwable) {}
 
-                    override fun onSuccess(response: Response<String>) {
-                        progressBar!!.visibility = View.GONE
-                        Log.e("UpdateUser response--->", response.code().toString() + "")
-                        if (response.code() == 200) {
-                            updatePref()
-                            Utils.Log("UpdateUser response--->", response.body()!! + "")
-                            iv_camera.visibility = View.INVISIBLE
-                            btn_submit.visibility = View.INVISIBLE
-                            //                            btn_logout.setVisibility(View.INVISIBLE);
+                            override fun onSuccess(response: Response<String>) {
+                                progressBar!!.visibility = View.GONE
+                                Log.e("UpdateUser response--->", response.code().toString() + "")
+                                if (response.code() == 200) {
+                                    updatePref()
+                                    Utils.Log("UpdateUser response--->", response.body()!! + "")
+                                    iv_camera.visibility = View.INVISIBLE
+                                    btn_submit.visibility = View.INVISIBLE
+                                    //                            btn_logout.setVisibility(View.INVISIBLE);
 
-                            et_name.isFocusable = false
-                            et_name.isClickable = false
-                            et_name.isFocusableInTouchMode = false
+                                    et_name.isFocusable = false
+                                    et_name.isClickable = false
+                                    et_name.isFocusableInTouchMode = false
 
-                            et_last_name.isFocusable = false
-                            et_last_name.isFocusableInTouchMode = false
+                                    et_last_name.isFocusable = false
+                                    et_last_name.isFocusableInTouchMode = false
 
-                            et_address.isFocusable = false
-                            et_address.isFocusableInTouchMode = false
+                                    et_address.isFocusable = false
+                                    et_address.isFocusableInTouchMode = false
 
-                            et_dob.isFocusable = false
-                            et_dob.isFocusableInTouchMode = false
+                                    et_dob.isFocusable = false
+                                    et_dob.isFocusableInTouchMode = false
 
-                            et_phone.isFocusable = false
-                            et_phone.isFocusableInTouchMode = false
+                                    et_phone.isFocusable = false
+                                    et_phone.isFocusableInTouchMode = false
 
-                            (activity as DashboardScreen).refreshDP()
+                                    (activity as DashboardScreen).refreshDP()
 
-                            Toast.makeText(activity, "User Updated Successfully!", Toast.LENGTH_SHORT).show()
-                        } else {
-                            Toast.makeText(activity, "User Updated Failed!", Toast.LENGTH_SHORT).show()
-                        }
-                    }
-                }))
+                                    Toast.makeText(activity, "User Updated Successfully!", Toast.LENGTH_SHORT).show()
+                                } else {
+                                    Toast.makeText(activity, "User Updated Failed!", Toast.LENGTH_SHORT).show()
+                                }
+                            }
+                        }))
     }
 
     override fun onDestroy() {
         super.onDestroy()
-            disposable.clear()
+        disposable.clear()
     }
 
-        companion object {
+    companion object {
 
         private val MY_CAMERA_PERMISSION_CODE = 100
 
@@ -442,5 +426,5 @@ class ProfileFragment : Fragment(), View.OnClickListener {
             return ProfileFragment()
         }
 
-        }
+    }
 }
