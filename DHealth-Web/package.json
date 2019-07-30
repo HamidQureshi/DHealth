@@ -8,7 +8,8 @@
         "gitbuild": "ng build --prod --base-href /start-javascript/sb-admin-material/master/dist/",
         "test": "ng test",
         "lint": "ng lint",
-        "e2e": "ng e2e"
+        "e2e": "ng e2e",
+        "dev": "lite-server"
     },
     "private": true,
     "dependencies": {
@@ -65,6 +66,7 @@
         "karma-coverage-istanbul-reporter": "2.0.4",
         "karma-jasmine": "2.0.1",
         "karma-jasmine-html-reporter": "1.4.0",
+        "lite-server": "^2.5.3",
         "protractor": "5.4.1",
         "ts-node": "7.0.1",
         "tslint": "5.11.0",

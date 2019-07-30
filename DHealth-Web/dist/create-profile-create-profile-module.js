@@ -84,6 +84,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/platform-browser */ "./node_modules/@angular/platform-browser/fesm5/platform-browser.js");
 /* harmony import */ var _helper_ledgerhelper__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../helper/ledgerhelper */ "./src/app/helper/ledgerhelper.ts");
 /* harmony import */ var _layout_layout_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../layout/layout.component */ "./src/app/layout/layout.component.ts");
+/* harmony import */ var ng2_img_max__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ng2-img-max */ "./node_modules/ng2-img-max/dist/ng2-img-max.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -102,13 +103,15 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+
 var CreateProfileComponent = /** @class */ (function () {
-    function CreateProfileComponent(layoutComp, ledgerHelper, router, http, sanitizer) {
+    function CreateProfileComponent(layoutComp, ledgerHelper, router, http, sanitizer, ng2ImgMax) {
         this.layoutComp = layoutComp;
         this.ledgerHelper = ledgerHelper;
         this.router = router;
         this.http = http;
         this.sanitizer = sanitizer;
+        this.ng2ImgMax = ng2ImgMax;
         this.image_set = false;
         this.user_type = 'Doctor';
     }
@@ -192,11 +195,20 @@ var CreateProfileComponent = /** @class */ (function () {
         var _this = this;
         if (event.target.files && event.target.files[0]) {
             var reader_1 = new FileReader();
-            reader_1.readAsDataURL(event.target.files[0]);
-            reader_1.onload = function () {
-                _this.image_set = true;
-                _this.image = reader_1.result;
-            };
+            this.ng2ImgMax.resizeImage(event.target.files[0], 400, 300).subscribe(function (result) {
+                reader_1.readAsDataURL(result);
+                reader_1.onload = function () {
+                    _this.image_set = true;
+                    _this.image = reader_1.result;
+                };
+            }, function (error) {
+                console.log('😢 Oh no!', error);
+            });
+            // reader.readAsDataURL(event.target.files[0]);
+            // reader.onload = () => {
+            //   this.image_set = true;
+            //   this.image = reader.result;
+            // };
         }
     };
     CreateProfileComponent.prototype.createProfile = function (body, header) {
@@ -223,7 +235,7 @@ var CreateProfileComponent = /** @class */ (function () {
         }),
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])(),
         __metadata("design:paramtypes", [_layout_layout_component__WEBPACK_IMPORTED_MODULE_6__["LayoutComponent"], _helper_ledgerhelper__WEBPACK_IMPORTED_MODULE_5__["LedgerHelper"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"],
-            _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"], _angular_platform_browser__WEBPACK_IMPORTED_MODULE_4__["DomSanitizer"]])
+            _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"], _angular_platform_browser__WEBPACK_IMPORTED_MODULE_4__["DomSanitizer"], ng2_img_max__WEBPACK_IMPORTED_MODULE_7__["Ng2ImgMaxService"]])
     ], CreateProfileComponent);
     return CreateProfileComponent;
 }());

@@ -191,7 +191,6 @@ var ProfilePageComponent = /** @class */ (function () {
         if (event.target.files && event.target.files[0]) {
             var reader_1 = new FileReader();
             this.ng2ImgMax.resizeImage(event.target.files[0], 400, 300).subscribe(function (result) {
-                // this.uploadedImage = result;
                 reader_1.readAsDataURL(result);
                 reader_1.onload = function () {
                     _this.image = reader_1.result;
